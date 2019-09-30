@@ -1,0 +1,27 @@
+<component name="ProjectDictionaryState">
+  <dictionary name="minha">
+    <words>
+      <w>addr</w>
+      <w>backlight</w>
+      <w>backlightval</w>
+      <w>chsize</w>
+      <w>cleardisplay</w>
+      <w>cursorshift</w>
+      <w>displaycontrol</w>
+      <w>displayfunction</w>
+      <w>displaymode</w>
+      <w>displayoff</w>
+      <w>displayon</w>
+      <w>entryleft</w>
+      <w>entrymodeset</w>
+      <w>entryright</w>
+      <w>entryshiftdecrement</w>
+      <w>entryshiftincrement</w>
+      <w>mssv</w>
+      <w>nobacklight</w>
+      <w>returnhome</w>
+      <w>rfid</w>
+      <w>smbus</w>
+    </words>
+  </dictionary>
+</component>
