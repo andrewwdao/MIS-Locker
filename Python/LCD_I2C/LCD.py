@@ -29,13 +29,22 @@ def begin():
 
 
 def pointerPos(options, pointer):
-    for pos in range(options):
-        if pos == pointer:
-            LCD.setCursor(0, pos)  # row, column
-            LCD.write(">")
-        else:
-            LCD.setCursor(0, pos)  # row, column
-            LCD.write(" ")
+    if options == 3:
+        for pos in range(1, options+1):  # go from 1 to (options+1)
+            if pos == pointer:
+                LCD.setCursor(0, pos)  # row, column
+                LCD.write(">")
+            else:
+                LCD.setCursor(0, pos)  # row, column
+                LCD.write(" ")
+    elif options == 2:
+        for pos in range(1, options+1):  # go from 0 to (options+1)
+            if pos == pointer:
+                LCD.setCursor(0, pos+1)  # row, column
+                LCD.write(">")
+            else:
+                LCD.setCursor(0, pos+1)  # row, column
+                LCD.write(" ")
 
 
 def clear():
@@ -58,7 +67,7 @@ def welcomePage(name, mssv, locker_num):
     LCD.setCursor(0, 2)  # row, column
     LCD.write("MSSV: " + mssv)
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Your Locker is " + locker_num)
+    LCD.write("Your Locker is " + str(locker_num))
 
 
 def addExtraInfoPage(name, mssv):
@@ -72,7 +81,7 @@ def addExtraInfoPage(name, mssv):
     LCD.write("New fingerprint")
 
 
-def welcomePageTemp(locker_num):
+def welcomeTempPage(locker_num):
     LCD.setCursor(3, 0)  # row, column
     LCD.write("TEMPORARY USER")
     LCD.setCursor(0, 1)  # row, column
@@ -80,7 +89,7 @@ def welcomePageTemp(locker_num):
     LCD.setCursor(0, 2)  # row, column
     LCD.write("user only.")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Your Locker is " + locker_num)
+    LCD.write("Your Locker is " + str(locker_num))
 
 
 def unknownIDPage():
@@ -98,10 +107,10 @@ def addFingerPage(number):
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Put your finger")
     LCD.setCursor(2, 3)  # row, column
-    LCD.write("in position " + number)
+    LCD.write("in position " + str(number))
 
 
-def addFingerPageSuccess():
+def addFingerSuccessPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("ADD  FINGERPRINT")
     LCD.setCursor(1, 1)  # row, column
@@ -110,7 +119,7 @@ def addFingerPageSuccess():
     LCD.write("Press any to return")
 
 
-def addFingerPageFail():
+def addFingerFailPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("ADD  FINGERPRINT")
     LCD.setCursor(6, 1)  # row, column
@@ -124,13 +133,13 @@ def addFingerPageFail():
 def addRFIDPage():
     LCD.setCursor(6, 0)  # row, column
     LCD.write("ADD RFID")
-    LCD.setCursor(2, 1)  # row, column
+    LCD.setCursor(3, 2)  # row, column
     LCD.write("Put your RFID")
-    LCD.setCursor(2, 2)  # row, column
+    LCD.setCursor(3, 3)  # row, column
     LCD.write("in the reader")
 
 
-def addRFIDPageSuccess():
+def addRFIDSuccessPage():
     LCD.setCursor(6, 0)  # row, column
     LCD.write("ADD RFID")
     LCD.setCursor(4, 1)  # row, column
@@ -139,7 +148,7 @@ def addRFIDPageSuccess():
     LCD.write("Press any to return")
 
 
-def addRFIDPageFail():
+def addRFIDFailPage():
     LCD.setCursor(6, 0)  # row, column
     LCD.write("ADD RFID")
     LCD.setCursor(6, 1)  # row, column
@@ -162,7 +171,7 @@ def addInfoPage():
 
 
 # ------------------------------ Admin level interfaces ------------------------------
-def mainPageDatabase():
+def mainDatabasePage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADMIN MENU:")
     LCD.setCursor(2, 1)  # row, column
@@ -173,7 +182,7 @@ def mainPageDatabase():
     LCD.write("3. Clear Database")  #
 
 
-def exportSuccess():
+def exportSuccessPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("EXPORT DATABASE")
     LCD.setCursor(7, 1)  # row, column
@@ -182,7 +191,7 @@ def exportSuccess():
     LCD.write("Press any to return")
 
 
-def exportFail():
+def exportFailPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("EXPORT DATABASE")
     LCD.setCursor(6, 1)  # row, column
@@ -202,7 +211,7 @@ def importPage():
     LCD.write("2. New database")
 
 
-def importSuccess():
+def importSuccessPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("IMPORT DATABASE")
     LCD.setCursor(7, 1)  # row, column
@@ -211,7 +220,7 @@ def importSuccess():
     LCD.write("Press any to return")
 
 
-def importFail():
+def importFailPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("IMPORT DATABASE")
     LCD.setCursor(6, 1)  # row, column
@@ -222,28 +231,28 @@ def importFail():
     LCD.write("Cancel")
 
 
-def mainPageLocker():
+def mainLockerPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADMIN MENU:")
     LCD.setCursor(2, 1)  # row, column
-    LCD.write("4. Check Info Locker")  # check any locker that has information in
+    LCD.write("4. Info Locker")  # check any locker that has information in
 
 
-def infoLocker(name, mssv):
+def infoLockerPage(name, mssv):
     LCD.setCursor(4, 0)  # row, column
     LCD.write("INFO LOCKER")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("Name: " + name)
     LCD.setCursor(0, 2)  # row, column
     LCD.write("MSSV: " + mssv)
-    LCD.setCursor(2, 3)  # row, column
+    LCD.setCursor(0, 3)  # row, column
     LCD.write("Unlock?")
 
 
-def infoLockerTemp():
+def infoLockerTempPage():
     LCD.setCursor(4, 0)  # row, column
     LCD.write("INFO LOCKER")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("Temporary User")
-    LCD.setCursor(2, 3)  # row, column
+    LCD.setCursor(0, 3)  # row, column
     LCD.write("Unlock?")
