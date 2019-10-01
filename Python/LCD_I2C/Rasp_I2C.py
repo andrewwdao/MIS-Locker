@@ -89,8 +89,8 @@ class LCD_I2C:
         self.bus = smbus.SMBus(1)  # Rev 2 Pi uses 1
         '''
         SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
-	    according to datasheet, we need at least 40ms after power rises above 2.7V
-	    before sending commands. Raspberry Pi can turn on way better 4.5V so we'll wait 50ms
+        according to datasheet, we need at least 40ms after power rises above 2.7V
+        before sending commands. Raspberry Pi can turn on way better 4.5V so we'll wait 50ms
         '''
         time.sleep(self.DELAY * 100)  # 50ms
 
@@ -100,8 +100,8 @@ class LCD_I2C:
 
         '''
         put the LCD into 4 bit mode
-	    this is according to the hitachi HD44780 datasheet. Figure 24, pg 46
-	    we start in 8bit mode, try to set 4 bit mode
+        this is according to the hitachi HD44780 datasheet. Figure 24, pg 46
+        we start in 8bit mode, try to set 4 bit mode
         '''
         self.command(0x33)  # 110011 Initialise to become 4bit mode
         self.command(0x32)  # 110010 Initialise to become 4bit mode

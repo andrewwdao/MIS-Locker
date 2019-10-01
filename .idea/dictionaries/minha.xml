@@ -4,9 +4,15 @@
       <w>addr</w>
       <w>backlight</w>
       <w>backlightval</w>
+      <w>bitmode</w>
+      <w>blinkoff</w>
+      <w>blinkon</w>
       <w>chsize</w>
       <w>cleardisplay</w>
+      <w>cursoroff</w>
+      <w>cursoron</w>
       <w>cursorshift</w>
+      <w>datasheet</w>
       <w>displaycontrol</w>
       <w>displayfunction</w>
       <w>displaymode</w>
@@ -17,10 +23,13 @@
       <w>entryright</w>
       <w>entryshiftdecrement</w>
       <w>entryshiftincrement</w>
+      <w>functionset</w>
       <w>mssv</w>
       <w>nobacklight</w>
       <w>returnhome</w>
       <w>rfid</w>
+      <w>setcgramaddr</w>
+      <w>setddramaddr</w>
       <w>smbus</w>
     </words>
   </dictionary>
