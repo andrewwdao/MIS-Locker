@@ -9,213 +9,241 @@
  --------------------------------------------------------------"""
 from Rasp_I2C import LCD_I2C
 
+# ---------------------------- Private Parameters:
+# -----Address and Screen parameter:
+LCD_ADDRESS = 0x27
+LCD_WIDTH = 20
+LCD_HEIGHT = 4
+LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
 
-class LCD(LCD_I2C):
-    # ---------------------------- Private Parameters:
-    # -----Address and Screen parameter:
 
-    # ------------------------------ Basic functions ------------------------------
-    def __init__(self, lcd_addr=0x27, lcd_cols=20, lcd_rows=4, lcd_backlight=0x00, char_size=0x00):
-        super().__init__(lcd_addr, lcd_cols, lcd_rows, lcd_backlight, char_size)
-        self.begin()
-        self.backlight()
-        self.clear()
-        self.setCursor(2, 0)  # row, column
-        self.write("SYSTEM  STARTING")
-        self.setCursor(7, 2)  # row, column
-        self.write("....")
+# ------------------------------ Basic functions ------------------------------
+def begin():
+    LCD.begin()
+    LCD.backlight()
+    LCD.clear()
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("SYSTEM  STARTING")
+    LCD.setCursor(7, 2)  # row, column
+    LCD.write("....")
 
-    def pointerPos(self, options, pointer):
-        for pos in range(options):
-            if pos == pointer:
-                self.setCursor(0, pos)  # row, column
-                self.write(">")
-            else:
-                self.setCursor(0, pos)  # row, column
-                self.write(" ")
 
-    # ------------------------------ User level interfaces ------------------------------
-    def waitPage(self):  # user can use RFID or their fingerprint
-        self.setCursor(4, 0)  # row, column
-        self.write("SYSTEM READY")
-        self.setCursor(5, 2)  # row, column
-        self.write("waiting...")
+def pointerPos(options, pointer):
+    for pos in range(options):
+        if pos == pointer:
+            LCD.setCursor(0, pos)  # row, column
+            LCD.write(">")
+        else:
+            LCD.setCursor(0, pos)  # row, column
+            LCD.write(" ")
 
-    def welcomePage(self, name, mssv, locker_num):
-        self.setCursor(3, 0)  # row, column
-        self.write("WELCOME TO MIS!")
-        self.setCursor(0, 1)  # row, column
-        self.write("Name: " + name)
-        self.setCursor(0, 2)  # row, column
-        self.write("MSSV: " + mssv)
-        self.setCursor(0, 3)  # row, column
-        self.write("Your Locker is " + locker_num)
 
-    def addExtraInfoPage(self, name, mssv):
-        self.setCursor(0, 0)  # row, column
-        self.write("Name: " + name)
-        self.setCursor(0, 1)  # row, column
-        self.write("MSSV: " + mssv)
-        self.setCursor(2, 2)  # row, column
-        self.write("New RFID")
-        self.setCursor(2, 3)  # row, column
-        self.write("New fingerprint")
+def clear():
+    LCD.clear()
 
-    def welcomePageTemp(self, locker_num):
-        self.setCursor(3, 0)  # row, column
-        self.write("TEMPORARY USER")
-        self.setCursor(0, 1)  # row, column
-        self.write("This is a one-time")
-        self.setCursor(0, 2)  # row, column
-        self.write("user only.")
-        self.setCursor(0, 3)  # row, column
-        self.write("Your Locker is " + locker_num)
 
-    def unknownIDPage(self):
-        self.setCursor(1, 0)  # row, column
-        self.write("NOT RECOGNISED ID!")
-        self.setCursor(2, 2)  # row, column
-        self.write("Add New ID")
-        self.setCursor(2, 3)  # row, column
-        self.write("Add Existed ID")
+# ------------------------------ User level interfaces ------------------------------
+def waitPage():  # user can use RFID or their fingerprint
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("SYSTEM READY")
+    LCD.setCursor(5, 2)  # row, column
+    LCD.write("waiting...")
 
-    def addFingerPage(self, number):
-        self.setCursor(2, 0)  # row, column
-        self.write("ADD  FINGERPRINT")
-        self.setCursor(2, 2)  # row, column
-        self.write("Put your finger")
-        self.setCursor(2, 3)  # row, column
-        self.write("in position " + number)
 
-    def addFingerPageSuccess(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("ADD  FINGERPRINT")
-        self.setCursor(1, 1)  # row, column
-        self.write("Fingerprint added!")
-        self.setCursor(0, 3)  # row, column
-        self.write("Press any to return")
+def welcomePage(name, mssv, locker_num):
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("WELCOME TO MIS!")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Name: " + name)
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("MSSV: " + mssv)
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Your Locker is " + locker_num)
 
-    def addFingerPageFail(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("ADD  FINGERPRINT")
-        self.setCursor(6, 1)  # row, column
-        self.write("Failed!")
-        self.setCursor(2, 2)  # row, column
-        self.write("Retry")
-        self.setCursor(2, 3)  # row, column
-        self.write("Cancel")
 
-    def addRFIDPage(self):
-        self.setCursor(6, 0)  # row, column
-        self.write("ADD RFID")
-        self.setCursor(2, 1)  # row, column
-        self.write("Put your RFID")
-        self.setCursor(2, 2)  # row, column
-        self.write("in the reader")
+def addExtraInfoPage(name, mssv):
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("Name: " + name)
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("MSSV: " + mssv)
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("New RFID")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("New fingerprint")
 
-    def addRFIDPageSuccess(self):
-        self.setCursor(6, 0)  # row, column
-        self.write("ADD RFID")
-        self.setCursor(4, 1)  # row, column
-        self.write("RFID added!")
-        self.setCursor(0, 3)  # row, column
-        self.write("Press any to return")
 
-    def addRFIDPageFail(self):
-        self.setCursor(6, 0)  # row, column
-        self.write("ADD RFID")
-        self.setCursor(6, 1)  # row, column
-        self.write("Failed!")
-        self.setCursor(2, 2)  # row, column
-        self.write("Retry")
-        self.setCursor(2, 3)  # row, column
-        self.write("Cancel")
+def welcomePageTemp(locker_num):
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("TEMPORARY USER")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("This is a one-time")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("user only.")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Your Locker is " + locker_num)
 
-    def addInfoPage(self):
-        self.setCursor(5, 0)  # row, column
-        self.write("ADD NEW INFO")
-        self.setCursor(0, 1)  # row, column
-        self.write("Connect to MIS-CTU")
-        self.setCursor(0, 2)  # row, column
-        self.write("wifi & open browser")
-        self.setCursor(0, 3)  # row, column
-        self.write("to: mis-locker.ctu")
 
-    # ------------------------------ Admin level interfaces ------------------------------
-    def mainPageDatabase(self):
-        self.setCursor(0, 0)  # row, column
-        self.write("ADMIN MENU:")
-        self.setCursor(2, 1)  # row, column
-        self.write("1. Export Database")  # export will export everything
-        self.setCursor(2, 2)  # row, column
-        self.write("2. Import Database")  # import will have 2 options: append and override
-        self.setCursor(2, 3)  # row, column
-        self.write("3. Clear Database")  #
+def unknownIDPage():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("NOT RECOGNISED ID!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Add New ID")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Add Existed ID")
 
-    def exportSuccess(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("EXPORT DATABASE")
-        self.setCursor(7, 1)  # row, column
-        self.write("Done!")
-        self.setCursor(0, 3)  # row, column
-        self.write("Press any to return")
 
-    def exportFail(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("EXPORT DATABASE")
-        self.setCursor(6, 1)  # row, column
-        self.write("Failed!")
-        self.setCursor(2, 2)  # row, column
-        self.write("Retry")
-        self.setCursor(2, 3)  # row, column
-        self.write("Cancel")
+def addFingerPage(number):
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("ADD  FINGERPRINT")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Put your finger")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("in position " + number)
 
-    def importPage(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("IMPORT DATABASE")
-        self.setCursor(2, 2)  # row, column
-        self.write("1. Append database")
-        self.setCursor(2, 3)  # row, column
-        self.write("2. New database")
 
-    def importSuccess(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("IMPORT DATABASE")
-        self.setCursor(7, 1)  # row, column
-        self.write("Done!")
-        self.setCursor(0, 3)  # row, column
-        self.write("Press any to return")
+def addFingerPageSuccess():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("ADD  FINGERPRINT")
+    LCD.setCursor(1, 1)  # row, column
+    LCD.write("Fingerprint added!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press any to return")
 
-    def importFail(self):
-        self.setCursor(2, 0)  # row, column
-        self.write("IMPORT DATABASE")
-        self.setCursor(6, 1)  # row, column
-        self.write("Failed!")
-        self.setCursor(2, 2)  # row, column
-        self.write("Retry")
-        self.setCursor(2, 3)  # row, column
-        self.write("Cancel")
 
-    def mainPageLocker(self):
-        self.setCursor(0, 0)  # row, column
-        self.write("ADMIN MENU:")
-        self.setCursor(2, 1)  # row, column
-        self.write("4. Check Info Locker")  # check any locker that has information in
+def addFingerPageFail():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("ADD  FINGERPRINT")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
 
-    def infoLocker(self, name, mssv):
-        self.setCursor(4, 0)  # row, column
-        self.write("INFO LOCKER")
-        self.setCursor(0, 1)  # row, column
-        self.write("Name: " + name)
-        self.setCursor(0, 2)  # row, column
-        self.write("MSSV: " + mssv)
-        self.setCursor(2, 3)  # row, column
-        self.write("Unlock?")
 
-    def infoLockerTemp(self):
-        self.setCursor(4, 0)  # row, column
-        self.write("INFO LOCKER")
-        self.setCursor(0, 1)  # row, column
-        self.write("Temporary User")
-        self.setCursor(2, 3)  # row, column
-        self.write("Unlock?")
+def addRFIDPage():
+    LCD.setCursor(6, 0)  # row, column
+    LCD.write("ADD RFID")
+    LCD.setCursor(2, 1)  # row, column
+    LCD.write("Put your RFID")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("in the reader")
+
+
+def addRFIDPageSuccess():
+    LCD.setCursor(6, 0)  # row, column
+    LCD.write("ADD RFID")
+    LCD.setCursor(4, 1)  # row, column
+    LCD.write("RFID added!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press any to return")
+
+
+def addRFIDPageFail():
+    LCD.setCursor(6, 0)  # row, column
+    LCD.write("ADD RFID")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
+
+
+def addInfoPage():
+    LCD.setCursor(5, 0)  # row, column
+    LCD.write("ADD NEW INFO")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Connect to MIS-CTU")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("wifi & open browser")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("to: mis-locker.ctu")
+
+
+# ------------------------------ Admin level interfaces ------------------------------
+def mainPageDatabase():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADMIN MENU:")
+    LCD.setCursor(2, 1)  # row, column
+    LCD.write("1. Export Database")  # export will export everything
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("2. Import Database")  # import will have 2 options: append and override
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("3. Clear Database")  #
+
+
+def exportSuccess():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("EXPORT DATABASE")
+    LCD.setCursor(7, 1)  # row, column
+    LCD.write("Done!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press any to return")
+
+
+def exportFail():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("EXPORT DATABASE")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
+
+
+def importPage():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("IMPORT DATABASE")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("1. Append database")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("2. New database")
+
+
+def importSuccess():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("IMPORT DATABASE")
+    LCD.setCursor(7, 1)  # row, column
+    LCD.write("Done!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press any to return")
+
+
+def importFail():
+    LCD.setCursor(2, 0)  # row, column
+    LCD.write("IMPORT DATABASE")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
+
+
+def mainPageLocker():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADMIN MENU:")
+    LCD.setCursor(2, 1)  # row, column
+    LCD.write("4. Check Info Locker")  # check any locker that has information in
+
+
+def infoLocker(name, mssv):
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("INFO LOCKER")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Name: " + name)
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("MSSV: " + mssv)
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Unlock?")
+
+
+def infoLockerTemp():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("INFO LOCKER")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Temporary User")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Unlock?")

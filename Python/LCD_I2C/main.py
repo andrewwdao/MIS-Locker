@@ -1,16 +1,9 @@
-from builtins import KeyboardInterrupt
-from LCD import LCD
+import lcd
 import time
-
-# ---------------------------- Private Constant:
-# -----Address and Screen parameter:
-LCD_ADDRESS = 0x27
-LCD_WIDTH = 20
-LCD_HEIGHT = 4
 
 
 def main():  # Main program block
-    lcd = LCD(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
+    lcd.begin()
     time.sleep(5)
     lcd.clear()
     lcd.waitPage()
