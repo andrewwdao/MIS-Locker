@@ -4,6 +4,7 @@
       <w>addr</w>
       <w>backlight</w>
       <w>backlightval</w>
+      <w>baudrate</w>
       <w>bitmode</w>
       <w>blinkoff</w>
       <w>blinkon</w>
@@ -27,6 +28,7 @@
       <w>minh</w>
       <w>mssv</w>
       <w>nobacklight</w>
+      <w>raschke</w>
       <w>returnhome</w>
       <w>rfid</w>
       <w>setcgramaddr</w>
