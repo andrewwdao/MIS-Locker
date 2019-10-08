@@ -1,7 +1,7 @@
 """------------------------------------------------------------*-
   LCD application module for Raspberry Pi
   Tested on: Raspberry Pi 3 B+
-  (c) Can Tho University 2019
+  (c) Minh-An Dao 2019
   version 1.00 - 02/10/2019
  --------------------------------------------------------------
  *
