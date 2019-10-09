@@ -8,6 +8,8 @@
       <w>bitmode</w>
       <w>blinkoff</w>
       <w>blinkon</w>
+      <w>charbuffer</w>
+      <w>charbuffers</w>
       <w>chsize</w>
       <w>cleardisplay</w>
       <w>cursoroff</w>
@@ -25,6 +27,7 @@
       <w>entryshiftdecrement</w>
       <w>entryshiftincrement</w>
       <w>functionset</w>
+      <w>incomming</w>
       <w>lindegaard</w>
       <w>minh</w>
       <w>mssv</w>
@@ -37,6 +40,8 @@
       <w>setcgramaddr</w>
       <w>setddramaddr</w>
       <w>smbus</w>
+      <w>startcode</w>
+      <w>uart</w>
     </words>
   </dictionary>
 </component>

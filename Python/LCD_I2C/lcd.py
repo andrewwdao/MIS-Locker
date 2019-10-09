@@ -14,11 +14,13 @@ from Rasp_I2C import LCD_I2C
 LCD_ADDRESS = 0x27
 LCD_WIDTH = 20
 LCD_HEIGHT = 4
-LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
+LCD = None
 
 
 # ------------------------------ Basic functions ------------------------------
 def begin():
+    global LCD
+    LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
     LCD.begin()
     LCD.backlight()
     LCD.clear()
