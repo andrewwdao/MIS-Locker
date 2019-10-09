@@ -4,9 +4,12 @@
       <w>addr</w>
       <w>backlight</w>
       <w>backlightval</w>
+      <w>baudrate</w>
       <w>bitmode</w>
       <w>blinkoff</w>
       <w>blinkon</w>
+      <w>charbuffer</w>
+      <w>charbuffers</w>
       <w>chsize</w>
       <w>cleardisplay</w>
       <w>cursoroff</w>
@@ -24,14 +27,21 @@
       <w>entryshiftdecrement</w>
       <w>entryshiftincrement</w>
       <w>functionset</w>
+      <w>incomming</w>
+      <w>lindegaard</w>
       <w>minh</w>
       <w>mssv</w>
       <w>nobacklight</w>
+      <w>petter</w>
+      <w>raschke</w>
       <w>returnhome</w>
       <w>rfid</w>
+      <w>rubell</w>
       <w>setcgramaddr</w>
       <w>setddramaddr</w>
       <w>smbus</w>
+      <w>startcode</w>
+      <w>uart</w>
     </words>
   </dictionary>
 </component>

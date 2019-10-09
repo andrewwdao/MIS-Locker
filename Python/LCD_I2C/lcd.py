@@ -1,7 +1,7 @@
 """------------------------------------------------------------*-
   LCD application module for Raspberry Pi
   Tested on: Raspberry Pi 3 B+
-  (c) Can Tho University 2019
+  (c) Minh-An Dao 2019
   version 1.00 - 02/10/2019
  --------------------------------------------------------------
  *
@@ -14,11 +14,13 @@ from Rasp_I2C import LCD_I2C
 LCD_ADDRESS = 0x27
 LCD_WIDTH = 20
 LCD_HEIGHT = 4
-LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
+LCD = None
 
 
 # ------------------------------ Basic functions ------------------------------
 def begin():
+    global LCD
+    LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
     LCD.begin()
     LCD.backlight()
     LCD.clear()
