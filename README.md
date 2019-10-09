@@ -6,6 +6,7 @@ Developed in Python combined with C/C++ on:
 
 Credited libraries:
  - Python3-fingerprint, (c) 2016 Bastian Raschke. Licensed under the German Free Software License
+ - Adafruit CircuitPython ADS1x15, (c) 2017 Carter Nelson for Adafruit Industries. Licensed under the MIT License.
  - Esp32 wifi manager, (c) 2017-2019, Tony Pottier. Licensed under the MIT License.
  - SpinKit, (c) 2015, Tobias Ahlin. Licensed under the MIT License.
  - jQuery, The jQuery Foundation. Licensed under the MIT License.
