@@ -10,6 +10,7 @@
 #include "Rasp_HC595.h"
 
 int main(void) {
+  delay(2000); //time for system to settle down, before working stablely!
   //printf("HC595 run!\n");
   HC595s_init();
   HC595s_initState();

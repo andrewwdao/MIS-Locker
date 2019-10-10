@@ -32,6 +32,7 @@
       <w>minh</w>
       <w>mssv</w>
       <w>nobacklight</w>
+      <w>ogino</w>
       <w>petter</w>
       <w>raschke</w>
       <w>returnhome</w>
@@ -41,7 +42,9 @@
       <w>setddramaddr</w>
       <w>smbus</w>
       <w>startcode</w>
+      <w>subpro</w>
       <w>uart</w>
+      <w>yasuhiro</w>
     </words>
   </dictionary>
 </component>
