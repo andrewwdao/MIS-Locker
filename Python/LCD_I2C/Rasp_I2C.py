@@ -1,7 +1,7 @@
 """------------------------------------------------------------*-
   LCD I2C python module for Raspberry Pi
   Tested on: Raspberry Pi 3 B+
-  (c) Can Tho University 2019
+  (c) Minh-An Dao 2019
   version 1.00 - 01/10/2019
  --------------------------------------------------------------
  * Credited tutorials and Libraries:
@@ -10,21 +10,13 @@
  * - LiquidCrystal_I2C library for Arduino:
     https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
  --------------------------------------------------------------"""
-import smbus
+from smbus2 import SMBus
 import time
 
 
 class LCD_I2C:
     # ---------------------------- Private Parameters:
     # -----Address and Screen parameter:
-    # _Addr = int()
-    # _cols = int()
-    # _rows = int()
-    # _chsize = int()
-    # _backlightval = int()
-    # _displayfunction = int()
-    # _displaycontrol = int()
-    # _displaymode = int()
     LCD_LINE1 = 0x80  # LCD RAM address for the 1st line (0x80|0x00)
     LCD_LINE2 = 0xC0  # LCD RAM address for the 2nd line (0x80|0x40)
     LCD_LINE3 = 0x94  # LCD RAM address for the 3rd line (0x80|0x14)
@@ -71,9 +63,6 @@ class LCD_I2C:
     PULSE = 0.000001  # 1us - Enable pulse must be >450ns
     DELAY = 0.0005  # 5ms
     WAIT = 0.002  # 2ms
-    # -----Open I2C interface:
-    # bus = smbus.SMBus(0)  # Rev 1 Pi uses 0
-    # bus = smbus.SMBus(1)  # Rev 2 Pi uses 1
 
     def __init__(self, lcd_addr=0x27, lcd_cols=20, lcd_rows=4, lcd_backlight=LCD_NOBACKLIGHT, char_size=LCD_5X8DOTS):
         self._Addr = lcd_addr
@@ -86,14 +75,13 @@ class LCD_I2C:
         self._displaymode = 0x00
         # -----Open I2C interface:
         # bus = smbus.SMBus(0)  # Rev 1 Pi uses 0
-        self.bus = smbus.SMBus(1)  # Rev 2 Pi uses 1
+        self.bus = SMBus(1)  # Rev 2 Pi uses 1
 
-    def begin(self):
         """
-        SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
-        according to datasheet, we need at least 40ms after power rises above 2.7V
-        before sending commands. Raspberry Pi can turn on way better 4.5V so we'll wait 50ms
-        """
+                SEE PAGE 45/46 FOR INITIALIZATION SPECIFICATION!
+                according to datasheet, we need at least 40ms after power rises above 2.7V
+                before sending commands. Raspberry Pi can turn on way better 4.5V so we'll wait 50ms
+                """
         time.sleep(self.DELAY * 100)  # 50ms
 
         # Now we pull both RS and R/W low to begin commands

@@ -21,7 +21,6 @@ LCD = None
 def begin():
     global LCD
     LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
-    LCD.begin()
     LCD.backlight()
     LCD.clear()
     LCD.setCursor(2, 0)  # row, column
