@@ -77,7 +77,7 @@ void HC595b_send(char firstByte, char midByte, char lastByte) { //send data to t
   digitalWrite(STCP_PIN_b, HIGH);//take the latch pin high so the LEDs will light up   
 }//end HC595b_send
 //--------------------------------
-void myShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
+void myShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val) //slower than normal shiftOut --> Good for Rasp!
 {
   uint8_t i;
   for (i = 0; i < 8; i++)  {
