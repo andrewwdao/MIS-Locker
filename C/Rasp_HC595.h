@@ -20,7 +20,7 @@
 #ifndef __RASP_HC595_H
 #define __RASP_HC595_H
 #include <stdio.h>
-//#include <stdlib.h>     /* atof */
+#include <stdlib.h>     /* atof */
 #include <wiringPi.h>
 #include <wiringShift.h>
 
@@ -31,6 +31,10 @@
 Initialize BOTH HC595 modules for 20 lockers
 */
 void HC595s_init();
+/**
+Set BOTH HC595 to its first state (all off)
+*/
+void HC595s_initState();
 /**
 Send data for the first HC595 module
 */

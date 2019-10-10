@@ -23,13 +23,13 @@
 
 // ------ Private constants -----------------------------------
 //First HC595 module:
-#define DS_PIN_1  	0 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
-#define STCP_PIN_1 	2 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
-#define SHCP_PIN_1 	3 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
+#define DS_PIN_a  	0 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
+#define STCP_PIN_a 	2 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
+#define SHCP_PIN_a 	3 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
 //Second HC595 module:
-#define DS_PIN_2  	1 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
-#define STCP_PIN_2 	4 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
-#define SHCP_PIN_2 	5 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
+#define DS_PIN_b  	1 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
+#define STCP_PIN_b 	4 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
+#define SHCP_PIN_b 	5 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
 
 #define BEGIN_STATE 0b00000000
 // ------ Private function prototypes -------------------------
@@ -47,33 +47,36 @@ void HC595s_init() {
 		return; 
 	}//end if
 	//set pins to output so you can control the shift register
-	pinMode(DS_PIN_1, OUTPUT);
-	pinMode(STCP_PIN_1, OUTPUT);
-	pinMode(SHCP_PIN_1, OUTPUT);
+	pinMode(DS_PIN_a, OUTPUT);
+	pinMode(STCP_PIN_a, OUTPUT);
+	pinMode(SHCP_PIN_a, OUTPUT);
   //set pins to output so you can control the shift register
-	pinMode(DS_PIN_2, OUTPUT);
-	pinMode(STCP_PIN_2, OUTPUT);
-	pinMode(SHCP_PIN_2, OUTPUT);
+	pinMode(DS_PIN_b, OUTPUT);
+	pinMode(STCP_PIN_b, OUTPUT);
+	pinMode(SHCP_PIN_b, OUTPUT);
+}//end HC595s_init
+//--------------------------------
+void HC595s_initState() {
   HC595a_send(BEGIN_STATE,BEGIN_STATE,BEGIN_STATE);
   HC595b_send(BEGIN_STATE,BEGIN_STATE,BEGIN_STATE);
 }//end HC595s_init
 //--------------------------------
 //data will flow as FIFO
-void HC595a_send(char lastByte, char midByte, char firstByte) { //send data to the first locker module
-  digitalWrite(STCP_PIN_1, LOW); // LATCH_PIN low, make sure the LEDs don't change while you're sending in bits
-  shiftOut(DS_PIN_1, SHCP_PIN_1, MSBFIRST, lastByte); //DATA to the last 74HC595 in the chain -dataPin - clockPin - order - data
-  shiftOut(DS_PIN_1, SHCP_PIN_1, MSBFIRST, midByte); //DATA to the next 74HC595 in the chain -dataPin - clockPin - order - data
-  shiftOut(DS_PIN_1, SHCP_PIN_1, MSBFIRST, firstByte); //DATA to the first 74HC595 in the chain -dataPin - clockPin - order - data
-  digitalWrite(STCP_PIN_1, HIGH);//take the latch pin high so the LEDs will light up   
+void HC595a_send(char firstByte, char midByte, char lastByte) { //send data to the first locker module
+  digitalWrite(STCP_PIN_a, LOW); // LATCH_PIN low, make sure the LEDs don't change while you're sending in bits
+  shiftOut(DS_PIN_a, SHCP_PIN_a, MSBFIRST, lastByte); //DATA to the last 74HC595 in the chain -dataPin - clockPin - order - data
+  shiftOut(DS_PIN_a, SHCP_PIN_a, MSBFIRST, midByte); //DATA to the next 74HC595 in the chain -dataPin - clockPin - order - data
+  shiftOut(DS_PIN_a, SHCP_PIN_a, MSBFIRST, firstByte); //DATA to the first 74HC595 in the chain -dataPin - clockPin - order - data
+  digitalWrite(STCP_PIN_a, HIGH);//take the latch pin high so the LEDs will light up   
 }//end HC595a_send
 //--------------------------------
 //data will flow as FIFO
-void HC595b_send(char lastByte, char midByte, char firstByte) { //send data to the second locker module
-  digitalWrite(STCP_PIN_2, LOW); // LATCH_PIN low, make sure the LEDs don't change while you're sending in bits
-  shiftOut(DS_PIN_2, SHCP_PIN_2, MSBFIRST, lastByte); //DATA to the last 74HC595 in the chain -dataPin - clockPin - order - data
-  shiftOut(DS_PIN_2, SHCP_PIN_2, MSBFIRST, midByte); //DATA to the next 74HC595 in the chain -dataPin - clockPin - order - data
-  shiftOut(DS_PIN_2, SHCP_PIN_2, MSBFIRST, firstByte); //DATA to the first 74HC595 in the chain -dataPin - clockPin - order - data
-  digitalWrite(STCP_PIN_2, HIGH);//take the latch pin high so the LEDs will light up   
+void HC595b_send(char firstByte, char midByte, char lastByte) { //send data to the second locker module
+  digitalWrite(STCP_PIN_b, LOW); // LATCH_PIN low, make sure the LEDs don't change while you're sending in bits
+  shiftOut(DS_PIN_b, SHCP_PIN_b, MSBFIRST, lastByte); //DATA to the last 74HC595 in the chain -dataPin - clockPin - order - data
+  shiftOut(DS_PIN_b, SHCP_PIN_b, MSBFIRST, midByte); //DATA to the next 74HC595 in the chain -dataPin - clockPin - order - data
+  shiftOut(DS_PIN_b, SHCP_PIN_b, MSBFIRST, firstByte); //DATA to the first 74HC595 in the chain -dataPin - clockPin - order - data
+  digitalWrite(STCP_PIN_b, HIGH);//take the latch pin high so the LEDs will light up   
 }//end HC595b_send
 //--------------------------------
 #endif //__RASP_STEPPER_CPP
