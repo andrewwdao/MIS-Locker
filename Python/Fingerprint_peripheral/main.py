@@ -1,18 +1,35 @@
+"""------------------------------------------------------------*-
+  Peripheral controller for Raspberry Pi
+  Manipulate 6 IC 74HC595 using C and Subprocess module
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (C) Yasuhiro Ogino 2019
+  version 1.00 - 10/10/2019
+ --------------------------------------------------------------
+ *
+ *
+ --------------------------------------------------------------"""
+import peripheral as per
 import fingerPrint
+import time
 
-PI_DIR = "./peripheral_init"
- = "./peripheral_main " + "0" + " " + "0" + " " + "0" + " " + "0" + " " + "0" + " " + "0"
-pm2_dir = "./peripheral_main " + "12" + " " + "34" + " " + "56" + " " + "12" + " " + "34" + " " + "56"
 
-fingerPrint.begin()
-fingerPrint.activate()
-try:
+def main():
+    per.init()
+    fingerPrint.begin()
+    fingerPrint.activate()
     while True:
-        fingerPrint.check()
-    #  print(fingerPrint.enroll())
+        fingerBuffer = fingerPrint.check()
+        if fingerBuffer[0] == "MATCHED":
+            if fingerBuffer[1] == 0:
+                per.lock01(per.ON)
+            if fingerBuffer[1] == 2:
+                per.lock01(per.OFF)
 
-    # print(fingerPrint.check())
 
-    # print(fingerPrint.delete(5))
-except KeyboardInterrupt:
-    pass
+if __name__ == '__main__':
+
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass

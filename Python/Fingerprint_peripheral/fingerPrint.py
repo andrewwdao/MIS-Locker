@@ -149,3 +149,4 @@ def check():
     if START_CHECKING:
         START_CHECKING = False
         return scan()
+    return ["NO DATA", 0]
