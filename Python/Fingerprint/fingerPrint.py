@@ -9,6 +9,7 @@
  *
  --------------------------------------------------------------"""
 from pyfingerprint.pyfingerprint import PyFingerprint
+import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
@@ -17,7 +18,10 @@ FINGER_PORT = '/dev/ttyUSB0'
 FINGER_BAUDRATE = 57600
 FINGER_ADDRESS = 0xFFFFFFFF
 FINGER_PASSWORD = 0x00000000
-WAIT_TIME = 5 # waiting time between first and second scan of enroll func
+TOUCH_PIN = 10  # BCM Mode
+WAIT_TIME = 5  # waiting time between first and second scan of enroll func
+DEBOUNCE = 10
+START_CHECKING = False
 Finger = None
 
 
@@ -25,6 +29,10 @@ Finger = None
 def begin():  # Tries to initialize the sensor
     global Finger
     try:
+        # pulled up to avoid false detection.
+        # So we'll be setting up falling edge detection
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         Finger = PyFingerprint(FINGER_PORT, FINGER_BAUDRATE, FINGER_ADDRESS, FINGER_PASSWORD)
         if not Finger.verifyPassword():
             raise ValueError('Password for the Fingerprint module is wrong!')
@@ -93,7 +101,7 @@ def delete(pos):  # Delete the template of the finger
         return False
 
 
-def check():  # Search for the incoming finger in database
+def scan():  # Search for the incoming finger in database
     try:
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
@@ -109,13 +117,35 @@ def check():  # Search for the incoming finger in database
 
         if positionNumber == -1:
             print('No match found!')
+            print(["NOT MATCHED", 0])
             return ["NOT MATCHED", 0]
         else:
             print('Template found at #' + str(positionNumber))
             print('Accuracy: ' + str(accuracyScore))
+            print(["MATCHED", positionNumber])
             return ["MATCHED", positionNumber]
     except Exception as e:
         print('Operation failed!')
         print('Exception message: ' + str(e))
+        print(["ERROR", e])
         return ["ERROR", e]
 
+
+def touchISR(channel):
+    global START_CHECKING
+    START_CHECKING = True
+
+
+def activate():
+    GPIO.add_event_detect(TOUCH_PIN, GPIO.FALLING, callback=touchISR, bouncetime=DEBOUNCE)
+
+
+def deactivate():
+    GPIO.remove_event_detect(TOUCH_PIN)
+
+
+def check():
+    global START_CHECKING
+    if START_CHECKING:
+        START_CHECKING = False
+        return scan()
