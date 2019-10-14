@@ -15,12 +15,12 @@ import time
 def main():
     database = Database()
 
-#    database.delAllAdmin()
-#    database.delAllMember()
+    database.delAllAdmin()
+    database.delAllMember()
 
-#    database.delAdmin(input('Put your admin RFID here to delete: '))
+    database.delAdmin(input('Put your admin RFID here to delete: '))
 
-#    database.delMember(input('Put your member MSSV here to delete: '))
+    database.delMember(input('Put your member MSSV here to delete: '))
 
     database.addAdmin(input('Put your admin RFID here: '))
 
@@ -47,6 +47,8 @@ def main():
         data = database.getInfo(fingerTemp[1])
         print('Name: '+data[0])
         print('MSSV: '+data[1])
+
+    database.export(True)
 
 
 if __name__ == '__main__':

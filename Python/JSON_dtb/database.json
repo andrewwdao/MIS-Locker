@@ -1,1 +1,27 @@
-{"admin": [], "member": []}
+{
+    "admin": [
+        {
+            "rfid": "MINHAN7497"
+        }
+    ],
+    "member": [
+        {
+            "name": "Dao Minh An",
+            "mssv": "B1509360",
+            "rfid": "RANDOM12345",
+            "fing": 0
+        },
+        {
+            "name": "Nguyen Minh Luan",
+            "mssv": "B1609654",
+            "rfid": "HIHI098321",
+            "fing": 1
+        },
+        {
+            "name": "Phan Nhat Khoa",
+            "mssv": "B1509386",
+            "rfid": "RANDOM0987",
+            "fing": 2
+        }
+    ]
+}
