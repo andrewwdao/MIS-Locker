@@ -1,0 +1,60 @@
+body {
+    background: url("../img/ctu.png"); /*background picture */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: #000;
+    font-family: helvetica;
+
+}
+img {
+    margin: 15px 0px 0px 0px;
+    background:#fff;
+    border: 3px #000;
+    border-radius: 180px;
+}
+h1 {
+    display: block;
+    font-size:45px;
+}
+p {
+    font-size:22px;
+}
+input {
+    border: rgba(0,0,0,0);
+    font-size: 30px;
+}
+#realInfo {
+    margin: 10px;
+}
+input[type="text"] {
+    padding: 20px 30px 20px 10px;
+    margin: 10px;
+}
+input[type="button"] {
+    padding:20px 80px;
+    background: #888;
+    color: #fff;
+    margin: 10px;
+}
+#pwrdby {
+    font-size:10px;
+}
+#credits {
+    text-align: left;
+    /* display: none; */
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+	outline: none;
+}
+@media (max-width: 500px) {
+    h1 {
+		font-size:36px;
+    }
+}
