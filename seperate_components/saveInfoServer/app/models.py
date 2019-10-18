@@ -1,0 +1,11 @@
+from app import db
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), index=True, unique=True)
+    mssv = db.Column(db.String(8), index=True, unique=True)
+    rfid = db.Column(db.String(10), index=True, unique=True)
+    fing = db.Column(db.Integer, index=True, unique=True)
+
+    def __repr__(self):
+        return '<User {}>'.format(self.mssv)
