@@ -14,7 +14,7 @@ def index():
             newUser = User(name=form.name.data, mssv=form.mssv.data)
             db.session.add(newUser)
             db.session.commit()
-            flash('Information received:\r\nName: {}\r\nID (MSSV): {}'.format(
+            flash('Information received:\n Name: {}\n - ID: {}'.format(
                    form.name.data, form.mssv.data))
         return redirect(url_for('index'))
     templateData = {
