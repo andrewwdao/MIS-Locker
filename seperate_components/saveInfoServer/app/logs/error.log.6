@@ -1,0 +1,107 @@
+2019-10-18 16:00:44,529 ERROR: Exception on / [POST] [in e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\routes.py", line 25, in index
+    return render_template('index.html', **templateData)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\templating.py", line 138, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\loaders.py", line 125, in load
+    code = environment.compile(source, name, filename)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 591, in compile
+    self.handle_exception(exc_info, source_hint=source_hint)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\index.html", line 34, in template
+    <p>{{ render_field(form.save, class="btn-primary" }}</p>
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\environment.py", line 497, in _parse
+    return Parser(self, source, name, encode_filename(filename)).parse()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 901, in parse
+    result = nodes.Template(self.subparse(), lineno=1)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 883, in subparse
+    rv = self.parse_statement()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 130, in parse_statement
+    return getattr(self, 'parse_' + self.stream.current.value)()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 268, in parse_block
+    node.body = self.parse_statements(('name:endblock',), drop_needle=True)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 165, in parse_statements
+    result = self.subparse(end_tokens)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 875, in subparse
+    add_data(self.parse_tuple(with_condexpr=True))
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 620, in parse_tuple
+    args.append(parse())
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 432, in parse_expression
+    return self.parse_condexpr()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 437, in parse_condexpr
+    expr1 = self.parse_or()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 450, in parse_or
+    left = self.parse_and()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 459, in parse_and
+    left = self.parse_not()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 470, in parse_not
+    return self.parse_compare()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 474, in parse_compare
+    expr = self.parse_math1()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 496, in parse_math1
+    left = self.parse_concat()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 507, in parse_concat
+    args = [self.parse_math2()]
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 517, in parse_math2
+    left = self.parse_pow()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 528, in parse_pow
+    left = self.parse_unary()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 547, in parse_unary
+    node = self.parse_postfix(node)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 676, in parse_postfix
+    node = self.parse_call(node)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 785, in parse_call
+    value = self.parse_expression()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 432, in parse_expression
+    return self.parse_condexpr()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 437, in parse_condexpr
+    expr1 = self.parse_or()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 450, in parse_or
+    left = self.parse_and()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 459, in parse_and
+    left = self.parse_not()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 470, in parse_not
+    return self.parse_compare()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 474, in parse_compare
+    expr = self.parse_math1()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 496, in parse_math1
+    left = self.parse_concat()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 507, in parse_concat
+    args = [self.parse_math2()]
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 517, in parse_math2
+    left = self.parse_pow()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 528, in parse_pow
+    left = self.parse_unary()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 546, in parse_unary
+    node = self.parse_primary()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\parser.py", line 564, in parse_primary
+    next(self.stream)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\lexer.py", line 359, in __next__
+    self.current = next(self._iter)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\lexer.py", line 562, in wrap
+    for lineno, token, value in stream:
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\jinja2\lexer.py", line 690, in tokeniter
+    filename)
+jinja2.exceptions.TemplateSyntaxError: unexpected '}', expected ')'

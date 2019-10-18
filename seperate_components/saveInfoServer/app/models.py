@@ -1,3 +1,4 @@
+from hashlib import md5
 from app import db
 
 class User(db.Model):

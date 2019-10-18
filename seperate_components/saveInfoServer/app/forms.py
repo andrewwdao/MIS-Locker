@@ -15,3 +15,4 @@ class InfoForm(FlaskForm):
         user = User.query.filter_by(mssv=mssv.data).first()
         if user is not None:
             raise ValidationError('This Student ID existed!')
+        

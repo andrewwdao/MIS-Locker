@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link rel="stylesheet" href="../static/style/style.css">
-    <link rel="stylesheet" href="../static/style/normalize.css">
-    <!-- <script src="../static/js/code.js"></script> -->
-    <title>{{server_title}}</title>
-  </head>
-  <body>
-    {% block content %}{% endblock %}
-  </body>
-</html>
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+  <title>{{server_title}}</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}

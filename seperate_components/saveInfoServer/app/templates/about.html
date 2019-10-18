@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
     <div id="credits">
       <header>
         <h1>About</h1>
@@ -18,10 +18,7 @@
          - cJSON, &copy; 2009-2017, Dave Gamble and cJSON contributors.<br />
          All Licensed under the MIT License.
         </p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-block" role="button">Ok</a>
       </section>
-      <div class="button">
-        <input id="but.ok" type="button" value="OK" class="ctr" />
-      </div>
     </div>
 {% endblock %}
-

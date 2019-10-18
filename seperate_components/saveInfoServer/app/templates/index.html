@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "_formhelper.html" import render_button %}
 
-{% block content %}
+{% block app_content %}
     <div id="app">
       <div id="avatar">
         <img src="../static/img/MIS.png"> <!-- logo for the system -->
@@ -18,36 +20,23 @@
       {% endif %}
       {% endwith %}
       <div id="userInfos">
-        <form action="" method="post" novalidate>
+        <!-- {{wtf.quick_form(form)}} -->
+        <form action="" method="post" class="form" role="form">
           {{ form.hidden_tag() }}
           <section id="realInfo">
-            <p>
-              <!-- {{ form.name.label }}<br> -->
-              {{ form.name(size=32,placeholder='Your full name') }}
-              {% for error in form.name.errors %}
-              <br /><span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-            </p>
-            <p>
-              <!-- {{ form.mssv.label }}<br> -->
-              {{ form.mssv(size=32,placeholder='Your ID (MSSV)') }}
-              {% for error in form.mssv.errors %}
-              <br /><span style="color: red;">[{{ error }}]</span>
-              {% endfor %}
-            </p>
-            <!-- <input id="but.name" type="text" placeholder="Your full Name">
-            <input id="but.mssv" type="text" placeholder="Your ID (MSSV)">    -->
+            <d1>
+              {{ wtf.form_field(form.name, class="form-control", size=32, placeholder='Your full name') }}
+              {{ wtf.form_field(form.mssv, class="form-control", size=32, placeholder='Your ID (MSSV)') }}
+            </d1>
           </section>
           <div class="button">
-            <p>{{ form.save() }}</p>
-            <!-- <input id="but.save"   type="button" value="Save" data-connect="manual" />
-				    <input id="but.cancel" type="button" value="Cancel"/> -->
+            <p>{{ render_button(form.save, class="btn btn-primary btn-block") }}</p>
           </div>
         </form>
       </div>
       <div id="pwrdby">
         <strong><br /><a id="acredits" href="{{url_for('about')}}"> &copy; 2019 Minh-An Dao.</a></strong><br />
-        <strong>Maker Innovation Space Can Tho</strong>
+        <strong>Maker Innovation Space, Can Tho University</strong>
       </div>
     </div>
 {% endblock %}
