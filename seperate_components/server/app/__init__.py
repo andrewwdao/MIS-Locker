@@ -17,19 +17,19 @@ from flask_bootstrap import Bootstrap
 import logging
 import os
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-bootstrap = Bootstrap(app)
+saveInfo_app = Flask(__name__)
+saveInfo_app.config.from_object(Config)
+db = SQLAlchemy(saveInfo_app)
+migrate = Migrate(saveInfo_app, db)
+bootstrap = Bootstrap(saveInfo_app)
 
 from app.errors import bp as errors_bp
-app.register_blueprint(errors_bp)
+saveInfo_app.register_blueprint(errors_bp)
 
 from app.save_info import bp as save_info_bp
-app.register_blueprint(save_info_bp)
+saveInfo_app.register_blueprint(save_info_bp)
 
-if not app.debug:
+if not saveInfo_app.debug:
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/error.log', maxBytes=10240,
@@ -37,9 +37,9 @@ if not app.debug:
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
     file_handler.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
-    app.logger.addHandler(file_handler)
+    saveInfo_app.logger.addHandler(file_handler)
 
-    app.logger.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
-    app.logger.info('System startup')
+    saveInfo_app.logger.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
+    saveInfo_app.logger.info('System startup')
 
 from app import models

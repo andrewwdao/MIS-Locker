@@ -8,10 +8,9 @@
  *  Server created for the purpose of saving user information
  *
  --------------------------------------------------------------"""
-from app import app
+from app import saveInfo_app, db
+from app.models import User
 
-
-if __name__ == "__main__":
-  # use this for raspberry pi
-  # app.run(host='0.0.0.0', port=7497, debug=True)
-  app.run(host='127.0.0.3', port=7497, debug=False)
+@saveInfo_app.shell_context_processor
+def make_shell_context():
+  return {'db':db,'User':User}

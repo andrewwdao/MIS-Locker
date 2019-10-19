@@ -9,7 +9,7 @@
  *
  --------------------------------------------------------------"""
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db
+from app import saveInfo_app, db
 from app.save_info.forms import InfoForm
 from app.models import User
 
@@ -20,8 +20,8 @@ def shutdownServer():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@saveInfo_app.route('/', methods=['GET', 'POST'])
+@saveInfo_app.route('/index', methods=['GET', 'POST'])
 def index():
     form = InfoForm()
     if form.validate_on_submit():
@@ -39,7 +39,7 @@ def index():
     }
     return render_template('save_info/index.html', **templateData)
 
-@app.route('/gotinfo', methods=['GET', 'POST'])
+@saveInfo_app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
     user = User.query.order_by(User.id.desc()).first()
     templateData = {
@@ -53,7 +53,7 @@ def gotInfo():
     shutdownServer()
     return render_template('save_info/gotInfo.html', **templateData)
 
-@app.route('/shutdown')
+@saveInfo_app.route('/shutdown')
 def shutdown():
     templateData = {
         'server_title': 'MIS Locker',
@@ -64,6 +64,6 @@ def shutdown():
     shutdownServer()
     return render_template('shutdown.html', **templateData)
 
-@app.route('/about')
+@saveInfo_app.route('/about')
 def about():
     return render_template('about.html')
