@@ -1,5 +1,5 @@
 """------------------------------------------------------------*-
-  Config module for Flask server
+  Config module for Flask server and database
   Tested on: Raspberry Pi 3 B+
   (c) Minh-An Dao 2019
   (c) Miguel Grinberg 2018
