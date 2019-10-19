@@ -32,8 +32,9 @@ def index():
             db.session.commit()
         return redirect(url_for('gotInfo'))
     templateData = {
-        'server_title': 'MIS Locker System',
-        'server_func': 'Add Guest ID',
+        'server_title': 'MIS Locker',
+        'main_title': 'MIS Locker System',
+        'main_func': 'Add Guest ID',
         'form': form
     }
     return render_template('index.html', **templateData)
@@ -42,8 +43,9 @@ def index():
 def gotInfo():
     user = User.query.order_by(User.id.desc()).first()
     templateData = {
-        'server_title': 'MIS Locker System',
-        'server_func': 'Information received',
+        'server_title': 'MIS Locker',
+        'main_title': 'MIS Locker System',
+        'main_func': 'Information received',
         'user_name': user.name,
         'user_id': user.mssv
     }
@@ -54,8 +56,9 @@ def gotInfo():
 @app.route('/shutdown')
 def shutdown():
     templateData = {
-        'server_title': 'MIS Locker System',
-        'server_func': 'Service closing...',
+        'server_title': 'MIS Locker',
+        'main_title': 'MIS Locker System',
+        'main_func': 'Service closing...',
     }
     # Start shutting down server
     shutdownServer()
@@ -64,7 +67,3 @@ def shutdown():
 @app.route('/about')
 def about():
     return render_template('about.html')
-
-
-# if __name__ == "__main__":
-# app.run(host='0.0.0.0', port=7497, debug=True)
