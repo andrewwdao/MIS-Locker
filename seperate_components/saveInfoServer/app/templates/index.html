@@ -23,15 +23,11 @@
         <!-- {{wtf.quick_form(form)}} -->
         <form action="" method="post" class="form" role="form">
           {{ form.hidden_tag() }}
-          <section id="realInfo">
-            <d1>
-              {{ wtf.form_field(form.name, class="form-control", size=32, placeholder='Your full name') }}
-              {{ wtf.form_field(form.mssv, class="form-control", size=32, placeholder='Your ID (MSSV)') }}
-            </d1>
-          </section>
-          <div class="button">
-            <p>{{ render_button(form.save, class="btn btn-primary btn-block") }}</p>
-          </div>
+          <d1>
+            {{ wtf.form_field(form.name, class="form-control", size=32, placeholder='Your full name') }}
+            {{ wtf.form_field(form.mssv, class="form-control", size=32, placeholder='Your ID (MSSV)') }}
+          </d1>
+          <p>{{ render_button(form.save, class="btn btn-primary btn-block") }}</p>
         </form>
       </div>
       <div id="pwrdby">

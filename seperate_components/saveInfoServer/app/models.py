@@ -1,3 +1,13 @@
+"""------------------------------------------------------------*-
+  Model module for Flask server
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.00 - 19/10/2019
+ --------------------------------------------------------------
+ * Defines database columns and tables
+ *
+ --------------------------------------------------------------"""
 from hashlib import md5
 from app import db
 

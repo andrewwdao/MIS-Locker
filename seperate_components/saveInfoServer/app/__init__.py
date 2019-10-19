@@ -1,3 +1,13 @@
+"""------------------------------------------------------------*-
+  Init module for Flask server
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.00 - 19/10/2019
+ --------------------------------------------------------------
+ * Make the server a fully functional package
+ *
+ --------------------------------------------------------------"""
 from flask import Flask, url_for
 from config import Config
 from flask_sqlalchemy import SQLAlchemy

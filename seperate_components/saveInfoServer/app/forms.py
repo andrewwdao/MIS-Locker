@@ -1,3 +1,13 @@
+"""------------------------------------------------------------*-
+  Form module for Flask server
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.00 - 19/10/2019
+ --------------------------------------------------------------
+ *  Define the form for flask server to collect.
+ *
+ --------------------------------------------------------------"""
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import ValidationError, DataRequired
@@ -14,5 +24,5 @@ class InfoForm(FlaskForm):
             raise ValidationError('Wrong format. Try again.')
         user = User.query.filter_by(mssv=mssv.data).first()
         if user is not None:
-            raise ValidationError('This Student ID existed!')
+            raise ValidationError('This ID existed!')
         

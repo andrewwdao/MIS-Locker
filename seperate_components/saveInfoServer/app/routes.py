@@ -1,3 +1,13 @@
+"""------------------------------------------------------------*-
+  Route module for the saveInfo Server.
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.30 - 19/10/2019
+ --------------------------------------------------------------
+ *  html routes for functions of the server
+ *
+ --------------------------------------------------------------"""
 from flask import render_template, flash, redirect, url_for
 from app import app, db
 from app.forms import InfoForm

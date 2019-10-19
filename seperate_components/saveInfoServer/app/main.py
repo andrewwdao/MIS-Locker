@@ -1,12 +1,13 @@
-"""
----------------------------------------------------------------
-  Main Python file.
-  Server created for the purpose of saving user information
-  Raspberry Pi B3+
-  (c) Minh-An Dao - 2019
-  version 1.00 - 22/09/2019
----------------------------------------------------------------
-"""
+"""------------------------------------------------------------*-
+  Main Python file for the saveInfo Server.
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.30 - 19/10/2019
+ --------------------------------------------------------------
+ *  Server created for the purpose of saving user information
+ *
+ --------------------------------------------------------------"""
 from app import app, db
 from app.models import User
 

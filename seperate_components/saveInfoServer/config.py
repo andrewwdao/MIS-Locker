@@ -1,3 +1,13 @@
+"""------------------------------------------------------------*-
+  Config module for Flask server
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019
+  (c) Miguel Grinberg 2018
+  version 1.00 - 19/10/2019
+ --------------------------------------------------------------
+ *
+ *
+ --------------------------------------------------------------"""
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
