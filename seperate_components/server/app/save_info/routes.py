@@ -13,6 +13,7 @@ from app import saveInfo_app, db
 from app.save_info.forms import InfoForm
 from app.models import User
 
+
 def shutdownServer():
     # Start shutting down server
     func = request.environ.get('werkzeug.server.shutdown')
@@ -20,15 +21,17 @@ def shutdownServer():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
+
 @saveInfo_app.route('/', methods=['GET', 'POST'])
 @saveInfo_app.route('/index', methods=['GET', 'POST'])
 def index():
     form = InfoForm()
     if form.validate_on_submit():
         user = User.query.filter_by(mssv=form.mssv.data).first()
-        if user is None :
-            newUser = User(name=form.name.data, mssv=form.mssv.data)
-            db.session.add(newUser)
+        if user is None:
+            newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+            newUser.name = form.name.data
+            newUser.mssv = form.mssv.data
             db.session.commit()
         return redirect(url_for('gotInfo'))
     templateData = {
@@ -39,9 +42,10 @@ def index():
     }
     return render_template('save_info/index.html', **templateData)
 
+
 @saveInfo_app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
-    user = User.query.order_by(User.id.desc()).first()
+    user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
     templateData = {
         'server_title': 'MIS Locker',
         'main_title': 'MIS Locker System',
@@ -53,6 +57,7 @@ def gotInfo():
     shutdownServer()
     return render_template('save_info/gotInfo.html', **templateData)
 
+
 @saveInfo_app.route('/shutdown')
 def shutdown():
     templateData = {
@@ -63,6 +68,7 @@ def shutdown():
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)
+
 
 @saveInfo_app.route('/about')
 def about():
