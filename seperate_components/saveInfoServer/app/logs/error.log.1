@@ -1,0 +1,105 @@
+2019-10-19 11:47:13,287 ERROR: Exception on /gotinfo [GET] [in e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 776, in visit_textual_label_reference
+    col = with_cols[element.element]
+KeyError: '-id'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\routes.py", line 39, in gotInfo
+    user = User.query.order_by('-id').first()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3240, in first
+    ret = list(self[0:1])
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3018, in __getitem__
+    return list(res)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3342, in __iter__
+    return self._execute_and_instances(context)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\orm\query.py", line 3367, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\engine\base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1098, in _execute_clauseelement
+    else None,
+  File "<string>", line 1, in <lambda>
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 462, in compile
+    return self._compiler(dialect, bind=bind, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 468, in _compiler
+    return dialect.statement_compiler(dialect, self, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 571, in __init__
+    Compiled.__init__(self, dialect, statement, **kwargs)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 319, in __init__
+    self.string = self.process(self.statement, **compile_kwargs)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 350, in process
+    return obj._compiler_dispatch(self, **kwargs)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 92, in _compiler_dispatch
+    return meth(self, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 2139, in visit_select
+    text, select, inner_columns, froms, byfrom, kwargs
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 2251, in _compose_select_body
+    text += self.order_by_clause(select, **kwargs)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 2310, in order_by_clause
+    order_by = select._order_by_clause._compiler_dispatch(self, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 92, in _compiler_dispatch
+    return meth(self, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 982, in visit_clauselist
+    c._compiler_dispatch(self, **kw) for c in clauselist.clauses
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 980, in <genexpr>
+    s
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 982, in <genexpr>
+    c._compiler_dispatch(self, **kw) for c in clauselist.clauses
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\visitors.py", line 92, in _compiler_dispatch
+    return meth(self, **kw)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\compiler.py", line 781, in visit_textual_label_reference
+    "Can't resolve label reference for ORDER BY / GROUP BY.",
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 4563, in _no_text_coercion
+    "extra": "%s " % extra if extra else "",
+sqlalchemy.exc.CompileError: Can't resolve label reference for ORDER BY / GROUP BY. Textual SQL expression '-id' should be explicitly declared as text('-id')
+2019-10-19 11:48:36,580 ERROR: Exception on /gotinfo [GET] [in e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\routes.py", line 39, in gotInfo
+    user = User.query.order_by(text('-id')).first()
+NameError: name 'text' is not defined
+2019-10-19 11:50:12,676 ERROR: Exception on /gotinfo [GET] [in e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "e:\google_drive\3.projects\0.luan_van\embedded_code\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\routes.py", line 43, in gotInfo
+    'user_name': user.name.data,
+AttributeError: 'str' object has no attribute 'data'

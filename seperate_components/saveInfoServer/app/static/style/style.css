@@ -22,7 +22,9 @@ h1 {
 p {
     font-size:22px;
 }
-
+#shutdown {
+    font-size:18px;
+}
 #pwrdby {
     font-size:10px;
 }

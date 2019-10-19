@@ -7,20 +7,15 @@
       <div id="avatar">
         <img src="../static/img/MIS.png"> <!-- logo for the system -->
         <h1>{{server_title}}</h1>
-        <p>{{server_func}}</p>
+        <p>{{server_func}}<br /></p>
       </div>
       <hr>
-      <div id="userInfos">
-        <!-- {{wtf.quick_form(form)}} -->
-        <form action="" method="post" class="form" role="form">
-          {{ form.hidden_tag() }}
-          <d1>
-            {{ wtf.form_field(form.name, class="form-control", size=32, placeholder='Your full name') }}
-            {{ wtf.form_field(form.mssv, class="form-control", size=32, placeholder='Your ID (MSSV)') }}
-          </d1>
-          <p>{{ render_button(form.save, class="btn btn-primary btn-block") }}</p>
-        </form>
-      </div>
+      <p>
+        Name: {{user_name}}<br />
+        ID: {{user_id}}<br />
+      </p>
+      <hr>
+      <p id ="shutdown">Service closing now...<br /></p>
       <div id="pwrdby">
         <strong><br /><a id="acredits" href="{{url_for('about')}}"> &copy; 2019 Minh-An Dao.</a></strong><br />
         <strong>Maker Innovation Space, Can Tho University</strong>
