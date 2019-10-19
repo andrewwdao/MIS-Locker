@@ -10,7 +10,7 @@
  --------------------------------------------------------------"""
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import InfoForm
+from app.save_info.forms import InfoForm
 from app.models import User
 
 def shutdownServer():
@@ -37,7 +37,7 @@ def index():
         'main_func': 'Add Guest ID',
         'form': form
     }
-    return render_template('index.html', **templateData)
+    return render_template('save_info/index.html', **templateData)
 
 @app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
@@ -51,7 +51,7 @@ def gotInfo():
     }
     # Start shutting down server
     shutdownServer()
-    return render_template('gotInfo.html', **templateData)
+    return render_template('save_info/gotInfo.html', **templateData)
 
 @app.route('/shutdown')
 def shutdown():

@@ -23,6 +23,12 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+from app.save_info import bp as save_info_bp
+app.register_blueprint(save_info_bp)
+
 if not app.debug:
     if not os.path.exists('logs'):
         os.mkdir('logs')
@@ -36,4 +42,4 @@ if not app.debug:
     app.logger.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
     app.logger.info('System startup')
 
-from app import routes, models, errors
+from app import models

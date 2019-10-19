@@ -1,0 +1,98 @@
+2019-10-19 14:18:04,156 ERROR: Exception on /index [GET] [in E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\save_info\routes.py", line 40, in index
+    return render_template('index.html', **templateData)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\templating.py", line 138, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\templating.py", line 60, in get_source
+    return self._get_source_fast(environment, template)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\templating.py", line 89, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index.html
+2019-10-19 14:18:04,468 ERROR: Exception on /favicon.ico [GET] [in E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1925, in dispatch_request
+    self.raise_routing_exception(req)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1907, in raise_routing_exception
+    raise request.routing_exception
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\ctx.py", line 350, in match_request
+    result = self.url_adapter.match(return_rule=True)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\werkzeug\routing.py", line 1799, in match
+    raise NotFound()
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1815, in handle_user_exception
+    return self.handle_http_exception(e)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 1743, in handle_http_exception
+    return handler(e)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\errors\handlers.py", line 17, in not_found_error
+    return render_template('errors/404.html'), 404
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\templating.py", line 140, in render_template
+    ctx.app,
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\templating.py", line 120, in _render
+    rv = template.render(context)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\asyncsupport.py", line 76, in render
+    return original_render(self, *args, **kwargs)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 1008, in render
+    return self.environment.handle_exception(exc_info, True)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\errors\404.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\environment.py", line 1005, in render
+    return concat(self.root_render_func(self.new_context(vars)))
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\errors\404.html", line 14, in root
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\base.html", line 14, in root
+    {{server_title}}
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 10, in root
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block_doc
+    {% block body -%}
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 39, in block_html
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 92, in block_body
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\base.html", line 45, in block_content
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\seperate_components\saveInfoServer\app\templates\errors\404.html", line 23, in block_app_content
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\jinja2\runtime.py", line 262, in call
+    return __obj(*args, **kwargs)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\app.py", line 2215, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\flask\helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "E:\Google_Drive\3.Projects\0.LUAN_VAN\Embedded_Code\venv\lib\site-packages\werkzeug\routing.py", line 2020, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'save_info.index'. Did you mean 'index' instead?
