@@ -19,6 +19,7 @@
             {{ wtf.form_field(form.mssv, class="form-control", size=32, placeholder='Your ID (MSSV)') }}
           </d1>
           <p>{{ render_button(form.save, class="btn btn-primary btn-block") }}</p>
+          <a href="{{ url_for('shutdown') }}" class="btn btn-primary btn-block" role="button">Close</a>
         </form>
       </div>
       <div id="pwrdby">

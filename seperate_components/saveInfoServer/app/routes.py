@@ -13,6 +13,12 @@ from app import app, db
 from app.forms import InfoForm
 from app.models import User
 
+def shutdownServer():
+    # Start shutting down server
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -42,11 +48,18 @@ def gotInfo():
         'user_id': user.mssv
     }
     # Start shutting down server
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
+    shutdownServer()
     return render_template('gotInfo.html', **templateData)
+
+@app.route('/shutdown')
+def shutdown():
+    templateData = {
+        'server_title': 'MIS Locker System',
+        'server_func': 'Service closing...',
+    }
+    # Start shutting down server
+    shutdownServer()
+    return render_template('shutdown.html', **templateData)
 
 @app.route('/about')
 def about():
