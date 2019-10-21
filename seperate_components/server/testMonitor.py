@@ -18,7 +18,7 @@ p = subprocess.Popen([COMPLIER, TARGET], shell=False, stdout=subprocess.PIPE)
 while True:
     # print ("Looping")
     line = p.stdout.readline()
-    if line == "save info done":
+    if line.strip() == "save info done":
         print("success!")
         exit()
     sys.stdout.flush()
