@@ -11,9 +11,10 @@
 import subprocess
 import sys
 
-dir = 'python3 saveInfo.py'
+COMPLIER = 'python3'
+TARGET = 'saveInfo.py'
 
-p = subprocess.Popen([dir], shell=False, stdout=subprocess.PIPE)
+p = subprocess.Popen([COMPLIER, TARGET], shell=False, stdout=subprocess.PIPE)
 while True:
     # print ("Looping")
     line = p.stdout.readline()
