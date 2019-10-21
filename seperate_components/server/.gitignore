@@ -66,7 +66,7 @@ tools/mkspiffs/mkspiffs
 tools/mkspiffs/mkspiffs.exe
 .DS_Store
 
-*.DB
+#*.DB
 */ipch
 *.DB-shm
 *.DB-wal
