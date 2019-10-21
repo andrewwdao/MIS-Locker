@@ -11,7 +11,7 @@
 import subprocess
 import sys
 
-dir = 'python saveInfo.py'
+dir = 'python3 saveInfo.py'
 
 p = subprocess.Popen([dir], shell=False, stdout=subprocess.PIPE)
 while True:
