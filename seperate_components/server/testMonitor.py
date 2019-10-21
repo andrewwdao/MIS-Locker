@@ -20,5 +20,5 @@ while True:
     line = p.stdout.readline()
     if line == "save info done":
         print("success!")
+        exit()
     sys.stdout.flush()
-  
