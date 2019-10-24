@@ -40,8 +40,8 @@ class Gwiot_7304D2:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(DATA_0, GPIO.IN)  # auto pull up already by the weigang
-        GPIO.setup(DATA_1, GPIO.IN)  # auto pull up already by the weigang
+        GPIO.setup(DATA_0, GPIO.IN, pull_up_down=GPIO.PUD_OFF)  # auto pull up already by the weigang
+        GPIO.setup(DATA_1, GPIO.IN, pull_up_down=GPIO.PUD_OFF)  # auto pull up already by the weigang
         # GPIO.setup(BUZZER, GPIO.OUT)  # only a signal pin, not a power pin!
         # GPIO.output(BUZZER, GPIO.HIGH)  # Buzzer OFF
 
@@ -56,6 +56,7 @@ class Gwiot_7304D2:
     def getData0_ISR(self,channel):
         if (self.__wiegandBitCount / 8) < MAX_WG_BITS:
             self.__wiegandData[int(self.__wiegandBitCount / 8)] <<= 1  # add 0 to the byte
+            self.__wiegandData[int(self.__wiegandBitCount / 8)] |= 0
             self.__wiegandBitCount += 1
         self.__wiegand_s = time.time()  # time since epoch in second
         self.__wiegand_us = time.time_ns()  # time since epoch in nano second
