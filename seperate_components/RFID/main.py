@@ -16,8 +16,8 @@
 import time
 import RPi.GPIO as GPIO
 
-D0 = 21
-D1 = 20
+D0 = 9
+D1 = 10
 bits = ''
 timeout = 5
 
