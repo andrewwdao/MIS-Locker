@@ -87,7 +87,7 @@ class Gwiot_7304D2:
             return True
         return False
 
-    def readData(self):
+    def read(self):
         data = self.__wiegandData.decode('utf-8')
         self.reset()
         return data
