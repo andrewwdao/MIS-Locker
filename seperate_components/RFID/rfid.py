@@ -2,7 +2,7 @@
   Weigang Reader - Gwiot 7304D2 - header file
   RASPBERRY PI 3B+
   (c) Minh-An Dao 2019
-  (c) Alperen Güman 2017
+  (c) Spiros Ioannou 2017
   version 1.00 - 24/10/2019
  --------------------------------------------------------------
  * RFID reader using Weigang 26 protocol.
@@ -17,7 +17,17 @@
  *  6(GREEN)  - DATA0   - Weigang DATA0 pin.
  *  7(WHITE)  - DATA1   - Weigang DATA1 pin.
  *  8(BLACK)  - GND
- * 
+ *
+ * This is interrupt drivern, no polling occurs.
+ * After each bit is read, a timeout is set.
+ * If timeout is reached read code is evaluated for correctness.
+ *
+ * Wiegand Bits:
+ * pFFFFFFFFNNNNNNNNNNNNNNNNP
+ * p: even parity of F-bits and leftmost 4 N-bits
+ * F: Facility code
+ * N: Card Number
+ * P: odd parity of rightmost 12 N-bits
  --------------------------------------------------------------"""
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
@@ -30,6 +40,19 @@ DATA_1 = 20  # GPIO BCM Pin 20 | White cable | Data1
 # FAST_INTERVAL = 0.5
 
 # -----Weigang parameters:
+WIEGAND_MAXBITS = 40
+
+'''
+Set some timeouts
+
+Wiegand defines:
+ * a Pulse Width time between 20 μs and 100 μs (microseconds)
+ * a Pulse Interval time between 200 μs and 20000 μsec
+
+Each bit takes 4-6 us, so all 26 bit sequence would take < 200us
+'''
+WIEGAND_BIT_INTERVAL_TIMEOUT_USEC = 20000  # interval between bits, typically 1000us
+
 
 
 class Gwiot_7304D2:
