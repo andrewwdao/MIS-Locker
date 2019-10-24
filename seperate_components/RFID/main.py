@@ -29,12 +29,12 @@ GPIO.setup(D1, GPIO.IN)
 
 def one(channel):
     global bits
-    bits |= '1'
+    bits += '1'
 
 
 def zero(channel):
     global bits
-    bits |= '0'
+    bits += '0'
 
 
 GPIO.add_event_detect(D0, GPIO.FALLING, callback=zero)
@@ -47,7 +47,7 @@ try:
             # time.sleep(0.1)
             # print "Binary:",bits
             print("Decimal:", int(str(bits), 2))
-            print("Hex:",hex(int(str(bits),2)))
+            print("Hex:",hex(int(str(bits), 2)))
             bits = '0'
             # time.sleep(0.1)
 except KeyboardInterrupt:
