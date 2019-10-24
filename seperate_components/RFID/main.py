@@ -14,7 +14,7 @@ from rfid import Gwiot_7304D2 as rfid
 try:
     print('RFID System ready!')
     while True:
-        if rfid.avaiable():
+        if rfid.available():
             print(rfid.read())
             rfid.buzzer()
 
