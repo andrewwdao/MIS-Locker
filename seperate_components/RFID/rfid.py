@@ -50,27 +50,27 @@ class Gwiot_7304D2:
         self.__wiegand_s = time.time()  # time since epoch in second
         self.__wiegand_us = time.time_ns()  # time since epoch in nano second
 
-        GPIO.add_event_detect(DATA_0, GPIO.FALLING, callback=self.getData0, bouncetime=DEBOUNCE)
-        GPIO.add_event_detect(DATA_1, GPIO.FALLING, callback=self.getData1, bouncetime=DEBOUNCE)
+        GPIO.add_event_detect(DATA_0, GPIO.FALLING, callback=self.getData0_ISR, bouncetime=DEBOUNCE)
+        GPIO.add_event_detect(DATA_1, GPIO.FALLING, callback=self.getData1_ISR, bouncetime=DEBOUNCE)
 
-    def reset(self):
-        self.__wiegandData = bytearray(MAX_WG_BITS)  # a limited list of bytes
-        self.__wiegandBitCount = 0
-
-    def getData0(self):
+    def getData0_ISR(self,channel):
         if (self.__wiegandBitCount / 8) < MAX_WG_BITS:
             self.__wiegandData[int(self.__wiegandBitCount / 8)] <<= 1  # add 0 to the byte
             self.__wiegandBitCount += 1
         self.__wiegand_s = time.time()  # time since epoch in second
         self.__wiegand_us = time.time_ns()  # time since epoch in nano second
 
-    def getData1(self):
+    def getData1_ISR(self,channel):
         if (self.__wiegandBitCount / 8) < MAX_WG_BITS:
             self.__wiegandData[int(self.__wiegandBitCount / 8)] <<= 1  # add 1 to the byte
             self.__wiegandData[int(self.__wiegandBitCount / 8)] |= 1
             self.__wiegandBitCount += 1
         self.__wiegand_s = time.time()  # time since epoch in second
         self.__wiegand_us = time.time_ns()  # time since epoch in nano second
+
+    def reset(self):
+        self.__wiegandData = bytearray(MAX_WG_BITS)  # a limited list of bytes
+        self.__wiegandBitCount = 0
 
     def getPendingBitCount(self):
         temp_s = time.time() - self.__wiegand_s
