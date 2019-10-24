@@ -28,8 +28,8 @@
 #include <wiringPi.h>
 
 /* Defaults, change with command-line options */
-#define D0_PIN 0
-#define D1_PIN 2
+#define D0_PIN 13
+#define D1_PIN 14
 
 #define WIEGANDMAXBITS 40
 
