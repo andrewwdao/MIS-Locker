@@ -9,9 +9,10 @@
  *
  *
  --------------------------------------------------------------"""
-from rfid import Gwiot_7304D2 as rfid
+from rfid import Gwiot_7304D2 as RFID
 
 try:
+    rfid = RFID()
     print('RFID System ready!')
     while True:
         if rfid.available():
