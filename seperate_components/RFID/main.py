@@ -15,7 +15,7 @@ try:
     rfid = RFID()
     print('ready')
     while True:
-        if rfid.available()
+        if rfid.available():
             print(rfid.read())
             print('done')
 except KeyboardInterrupt:
