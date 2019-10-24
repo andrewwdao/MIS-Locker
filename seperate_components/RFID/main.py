@@ -43,7 +43,7 @@ GPIO.add_event_detect(D1, GPIO.FALLING, callback=one)
 print("Present Card")
 try:
     while True:
-        if len(bits) == 32:
+        if len(bits) == 26:
             # time.sleep(0.1)
             # print "Binary:",bits
             print("Decimal:", int(str(bits), 2))
