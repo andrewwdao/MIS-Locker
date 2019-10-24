@@ -43,8 +43,8 @@ class Gwiot_7304D2:
         GPIO.setwarnings(False)
         GPIO.setup(DATA_0, GPIO.IN)  # auto pull up already by the weigang
         GPIO.setup(DATA_1, GPIO.IN)  # auto pull up already by the weigang
-        GPIO.setup(BUZZER, GPIO.OUT)  # only a signal pin, not a power pin!
-        GPIO.output(BUZZER, GPIO.HIGH)  # Buzzer OFF
+        # GPIO.setup(BUZZER, GPIO.OUT)  # only a signal pin, not a power pin!
+        # GPIO.output(BUZZER, GPIO.HIGH)  # Buzzer OFF
 
         self.__wiegandData = bytearray(MAX_WG_BITS)  # a limited list of bytes
         self.__wiegandBitCount = 0
