@@ -29,85 +29,19 @@
  * N: Card Number
  * P: odd parity of rightmost 12 N-bits
  --------------------------------------------------------------"""
-import RPi.GPIO as GPIO  # default as BCM mode!
-import time
+import subprocess
+import sys
 
-# ---------------------------- Configurable parameters -------------------------
-# -----Pin connection:
-DATA_0 = 21  # GPIO BCM Pin 21 | Green cable | Data0
-DATA_1 = 20  # GPIO BCM Pin 20 | White cable | Data1
-# BUZZER = 16  # GPIO BCM Pin 16 | Yellow cable | Sound
-# FAST_INTERVAL = 0.5
+TARGET = './wiegand_rpi'
 
-# -----Weigang parameters:
-WIEGAND_MAXBITS = 40
-
-'''
-Set some timeouts
-
-Wiegand defines:
- * a Pulse Width time between 20 μs and 100 μs (microseconds)
- * a Pulse Interval time between 200 μs and 20000 μsec
-
-Each bit takes 4-6 us, so all 26 bit sequence would take < 200us
-'''
-WIEGAND_BIT_INTERVAL_TIMEOUT_USEC = 20000  # interval between bits, typically 1000us
-
-
-
-class Gwiot_7304D2:
-    def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(DATA_0, GPIO.IN, pull_up_down=GPIO.PUD_OFF)  # auto pull up already by the weigang
-        GPIO.setup(DATA_1, GPIO.IN, pull_up_down=GPIO.PUD_OFF)  # auto pull up already by the weigang
-        # GPIO.setup(BUZZER, GPIO.OUT)  # only a signal pin, not a power pin!
-        # GPIO.output(BUZZER, GPIO.HIGH)  # Buzzer OFF
-
-        self.__wiegandData = bytearray(MAX_WG_BITS)  # a limited list of bytes
-        self.__wiegandBitCount = 0
-        self.__wiegand_s = time.time()  # time since epoch in second
-        self.__wiegand_us = time.time_ns()  # time since epoch in nano second
-
-        GPIO.add_event_detect(DATA_0, GPIO.FALLING, callback=self.getData0_ISR, bouncetime=DEBOUNCE)
-        GPIO.add_event_detect(DATA_1, GPIO.FALLING, callback=self.getData1_ISR, bouncetime=DEBOUNCE)
-
-    def getData0_ISR(self,channel):
-        if (self.__wiegandBitCount / 8) < MAX_WG_BITS:
-            self.__wiegandData[int(self.__wiegandBitCount / 8)] <<= 1  # add 0 to the byte
-            self.__wiegandData[int(self.__wiegandBitCount / 8)] |= 0
-            self.__wiegandBitCount += 1
-        self.__wiegand_s = time.time()  # time since epoch in second
-        self.__wiegand_us = time.time_ns()  # time since epoch in nano second
-
-    def getData1_ISR(self,channel):
-        if (self.__wiegandBitCount / 8) < MAX_WG_BITS:
-            self.__wiegandData[int(self.__wiegandBitCount / 8)] <<= 1  # add 1 to the byte
-            self.__wiegandData[int(self.__wiegandBitCount / 8)] |= 1
-            self.__wiegandBitCount += 1
-        self.__wiegand_s = time.time()  # time since epoch in second
-        self.__wiegand_us = time.time_ns()  # time since epoch in nano second
-
-    def reset(self):
-        self.__wiegandData = bytearray(MAX_WG_BITS)  # a limited list of bytes
-        self.__wiegandBitCount = 0
-
-    def getPendingBitCount(self):
-        temp_s = time.time() - self.__wiegand_s
-        temp_us = time.time_ns() - self.__wiegand_us
-        if (temp_s > 1) | (temp_us > READER_TIMEOUT):
-            return self.__wiegandBitCount
-        return 0
-
-    def lengthByte(self):
-        return self.__wiegandBitCount / 8 + 1
-
-    def available(self):
-        if self.getPendingBitCount() > 0:
-            return True
-        return False
-
-    def read(self):
-        data = self.__wiegandData
-        self.reset()
-        return data
+p = subprocess.Popen([TARGET], shell=False, stdout=subprocess.PIPE)
+print('ready!')
+while True:
+    # print ("Looping")
+    line = p.stdout.readline()
+    print(str(line.strip()))
+    if line.strip() == b'done!':
+        print("success!")
+        sys.stdout.flush()
+        exit()
+    sys.stdout.flush()

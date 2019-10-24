@@ -84,6 +84,8 @@ void show_code() {
     printf("*** Card code: %d(dec) 0x%X\n", wds.card_code, wds.card_code);
     printf("*** Full code: %d\n", wds.full_code);
     printf("*** Parity 0:%d Parity 1:%d\n", wds.p0, wds.p1);
+    printf("done!");
+    exit(0);
     fflush(stdout);
 }
 
