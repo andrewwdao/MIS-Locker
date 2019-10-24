@@ -17,7 +17,7 @@ try:
     while True:
         if rfid.available():
             print(rfid.read())
-            rfid.buzzer()
+            print('done!')
 
 except KeyboardInterrupt:
     pass

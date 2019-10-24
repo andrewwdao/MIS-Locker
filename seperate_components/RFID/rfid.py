@@ -26,14 +26,15 @@ import time
 # -----Pin connection:
 DATA_0 = 21  # GPIO BCM Pin 21 | Green cable | Data0
 DATA_1 = 20  # GPIO BCM Pin 20 | White cable | Data1
-BUZZER = 16  # GPIO BCM Pin 16 | Yellow cable | Sound
+# BUZZER = 16  # GPIO BCM Pin 16 | Yellow cable | Sound
+# FAST_INTERVAL = 0.5
 
 # -----Weigang parameters:
 MAX_WG_BITS = 32
 READER_TIMEOUT = 3000000  # ns
 WG_LEN = 256
 DEBOUNCE = 10
-FAST_INTERVAL = 0.5
+
 
 
 class Gwiot_7304D2:
@@ -88,12 +89,6 @@ class Gwiot_7304D2:
         return False
 
     def read(self):
-        data = self.__wiegandData.decode('utf-8')
+        data = self.__wiegandData
         self.reset()
         return data
-
-    def buzzer(self):
-        GPIO.output(BUZZER, GPIO.LOW)  # Buzzer ON
-        time.sleep(FAST_INTERVAL)
-        GPIO.output(BUZZER, GPIO.HIGH)  # Buzzer OFF
-        time.sleep(FAST_INTERVAL)
