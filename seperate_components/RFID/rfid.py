@@ -30,11 +30,10 @@ DATA_1 = 20  # GPIO BCM Pin 20 | White cable | Data1
 # FAST_INTERVAL = 0.5
 
 # -----Weigang parameters:
-MAX_WG_BITS = 32
+MAX_WG_BITS = 26
 READER_TIMEOUT = 3000000  # ns
 WG_LEN = 256
 DEBOUNCE = 10
-
 
 
 class Gwiot_7304D2:

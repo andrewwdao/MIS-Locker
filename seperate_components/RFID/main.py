@@ -9,50 +9,15 @@
  *
  *
  --------------------------------------------------------------"""
-# !/usr/bin/env python
+from rfid import Gwiot_7304D2 as RFID
 
-# green/data0 is pin 22
-# white/data1 is pin 7
-import time
-import RPi.GPIO as GPIO
-
-D0 = 9
-D1 = 10
-bits = ''
-timeout = 5
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-GPIO.setup(D0, GPIO.IN)
-GPIO.setup(D1, GPIO.IN)
-
-
-def one(channel):
-    global bits
-    bits += '1'
-
-
-def zero(channel):
-    global bits
-    bits += '0'
-
-
-GPIO.add_event_detect(D0, GPIO.FALLING, callback=zero)
-GPIO.add_event_detect(D1, GPIO.FALLING, callback=one)
-
-print("Present Card")
 try:
+    rfid = RFID()
+    print('ready')
     while True:
-        if len(bits) == 26:
-            # time.sleep(0.1)
-            # print "Binary:",bits
-            print("Decimal:", int(str(bits), 2))
-            print("Hex:",hex(int(str(bits), 2)))
-            bits = '0'
-            # time.sleep(0.1)
+        if rfid.available()
+            print(rfid.read())
+            print('done')
 except KeyboardInterrupt:
-    GPIO.cleanup()
-    print
-    "Clean Exit By user"
+    pass
 
-GPIO.cleanup()
