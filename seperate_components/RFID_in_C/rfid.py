@@ -1,24 +1,24 @@
 """*------------------------------------------------------------*-
-  Weigang Reader - Gwiot 7304D2 - header file
-  RASPBERRY PI 3B+
-  (c) Minh-An Dao 2019
-  (c) Spiros Ioannou 2017
-  version 1.00 - 24/10/2019
+  Wiegand Reader - python module file
+  Tested with Gwiot 7304D2 RFID Reader(26 bit Wiegand mode) and RASPBERRY PI 3B+
+    (c) Minh-An Dao 2019
+    (c) Spiros Ioannou 2017
+  version 1.10 - 25/10/2019
  --------------------------------------------------------------
- * RFID reader using Weigang 26 protocol.
+ * RFID reader using Wiegand 26 protocol.
  * Use both 125Khz and 315Mhz Cards
- *  
+ *
  *  ------ Pinout ------
  *  1(RED)    - VCC     - DC 9-12V
- *  2(BROWN)  - FORMAT  - Keep floating to use weigang26, connect to GND to use weigang34
+ *  2(BROWN)  - FORMAT  - Keep floating to use wiegand26, connect to GND to use weigang34
  *  3(BLUE)   - OUT     - 5V in normal condition, GND when card was scanned
  *  4(YELLOW) - Buzzer  - pull up automatically (5V), pull to GND to make it beep.
  *  5(ORANGE) - LED     - pull up automatically (5V) - RED, pull to GND to make it GREEN.
- *  6(GREEN)  - DATA0   - Weigang DATA0 pin.
- *  7(WHITE)  - DATA1   - Weigang DATA1 pin.
+ *  6(GREEN)  - DATA0   - Wiegand DATA0 pin.
+ *  7(WHITE)  - DATA1   - Wiegand DATA1 pin.
  *  8(BLACK)  - GND
  *
- * This is interrupt drivern, no polling occurs.
+ * This is interrupt driven, no polling occurs.
  * After each bit is read, a timeout is set.
  * If timeout is reached read code is evaluated for correctness.
  *
@@ -28,20 +28,50 @@
  * F: Facility code
  * N: Card Number
  * P: odd parity of rightmost 12 N-bits
+ *
+ * Usage:
+ * ./rfid_main [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
+ *  With:
+ *  -d : debug mode
+ *  -h : help
+ *  -a : dumb all received information out
+ *  -0 D0-pin: GPIO pin for data0 pulse (wiringPi pin)
+ *  -1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)
+ *
  --------------------------------------------------------------"""
-import subprocess
+import subprocess as subpro
 import sys
 
-TARGET = './wiegand_rpi'
+TARGET = './rfid_main'
+rfid_object = object()
 
-p = subprocess.Popen([TARGET], shell=False, stdout=subprocess.PIPE)
-print('ready!')
-while True:
-    # print ("Looping")
-    line = p.stdout.readline()
-    print(str(line.strip()))
-    if line.strip() == b'done!':
-        print("success!")
-        sys.stdout.flush()
-        exit()
+def start():
+    global rfid_object
+    rfid_object = subpro.Popen([TARGET], shell=False, stdout=subpro.PIPE, stderr=subpro.PIPE)
+    print('RFID ready!')
+
+def check():
+    data = rfid_object.communicate()
+    mes = data[0] # stdout.readline()
+    err = data[1] # stderr.readline()
+
+    print(str(mes))
+    print(str(err))
     sys.stdout.flush()
+    sys.stderr.flush()
+
+    # line = p.stdout.readline()
+    # print(str(line.strip()))
+    # if line.strip() == b'done!':
+    #     print("success!")
+    #     sys.stdout.flush()
+    #     exit()
+    # sys.stdout.flush()
+
+def stop():
+    # check if process terminated or not
+    if rfid_object.poll() is None:
+        rfid_object.terminate()
+        rfid_object.kill()
+        print('RFID terminated!')
+

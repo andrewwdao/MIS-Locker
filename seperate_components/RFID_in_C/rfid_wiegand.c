@@ -30,7 +30,7 @@
  * P: odd parity of rightmost 12 N-bits
  *
  * Usage:
- * ./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
+ * ./rfid_main [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
  *  With:
  *  -d : debug mode
  *  -h : help
@@ -133,10 +133,8 @@ void d1_ISR(void) {
     add_bit_w26(1);
 }//end d1_ISR
 //--------------------------------------------------------------
-void rfid_init(int d0pin,
-               int d1pin,
-               int input_debug,
-               int input_in_system) {
+void rfid_init(int d0pin,int d1pin,
+               int input_debug, int input_in_system) {
     debug = input_debug;
     in_system = input_in_system;
     //-------------- Setup wiegand timeout handler -------------
@@ -240,8 +238,10 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     } else {  //for usage inside the big system
         if (wds.code_valid) { //if the received code is valid
             printf("0x%X\n", wds.full_code);
+            fflush(stdout);
         } else { //if the received code is NOT valid
             printf("CHECKSUM_FAILED\n");
+            fflush(stdout);
         }//end if else
     }//end if else
 } //end wiegand_timeout
@@ -285,20 +285,19 @@ void rfid_showAll() {
     printf("*** Card code: %d(dec) 0x%X\n", wds.card_code, wds.card_code);
     printf("*** Full code: %d\n", wds.full_code);
     printf("*** Parity 0:%d Parity 1:%d\n", wds.p0, wds.p1);
-    exit(0);
     fflush(stdout);
 }//end rfid_showAll
 //--------------------------------------------------------------
 void rfid_showUsage() {
     printf("\nHow to use:\n");
     printf("Type in the command line:\n");
-    printf("\t./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]\n");
+    printf("\n\t./rfid_main [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]\n\n");
     printf("With:\n");
     printf("\t-d : debug mode\n");
     printf("\t-h : help\n");
     printf("\t-a : dumb all received information out\n");
     printf("\t-0 D0-pin: GPIO pin for data0 pulse (wiringPi pin)\n");
-    printf("\t-1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)\n");
-    printf("\n");
-}
+    printf("\t-1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)\n\n");
+    fflush(stdout);
+}//end rfid_showUsage
 #endif //__RFID_WIEGAND_C

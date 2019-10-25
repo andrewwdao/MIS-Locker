@@ -1,23 +1,31 @@
-"""------------------------------------------------------------*-
-  Peripheral controller for Raspberry Pi
-  Manipulate 6 IC 74HC595 using C and Subprocess module
-  Tested on: Raspberry Pi 3 B+
-  (c) Minh-An Dao 2019
-  (C) Yasuhiro Ogino 2019
-  version 1.00 - 10/10/2019
+"""*------------------------------------------------------------*-
+  Wiegand Reader - python main file
+  Tested with Gwiot 7304D2 RFID Reader(26 bit Wiegand mode) and RASPBERRY PI 3B+
+    (c) Minh-An Dao 2019
+    (c) Spiros Ioannou 2017
+  version 1.10 - 25/10/2019
  --------------------------------------------------------------
+ * RFID reader using Wiegand 26 protocol.
+ * Use both 125Khz and 315Mhz Cards
  *
+ *  ------ Pinout ------
+ *  1(RED)    - VCC     - DC 9-12V
+ *  2(BROWN)  - FORMAT  - Keep floating to use wiegand26, connect to GND to use weigang34
+ *  3(BLUE)   - OUT     - 5V in normal condition, GND when card was scanned
+ *  4(YELLOW) - Buzzer  - pull up automatically (5V), pull to GND to make it beep.
+ *  5(ORANGE) - LED     - pull up automatically (5V) - RED, pull to GND to make it GREEN.
+ *  6(GREEN)  - DATA0   - Wiegand DATA0 pin.
+ *  7(WHITE)  - DATA1   - Wiegand DATA1 pin.
+ *  8(BLACK)  - GND
  *
  --------------------------------------------------------------"""
-from rfid import Gwiot_7304D2 as RFID
-
+import rfid
+import time
 try:
-    rfid = RFID()
-    print('ready')
+    rfid.start()
     while True:
-        if rfid.available():
-            print(rfid.read())
-            print('done')
+        rfid.check()
+        time.sleep(1)
 except KeyboardInterrupt:
     pass
 

@@ -30,7 +30,7 @@
  * P: odd parity of rightmost 12 N-bits
  *
  * Usage:
- * ./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
+ * ./rfid_main [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
  *  With:
  *  -d : debug mode
  *  -h : help
