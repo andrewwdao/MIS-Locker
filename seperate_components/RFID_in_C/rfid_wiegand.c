@@ -133,10 +133,10 @@ void d1_ISR(void) {
     add_bit_w26(1);
 }//end d1_ISR
 //--------------------------------------------------------------
-void rfid_init(int d0pin = D0_DEFAULT_PIN,
-               int d1pin = D1_DEFAULT_PIN,
-               int input_debug=0,
-               int input_in_system=1) {
+void rfid_init(int d0pin,
+               int d1pin,
+               int input_debug,
+               int input_in_system) {
     debug = input_debug;
     in_system = input_in_system;
     //-------------- Setup wiegand timeout handler -------------
@@ -234,7 +234,7 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     if (debug)
         fprintf(stderr, "wiegand timeout\n");
     wiegand_sequence_reset();
-    
+
     if (in_system) { //this code is inside the big system
         if (wds.code_valid) { //if the received code is valid
             printf("0x%X\n", wds.card_code);

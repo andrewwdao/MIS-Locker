@@ -56,7 +56,10 @@
 /**
 Initialize the whole rfid system including GPIOs, interrupts and handlers
 */
-void rfid_init(int, int, int, int);
+void rfid_init(int d0pin = D0_DEFAULT_PIN,
+               int d1pin = D1_DEFAULT_PIN,
+               int input_debug=0,
+               int input_in_system=1);
 
 /**
 Show usage information for the user
