@@ -28,8 +28,7 @@ class StreamReader:
             """
 
             while True:
-                # line = stream.readline()
-                line = stream.communicate()
+                line = stream.readline()
                 if line:
                     queues.put(line)
                 else:
@@ -40,7 +39,7 @@ class StreamReader:
         self._t.daemon = True
         self._t.start() #start collecting lines from the stream
 
-    def communicate(self, timeout = None):
+    def readline(self, timeout = None):
         try:
             return self._q.get(block = timeout is not None,
                     timeout = timeout)

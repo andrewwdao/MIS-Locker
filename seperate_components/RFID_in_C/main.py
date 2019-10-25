@@ -25,9 +25,9 @@ try:
     rfid.start()
     time.sleep(1)
     while True:
-        [mes, err] = rfid.check()
-        print(mes)
-        print(err)
+        [rfid_status, rfid_tag] = rfid.check()
+        print(rfid_status)
+        print(rfid_tag)
         print('hope this works')
         time.sleep(1)
 except KeyboardInterrupt:
