@@ -30,10 +30,11 @@
  * P: odd parity of rightmost 12 N-bits
  *
  * Usage:
- * ./wiegand_read [-d] [-0 D0-pin] [-1 D1-pin]
+ * ./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
  *  With:
  *  -d : debug mode
  *  -h : help
+ *  -a : dumb all received information out
  *  -0 D0-pin: GPIO pin for data0 pulse (wiringPi pin)
  *  -1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)
  *

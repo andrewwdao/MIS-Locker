@@ -5,7 +5,15 @@
   version 1.30 - 10/10/2019
  --------------------------------------------------------------
  *
- * 
+ * Usage:
+ * ./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
+ *  With:
+ *  -d : debug mode
+ *  -h : help
+ *  -a : dumb all received information out
+ *  -0 D0-pin: GPIO pin for data0 pulse (wiringPi pin)
+ *  -1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)
+ *
  -------------------------------------------------------------- */
 #include "rfid_wiegand.h"
 
@@ -29,7 +37,7 @@ int main(int argc, char *argv[]) {
 
     /* Parse Options */
     int opt;
-    while ((opt = getopt(argc, argv, "d0:1:")) != -1) {
+    while ((opt = getopt(argc, argv, "dha0:1:")) != -1) {
         switch (opt) {
         case 'd':
             options.debug++;
@@ -61,7 +69,7 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         pause();
-        printf("\nAfter Pause\n\n");
+//        printf("\nAfter Pause\n\n");
     }//end while
 }//end main
 

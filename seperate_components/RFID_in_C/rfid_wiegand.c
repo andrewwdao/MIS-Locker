@@ -30,7 +30,7 @@
  * P: odd parity of rightmost 12 N-bits
  *
  * Usage:
- * ./wiegand_read [-d/h/a] [-0 D0-pin] [-1 D1-pin]
+ * ./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]
  *  With:
  *  -d : debug mode
  *  -h : help
@@ -235,14 +235,14 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
         fprintf(stderr, "wiegand timeout\n");
     wiegand_sequence_reset();
 
-    if (in_system) { //this code is inside the big system
+    if ((!in_system)||debug) { //for testing the function
+        rfid_showAll();
+    } else {  //for usage inside the big system
         if (wds.code_valid) { //if the received code is valid
-            printf("0x%X\n", wds.card_code);
+            printf("0x%X\n", wds.full_code);
         } else { //if the received code is NOT valid
             printf("CHECKSUM_FAILED\n");
         }//end if else
-    } else { //this code is for testing the function
-        rfid_showAll();
     }//end if else
 } //end wiegand_timeout
 //--------------------------------------------------------------
@@ -290,11 +290,13 @@ void rfid_showAll() {
 }//end rfid_showAll
 //--------------------------------------------------------------
 void rfid_showUsage() {
-    printf("Usage:\n");
-    printf("./wiegand_read [-d] [-0 D0-pin] [-1 D1-pin]\n");
+    printf("\nHow to use:\n");
+    printf("Type in the command line:\n");
+    printf("\t./wiegand_read [-d] [-h] [-a] [-0 D0-pin] [-1 D1-pin]\n");
     printf("With:\n");
     printf("\t-d : debug mode\n");
     printf("\t-h : help\n");
+    printf("\t-a : dumb all received information out\n");
     printf("\t-0 D0-pin: GPIO pin for data0 pulse (wiringPi pin)\n");
     printf("\t-1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)\n");
     printf("\n");
