@@ -24,8 +24,9 @@ import time
 try:
     rfid.start()
     while True:
-        rfid.check()
+        print(rfid.check())
         time.sleep(1)
 except KeyboardInterrupt:
+    rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass
 
