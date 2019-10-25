@@ -54,7 +54,7 @@ def start():
     print('RFID ready!')
 
 def check():
-    mes = rfid_mes.readline()  # 0.05 secs to let the shell output the result
+    mes = rfid_mes.readline(0.05)  # 0.05 secs to let the shell output the result
     sys.stdout.flush()
     if mes is not None:  # turn it into string if it is not a null
         mes = mes.strip().decode("utf-8")
@@ -63,11 +63,9 @@ def check():
 
     return [True, mes]
 
-
 def stop():
     # check if process terminated or not
     if rfid_object.poll() is None:
         rfid_object.terminate()
         rfid_object.kill()
         print('RFID terminated!')
-

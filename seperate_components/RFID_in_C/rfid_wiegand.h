@@ -58,7 +58,6 @@
 Initialize the whole rfid system including GPIOs, interrupts and handlers
 */
 void rfid_init(int, int, int, int);
-
 /**
 Show usage information for the user
 */

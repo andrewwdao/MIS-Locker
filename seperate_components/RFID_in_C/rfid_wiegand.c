@@ -238,10 +238,10 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     } else {  //for usage inside the big system
         if (wds.code_valid) { //if the received code is valid
             printf("0x%X\n", wds.full_code);
-            fflush(stdout);fflush(stderr);
+            fflush(stdout);
         } else { //if the received code is NOT valid
             printf("CHECKSUM_FAILED\n");
-            fflush(stdout);fflush(stderr);
+            fflush(stdout);
         }//end if else
     }//end if else
 } //end wiegand_timeout
@@ -278,13 +278,12 @@ void reset_timeout_timer(long usec) { //timeout handler, should fire after bit s
 }//end reset_timeout_timer
 //--------------------------------------------------------------
 void rfid_showAll() {
-    printf("\n");
-    printf("*** Code Valid: %d\n", wds.code_valid);
+    printf("\n*** Code Valid: %d\n", wds.code_valid);
     printf("*** Facility code: %d(dec) 0x%X\n", wds.facility_code,
            wds.facility_code);
     printf("*** Card code: %d(dec) 0x%X\n", wds.card_code, wds.card_code);
     printf("*** Full code: %d\n", wds.full_code);
-    printf("*** Parity 0:%d Parity 1:%d\n", wds.p0, wds.p1);
+    printf("*** Parity 0:%d Parity 1:%d\n\n", wds.p0, wds.p1);
     fflush(stdout);
 }//end rfid_showAll
 //--------------------------------------------------------------
@@ -300,4 +299,5 @@ void rfid_showUsage() {
     printf("\t-1 D1-pin: GPIO pin for data1 pulse (wiringPi pin)\n\n");
     fflush(stdout);
 }//end rfid_showUsage
+//--------------------------------------------------------------
 #endif //__RFID_WIEGAND_C

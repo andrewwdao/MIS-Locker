@@ -25,11 +25,9 @@ try:
     rfid.start()
     time.sleep(1)
     while True:
-        [rfid_status, rfid_tag] = rfid.check()
-        print(rfid_status)
-        print(rfid_tag)
-        print('hope this works')
-        time.sleep(1)
+        [rfid_available, rfid_tag] = rfid.check()
+        if rfid_available:
+            print(rfid_tag)
 except KeyboardInterrupt:
     rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass
