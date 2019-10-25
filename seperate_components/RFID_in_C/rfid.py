@@ -55,11 +55,11 @@ def check():
     # mes = data[0] # stdout.readline()
     # err = data[1] # stderr.readline()
 
-    mes = rfid_object.stdout.readline()
-    err = rfid_object.stderr.readline()
-
-    print(str(mes.strip()))
-    print(str(err.strip()))
+    # mes = rfid_object.stdout.readline()
+    # err = rfid_object.stderr.readline()
+    #
+    # print(str(mes.strip()))
+    # print(str(err.strip()))
     print('something else')
     sys.stdout.flush()
     sys.stderr.flush()
