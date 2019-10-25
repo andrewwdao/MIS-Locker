@@ -57,6 +57,7 @@ def check():
 
     print(str(mes))
     print(str(err))
+    print('something else')
     sys.stdout.flush()
     sys.stderr.flush()
 

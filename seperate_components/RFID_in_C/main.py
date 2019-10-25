@@ -25,8 +25,10 @@ try:
     rfid.start()
     while True:
         print(rfid.check())
+        print('hehe')
         time.sleep(1)
 except KeyboardInterrupt:
     rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    print('This is python exit')
     pass
 
