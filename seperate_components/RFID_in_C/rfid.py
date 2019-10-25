@@ -51,7 +51,7 @@ def start():
     print('RFID ready!')
 
 def check():
-    while rfid_object.poll is None:
+    w#hile rfid_object.poll is None:
         mes = rfid_object.communicate()[0]
         err = ''
     # err = rfid_object.stderr.readline()
