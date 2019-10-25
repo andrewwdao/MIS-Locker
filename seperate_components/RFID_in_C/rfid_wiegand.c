@@ -234,6 +234,7 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     if (debug)
         fprintf(stderr, "wiegand timeout\n");
     wiegand_sequence_reset();
+    
     if (in_system) { //this code is inside the big system
         if (wds.code_valid) { //if the received code is valid
             printf("0x%X\n", wds.card_code);
@@ -243,7 +244,6 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     } else { //this code is for testing the function
         rfid_showAll();
     }//end if else
-    show_code();
 } //end wiegand_timeout
 //--------------------------------------------------------------
 void wiegand_sequence_reset() {
