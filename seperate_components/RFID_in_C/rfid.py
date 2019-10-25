@@ -53,7 +53,7 @@ def start():
     rfid_mes = StreamReader(rfid_object.stdout)
     print('RFID ready!')
 
-def check()
+def check():
     mes = rfid_mes.readline(0.01)  # 0.05 secs to let the shell output the result
     sys.stdout.flush()
     if mes is not None:  # turn it into string if it is not a null
