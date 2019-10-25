@@ -17,8 +17,8 @@
  *  8 - GND     9  - QH'    - left floated when using only 1 74HC595, connect to pin 14 (SER) of the next 74HC595 if using multiple ones.
  * 
  -------------------------------------------------------------- */
-#ifndef  __RASP_HC595_CPP 
-#define  __RASP_HC595_CPP
+#ifndef  __RASP_HC595_C
+#define  __RASP_HC595_C
 #include "Rasp_HC595.h"
 
 // ------ Private constants -----------------------------------
@@ -94,4 +94,4 @@ void myShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val
   }//end for
 }//end myShiftOut
 //--------------------------------
-#endif //__RASP_HC595_CPP
+#endif //__RASP_HC595_C

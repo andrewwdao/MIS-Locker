@@ -13,15 +13,15 @@ IDIR =     /                                                               \
 # INCLUDES DIRECTION
 ###############################################################################
 _DEPS =                                                                    \
-            Rasp_HC595.h                                                   \
+            rfid_wiegand.h                                                 \
 												   						   \
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 ###############################################################################
 # OBJECTS CREATED
 ###############################################################################
 _OBJ =                                                                     \
-			peripheral_main.o                                              \
-            Rasp_HC595.o												   \
+			rfid_main.o                                                    \
+            rfid_wiegand.o												   \
 			
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 ###############################################################################
@@ -40,12 +40,12 @@ LIBS =                                                                     \
 ###############################################################################
 # DEFINES
 ###############################################################################
-CFLAGS  = -l wiringPi -O2 -Wall -pipe -I$(IDIR)                            \
+CFLAGS  = -lwiringPi -lpthread -lrt  -Wall -O -I$(IDIR)                            \
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-peripheral_main: $(OBJ)
+rfid_main: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
