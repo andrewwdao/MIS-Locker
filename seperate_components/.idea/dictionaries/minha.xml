@@ -17,6 +17,7 @@
       <w>nsec</w>
       <w>perror</w>
       <w>pinout</w>
+      <w>popen</w>
       <w>printf</w>
       <w>readline</w>
       <w>rfid</w>

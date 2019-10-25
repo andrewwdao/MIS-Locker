@@ -13,22 +13,23 @@ from queue import Queue, Empty
 
 class StreamReader:
 
-    def __init__(self, stream):
+    def __init__(self, popen_object):
         """
         stream: the stream to read from.
                 Usually a process' stdout or stderr.
         """
 
-        self._s = stream
+        self._s = popen_object
         self._q = Queue()
 
-        def _populateQueue(streams, queues):
+        def _populateQueue(stream, queues):
             """
             Collect lines from 'stream' and put them in 'queue'.
             """
 
             while True:
-                line = streams.readline()
+                # line = stream.readline()
+                line = stream.communicate()
                 if line:
                     queues.put(line)
                 else:
@@ -39,11 +40,11 @@ class StreamReader:
         self._t.daemon = True
         self._t.start() #start collecting lines from the stream
 
-    def readline(self, timeout = None):
+    def communicate(self, timeout = None):
         try:
             return self._q.get(block = timeout is not None,
                     timeout = timeout)
         except Empty:
-            return None
+            return None, None
 
 class UnexpectedEndOfStream(Exception): pass

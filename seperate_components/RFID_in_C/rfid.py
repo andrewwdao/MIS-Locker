@@ -50,7 +50,7 @@ rfid_stream = object()
 def start():
     global rfid_object, rfid_stream
     rfid_object = subpro.Popen([TARGET], shell=False, stdout=subpro.PIPE, stderr=subpro.PIPE)
-    rfid_stream = StreamReader(rfid_object.stdout)
+    rfid_stream = StreamReader(rfid_object)
     print('RFID ready!')
 
 def check():
@@ -60,11 +60,11 @@ def check():
     # err = rfid_object.stderr.readline()
     # mes = rfid_object.stdout.readline()
 
-    mes = rfid_stream.readline(0.1)
+    (mes, err) = rfid_stream.communicate(0.1) # 0.1 secs to let the shell output the result
     if mes is not None:
         mes = str(mes.strip())
-    err = ''
-
+    if err is not None:
+        err = str(err.strip())
     # (mes, err) = rfid_object.communicate()
     sys.stdout.flush()
     sys.stderr.flush()
