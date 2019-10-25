@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
               options.in_system);
 
     while (1) {
-        //pause();
-//        printf("\nAfter Pause\n\n");
+//        pause(); //pause to wait for ISR and not consuming system memory
+    fflush(stdout);fflush(stderr);
     }//end while
 }//end main
 
