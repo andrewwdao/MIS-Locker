@@ -53,16 +53,16 @@ def start():
     rfid_mes = StreamReader(rfid_object.stdout)
     print('RFID ready!')
 
-def check():
-    while rfid_object.poll is None:
-        mes = rfid_mes.readline(0.1) # 0.05 secs to let the shell output the result
-        sys.stdout.flush()
-        if mes is not None: # turn it into string if it is not a null
-            mes = str(mes.strip())
-        if mes is None or mes == 'CHECKSUM_FAILED':
-            return [False,'']
+def check()
+    mes = rfid_mes.readline(0.01)  # 0.05 secs to let the shell output the result
+    sys.stdout.flush()
+    if mes is not None:  # turn it into string if it is not a null
+        mes = mes.strip().decode("utf-8")
+    if mes is None or mes == 'CHECKSUM_FAILED':
+        return [False, '']
 
-        return [True,mes]
+    return [True, mes]
+
 
 def stop():
     # check if process terminated or not
