@@ -45,7 +45,7 @@ import sys
 
 TARGET = './rfid_main'
 rfid_object = object()
-rfid_stream = object()
+rfid_mes = object()
 
 def start():
     global rfid_object, rfid_stream
@@ -56,14 +56,14 @@ def start():
 def check():
     # while rfid_object.poll is None:
 
-    mes = rfid_stream.readline(0.1) # 0.1 secs to let the shell output the result
+    mes = rfid_mes.readline(0.1) # 0.1 secs to let the shell output the result
     sys.stdout.flush()
     if mes is not None: # turn it into string if it is not a null
         mes = str(mes.strip())
 
     if mes is None or mes == 'CHECKSUM_FAILED':
         return [False,'']
-    
+
     return [True,mes]
     # line = p.stdout.readline()
     # print(str(line.strip()))
