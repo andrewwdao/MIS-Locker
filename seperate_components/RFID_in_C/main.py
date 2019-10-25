@@ -24,11 +24,12 @@ import time
 try:
     rfid.start()
     while True:
-        rfid.check()
-        print('hehe')
+        [mes, err] = rfid.check()
+        print(mes)
+        print(err)
+        print('hope this works')
         time.sleep(1)
 except KeyboardInterrupt:
     rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
-    print('This is python exit')
     pass
 

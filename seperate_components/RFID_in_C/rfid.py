@@ -51,19 +51,12 @@ def start():
     print('RFID ready!')
 
 def check():
-    # data = rfid_object.communicate()
-    # mes = data[0] # stdout.readline()
-    # err = data[1] # stderr.readline()
-
-    mes = rfid_object.stdout.readline()
+    # mes = rfid_object.stdout.readline()
     # err = rfid_object.stderr.readline()
-    #
-    print(str(mes.strip()))
-    # print(str(err.strip()))
-    print('something else')
+    (mes, err) = rfid_object.communicate()
     sys.stdout.flush()
     sys.stderr.flush()
-
+    return [str(mes.strip()),str(err.strip())]
     # line = p.stdout.readline()
     # print(str(line.strip()))
     # if line.strip() == b'done!':
