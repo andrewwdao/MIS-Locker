@@ -24,7 +24,7 @@ import time
 try:
     rfid.start()
     while True:
-        print(rfid.check())
+        # print(rfid.check())
         print('hehe')
         time.sleep(1)
 except KeyboardInterrupt:
