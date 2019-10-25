@@ -54,24 +54,15 @@ def start():
     print('RFID ready!')
 
 def check():
-    # while rfid_object.poll is None:
+    while rfid_object.poll is None:
+        mes = rfid_mes.readline(0.01) # 0.01 secs to let the shell output the result
+        sys.stdout.flush()
+        if mes is not None: # turn it into string if it is not a null
+            mes = mes.strip().decode("utf-8")
+        if mes is None or mes == 'CHECKSUM_FAILED':
+            return [False,'']
 
-    mes = rfid_mes.readline(0.1) # 0.1 secs to let the shell output the result
-    sys.stdout.flush()
-    if mes is not None: # turn it into string if it is not a null
-        mes = str(mes.strip())
-
-    if mes is None or mes == 'CHECKSUM_FAILED':
-        return [False,'']
-
-    return [True,mes]
-    # line = p.stdout.readline()
-    # print(str(line.strip()))
-    # if line.strip() == b'done!':
-    #     print("success!")
-    #     sys.stdout.flush()
-    #     exit()
-    # sys.stdout.flush()
+        return [True,mes]
 
 def stop():
     # check if process terminated or not

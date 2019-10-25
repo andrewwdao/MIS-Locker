@@ -39,7 +39,7 @@ class StreamReader:
         self._t.daemon = True
         self._t.start() #start collecting lines from the stream
 
-    def readline(self, timeout = None):
+    def readline(self, timeout = 0.1):
         try:
             return self._q.get(block = timeout is not None,
                     timeout = timeout)
