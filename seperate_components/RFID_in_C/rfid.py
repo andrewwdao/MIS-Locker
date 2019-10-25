@@ -52,10 +52,10 @@ def start():
 
 def check():
     # while rfid_object.poll is None:
-    mes = rfid_object.communicate()[0]
-    err = ''
+    # mes = rfid_object.communicate()[0]
+    # err = ''
     # err = rfid_object.stderr.readline()
-    # (mes, err) = rfid_object.communicate()
+    (mes, err) = rfid_object.communicate()
     sys.stdout.flush()
     sys.stderr.flush()
     return [str(mes),str(err)]

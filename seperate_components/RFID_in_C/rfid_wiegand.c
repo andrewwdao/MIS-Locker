@@ -238,10 +238,10 @@ void wiegand_timeout() { //Timeout from last bit read, sequence may be completed
     } else {  //for usage inside the big system
         if (wds.code_valid) { //if the received code is valid
             printf("0x%X\n", wds.full_code);
-            fflush(stdout);
+            fflush(stdout);fflush(stderr);
         } else { //if the received code is NOT valid
             printf("CHECKSUM_FAILED\n");
-            fflush(stdout);
+            fflush(stdout);fflush(stderr);
         }//end if else
     }//end if else
 } //end wiegand_timeout

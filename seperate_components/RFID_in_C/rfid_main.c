@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
               options.in_system);
 
     while (1) {
-        pause();
+        //pause();
 //        printf("\nAfter Pause\n\n");
     }//end while
 }//end main
