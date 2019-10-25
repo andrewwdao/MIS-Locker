@@ -61,12 +61,14 @@ def check():
     # mes = rfid_object.stdout.readline()
 
     mes = rfid_stream.readline(0.1)
+    if mes is not None:
+        mes = str(mes.strip())
     err = ''
 
     # (mes, err) = rfid_object.communicate()
     sys.stdout.flush()
     sys.stderr.flush()
-    return [str(mes.strip()),str(err.strip())]
+    return [mes,err]
     # line = p.stdout.readline()
     # print(str(line.strip()))
     # if line.strip() == b'done!':
