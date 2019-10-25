@@ -54,7 +54,10 @@ int main(int argc, char *argv[]) {
         }//end switch case
     }//end while
 
-    rfid_init(options.d0pin, options.d1pin, options.debug, options.in_system);
+    rfid_init(options.d0pin,
+              options.d1pin,
+              options.debug,
+              options.in_system);
 
     while (1) {
         pause();
