@@ -19,7 +19,7 @@
 #include "rfid_wiegand.h"
 
 /* Defaults, change with command-line options */
-#define D0_PIN 6
+#define D0_PIN 11
 #define D1_PIN 10
 
 struct option_s {
