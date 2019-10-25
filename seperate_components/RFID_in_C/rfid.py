@@ -58,7 +58,7 @@ def check():
         mes = rfid_mes.readline(0.05) # 0.05 secs to let the shell output the result
         sys.stdout.flush()
         if mes is not None: # turn it into string if it is not a null
-            mes = str(mes.strip()).decode("utf-8")
+            mes = str(mes.strip())
         if mes is None or mes == 'CHECKSUM_FAILED':
             return [False,'']
 
