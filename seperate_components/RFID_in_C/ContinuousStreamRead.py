@@ -44,6 +44,6 @@ class StreamReader:
             return self._q.get(block = timeout is not None,
                     timeout = timeout)
         except Empty:
-            return None, None
+            return None
 
 class UnexpectedEndOfStream(Exception): pass
