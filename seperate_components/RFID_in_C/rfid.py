@@ -40,14 +40,17 @@
  *
  --------------------------------------------------------------"""
 import subprocess as subpro
+from ContinuousStreamRead import StreamReader
 import sys
 
 TARGET = './rfid_main'
 rfid_object = object()
+rfid_stream = object()
 
 def start():
-    global rfid_object
+    global rfid_object, rfid_stream
     rfid_object = subpro.Popen([TARGET], shell=False, stdout=subpro.PIPE, stderr=subpro.PIPE)
+    rfid_stream = StreamReader(rfid_object.stdout)
     print('RFID ready!')
 
 def check():
@@ -55,12 +58,15 @@ def check():
     # mes = rfid_object.communicate()[0]
     # err = ''
     # err = rfid_object.stderr.readline()
-    mes = rfid_object.stdout.readline()
+    # mes = rfid_object.stdout.readline()
+
+    mes = rfid_stream.readline(0.1)
     err = ''
+
     # (mes, err) = rfid_object.communicate()
     sys.stdout.flush()
     sys.stderr.flush()
-    return [str(mes),str(err)]
+    return [str(mes.strip()),str(err.strip())]
     # line = p.stdout.readline()
     # print(str(line.strip()))
     # if line.strip() == b'done!':

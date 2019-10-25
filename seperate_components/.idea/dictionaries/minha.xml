@@ -18,6 +18,7 @@
       <w>perror</w>
       <w>pinout</w>
       <w>printf</w>
+      <w>readline</w>
       <w>rfid</w>
       <w>setitimer</w>
       <w>sigemptyset</w>

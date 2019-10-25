@@ -68,8 +68,7 @@ int main(int argc, char *argv[]) {
               options.in_system);
 
     while (1) {
-//        pause(); //pause to wait for ISR and not consuming system memory
-    fflush(stdout);fflush(stderr);
+        pause(); //pause to wait for ISR and not consuming system memory
     }//end while
 }//end main
 
