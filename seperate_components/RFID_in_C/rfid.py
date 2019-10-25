@@ -48,7 +48,7 @@ rfid_object = object()
 rfid_mes = object()
 
 def start():
-    global rfid_object, rfid_stream
+    global rfid_object, rfid_mes
     rfid_object = subpro.Popen([TARGET], shell=False, stdout=subpro.PIPE, stderr=subpro.PIPE)
     rfid_mes = StreamReader(rfid_object.stdout)
     print('RFID ready!')
