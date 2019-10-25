@@ -9,7 +9,7 @@
  * - https://gist.github.com/EyalAr
  --------------------------------------------------------------"""
 from threading import Thread
-from Queue import Queue, Empty
+from queue import Queue, Empty
 
 class StreamReader:
 
@@ -22,7 +22,7 @@ class StreamReader:
         self._s = stream
         self._q = Queue()
 
-        def _populateQueue(streams, queue):
+        def _populateQueue(streams, queues):
             """
             Collect lines from 'stream' and put them in 'queue'.
             """
@@ -30,7 +30,7 @@ class StreamReader:
             while True:
                 line = streams.readline()
                 if line:
-                    queue.put(line)
+                    queues.put(line)
                 else:
                     raise UnexpectedEndOfStream
 
