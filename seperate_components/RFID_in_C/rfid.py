@@ -58,7 +58,7 @@ def check():
     # (mes, err) = rfid_object.communicate()
         sys.stdout.flush()
         sys.stderr.flush()
-        return [str(mes.strip()),str(err.strip())]
+        return [str(mes),str(err)]
     # line = p.stdout.readline()
     # print(str(line.strip()))
     # if line.strip() == b'done!':

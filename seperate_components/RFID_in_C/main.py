@@ -23,6 +23,7 @@ import rfid
 import time
 try:
     rfid.start()
+    time.sleep(1)
     while True:
         [mes, err] = rfid.check()
         print(mes)
