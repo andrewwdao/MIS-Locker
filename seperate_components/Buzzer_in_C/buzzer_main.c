@@ -22,7 +22,7 @@
 
 /* Defaults, change with command-line options */
 #define BUZZER_PIN   0 // wiringPi pin -BCM pin 17
-#define BUZZER_DELAY 50 //ms
+#define BUZZER_DELAY 100 //ms
 
 void buzzer_showUsage();
 void buzzer_start(int buzDelay,int buzTimes,int buzPin);
