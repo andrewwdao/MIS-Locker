@@ -15,7 +15,9 @@
  -------------------------------------------------------------- */
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdint.h>
+#include <signal.h>
 #include <wiringPi.h>
 
 /* Defaults, change with command-line options */
@@ -27,9 +29,9 @@ void buzzer_start(int buzDelay,int buzTimes,int buzPin);
 
 int main(int argc, char *argv[]) {
     /* defaults */
-    buzzer_delay = BUZZER_DELAY;
-    beep_times = 1;
-    buzzer_pin = BUZZER_PIN;
+    int buzzer_delay = BUZZER_DELAY;
+    int beep_times = 1;
+    int buzzer_pin = BUZZER_PIN;
 
     /* Parse Options */
     int opt;
