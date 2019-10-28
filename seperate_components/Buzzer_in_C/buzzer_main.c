@@ -21,6 +21,10 @@
 /* Defaults, change with command-line options */
 #define BUZZER_PIN   0 // wiringPi pin -BCM pin 17
 #define BUZZER_DELAY 300 //ms
+
+void buzzer_showUsage();
+void buzzer_start(int buzDelay,int buzTimes,int buzPin);
+
 int main(int argc, char *argv[]) {
     /* defaults */
     buzzer_delay = BUZZER_DELAY;
@@ -66,9 +70,9 @@ void buzzer_start(int buzDelay,int buzTimes,int buzPin) {
     wiringPiSetup();
     pinMode(buzPin, OUTPUT);
     for (int i=0;i<buzTimes;i++) {
-        digitalWrite(STCP_PIN_a, LOW); //BEEP
+        digitalWrite(buzPin, LOW); //BEEP
         delay(buzDelay);
-        digitalWrite(STCP_PIN_a, HIGH); //NO BEEP
+        digitalWrite(buzPin, HIGH); //NO BEEP
         delay(buzDelay);
     }//end for
 }//end buzzer_start
