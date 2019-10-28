@@ -23,13 +23,13 @@
 
 // ------ Private constants -----------------------------------
 //First HC595 module:
-#define DS_PIN_a  	0 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
-#define STCP_PIN_a 	2 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
-#define SHCP_PIN_a 	3 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
+#define DS_PIN_a  	5 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
+#define STCP_PIN_a 	4 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
+#define SHCP_PIN_a 	1 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
 //Second HC595 module:
-#define DS_PIN_b  	1 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
-#define STCP_PIN_b 	4 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
-#define SHCP_PIN_b 	5 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
+#define DS_PIN_b  	12 //Pin connected to SER - DATA PIN (or Pin14 - DS) of 74HC595 - pin 0 of wiringPi, GPIO17
+#define STCP_PIN_b 	13 //Pin connected to RCLK - LATCH_PIN (or Pin12 - ST_CP) of 74HC595 - pin 2 of wiringPi, GPIO 27
+#define SHCP_PIN_b 	14 //Pin connected to SRCLK - CLOCK_PIN (or Pin11 - SH_CP) of 74HC595 - pin 3 of wiringPi, GPIO 22
 
 #define BEGIN_STATE 0b00000000
 // ------ Private function prototypes -------------------------
