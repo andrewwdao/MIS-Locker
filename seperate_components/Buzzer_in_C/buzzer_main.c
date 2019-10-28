@@ -22,7 +22,7 @@
 
 /* Defaults, change with command-line options */
 #define BUZZER_PIN   0 // wiringPi pin -BCM pin 17
-#define BUZZER_DELAY 300 //ms
+#define BUZZER_DELAY 150 //ms
 
 void buzzer_showUsage();
 void buzzer_start(int buzDelay,int buzTimes,int buzPin);
@@ -30,7 +30,7 @@ void buzzer_start(int buzDelay,int buzTimes,int buzPin);
 int main(int argc, char *argv[]) {
     /* defaults */
     int buzzer_delay = BUZZER_DELAY;
-    int beep_times = 1;
+    int beep_times = 2;
     int buzzer_pin = BUZZER_PIN;
 
     /* Parse Options */
