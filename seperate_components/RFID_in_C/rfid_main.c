@@ -19,8 +19,8 @@
 #include "rfid_wiegand.h"
 
 /* Defaults, change with command-line options */
-#define D0_PIN 11
-#define D1_PIN 10
+#define D0_PIN 3 // wiringPi pin
+#define D1_PIN 2 // wiringPi pin
 
 struct option_s {
     int d0pin;

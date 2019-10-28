@@ -45,8 +45,8 @@
 
 // ------ Private constants -----------------------------------
 /* Defaults, change with command-line options */
-#define D0_DEFAULT_PIN 11
-#define D1_DEFAULT_PIN 10
+#define D0_DEFAULT_PIN 3 // wiringPi pin
+#define D1_DEFAULT_PIN 2 // wiringPi pin
 
 #define WIEGAND_MAXBITS 40
 

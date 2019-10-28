@@ -29,8 +29,10 @@
       <w>entryright</w>
       <w>entryshiftdecrement</w>
       <w>entryshiftincrement</w>
+      <w>fflush</w>
       <w>fing</w>
       <w>functionset</w>
+      <w>getopt</w>
       <w>gpio</w>
       <w>gwiot</w>
       <w>incomming</w>
@@ -43,8 +45,10 @@
       <w>nhat</w>
       <w>nobacklight</w>
       <w>ogino</w>
+      <w>optarg</w>
       <w>petter</w>
       <w>phan</w>
+      <w>printf</w>
       <w>raschke</w>
       <w>returnhome</w>
       <w>rfid</w>
@@ -54,6 +58,8 @@
       <w>setddramaddr</w>
       <w>smbus</w>
       <w>startcode</w>
+      <w>stcp</w>
+      <w>stdint</w>
       <w>subpro</w>
       <w>uart</w>
       <w>weigang</w>
