@@ -17,8 +17,7 @@ import buzzer
 
 
 try:
-    buzzer.beep(300,3)
+    buzzer.beep(100, 2)
 except KeyboardInterrupt:
-    rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass
 

@@ -18,7 +18,7 @@ import subprocess as subpro
 TARGET = './buzzer_main'
 
 
-def beep(delayTime, buzTimes):
+def beep(delayTime=100, buzTimes=2):
     # print('Buzzer ready!')
     subpro.Popen([TARGET, str(delayTime), str(buzTimes)], shell=False)
 
