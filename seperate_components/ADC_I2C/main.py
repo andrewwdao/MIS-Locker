@@ -3,6 +3,6 @@ import time
 button = adc_button()
 switches = adc_switches()
 while True:
-    # print(button.read())
-    print(switches.read())
+    print(button.readRaw())
+    #print(switches.read())
     time.sleep(0.5)

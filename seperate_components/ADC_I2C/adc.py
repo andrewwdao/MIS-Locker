@@ -103,6 +103,9 @@ class adc_button(adc_read):
             return "BUT_OK"
         return "ERROR"
 
+    def readRaw(self):
+        return self.button.value
+
 
 class adc_switches(adc_read):
     def __init__(self):
@@ -167,3 +170,6 @@ class adc_switches(adc_read):
             return "DOOR10"
         # if still nothing return, then must be some error
         return "ERROR"
+
+    def readRaw(self):
+        return self.button.value
