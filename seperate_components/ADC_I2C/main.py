@@ -5,4 +5,4 @@ switches = adc_switches()
 while True:
     print(button.readRaw())
     #print(switches.read())
-    time.sleep(0.5)
+    time.sleep(1)
