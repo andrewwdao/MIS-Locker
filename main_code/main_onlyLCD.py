@@ -30,7 +30,7 @@ def main():  # Main program block
 
     lcd.clear()
     lcd.unknownIDPage()
-    lcd.pointerPos(2, 1)
+    lcd.pointerPos(3, 1)
 
     time.sleep(3)
 
