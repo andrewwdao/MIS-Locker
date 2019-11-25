@@ -71,6 +71,31 @@ def welcomePage(name, mssv, locker_num):
     LCD.write("Your Locker is " + str(locker_num))
 
 
+def returnPage(name, locker_num):
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Hello " + name + "!")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Your Locker is " + str(locker_num))
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Unlocked!")
+
+
+def questionPage():
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Continue using?")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Yes")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("No (Default)")
+
+
+def continueUsingPage():
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("YES command received.")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Your locker remained!")
+
+
 def addExtraInfoPage(name, mssv):
     LCD.setCursor(0, 0)  # row, column
     LCD.write("Name: " + name)
@@ -162,81 +187,34 @@ def addRFIDFailPage():
 
 def addInfoPage():
     LCD.setCursor(5, 0)  # row, column
-    LCD.write("ADD NEW INFO")
+    LCD.write("ADD NEW INFO:Connect")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("Connect to MIS-CTU")
+    LCD.write("to MIS-CTU wifi & ")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("wifi & open browser")
+    LCD.write("open browser to")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("to: mis-locker.ctu")
+    LCD.write("192.168.1.111:7497")
 
 
 # ------------------------------ Admin level interfaces ------------------------------
-def mainDatabasePage():
+def mainAdminPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADMIN MENU:")
     LCD.setCursor(2, 1)  # row, column
-    LCD.write("1. Export Database")  # export will export everything
+    LCD.write("1. Modify Database")  # export will export everything
     LCD.setCursor(2, 2)  # row, column
-    LCD.write("2. Import Database")  # import will have 2 options: append and override
-    LCD.setCursor(2, 3)  # row, column
-    LCD.write("3. Clear Database")  #
+    LCD.write("2. Info Locker")  # import will have 2 options: append and override
 
 
-def exportSuccessPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("EXPORT DATABASE")
-    LCD.setCursor(7, 1)  # row, column
-    LCD.write("Done!")
+def modifyDatabaseInfoPage():
+    LCD.setCursor(5, 0)  # row, column
+    LCD.write("Connect to ssh with:")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("ssh MISlocker@192")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write(".168.1.111")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
-
-
-def exportFailPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("EXPORT DATABASE")
-    LCD.setCursor(6, 1)  # row, column
-    LCD.write("Failed!")
-    LCD.setCursor(2, 2)  # row, column
-    LCD.write("Retry")
-    LCD.setCursor(2, 3)  # row, column
-    LCD.write("Cancel")
-
-
-def importPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("IMPORT DATABASE")
-    LCD.setCursor(2, 2)  # row, column
-    LCD.write("1. Append database")
-    LCD.setCursor(2, 3)  # row, column
-    LCD.write("2. New database")
-
-
-def importSuccessPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("IMPORT DATABASE")
-    LCD.setCursor(7, 1)  # row, column
-    LCD.write("Done!")
-    LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
-
-
-def importFailPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("IMPORT DATABASE")
-    LCD.setCursor(6, 1)  # row, column
-    LCD.write("Failed!")
-    LCD.setCursor(2, 2)  # row, column
-    LCD.write("Retry")
-    LCD.setCursor(2, 3)  # row, column
-    LCD.write("Cancel")
-
-
-def mainLockerPage():
-    LCD.setCursor(0, 0)  # row, column
-    LCD.write("ADMIN MENU:")
-    LCD.setCursor(2, 1)  # row, column
-    LCD.write("4. Info Locker")  # check any locker that has information in
+    LCD.write("Pass: raspberry")
 
 
 def infoLockerPage(name, mssv):
@@ -250,6 +228,15 @@ def infoLockerPage(name, mssv):
     LCD.write("Unlock?")
 
 
+def unlockConfirmPage(locker_num):
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("UNLOCKED!")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Locker: " + str(locker_num))
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("All info deleted!")
+
+
 def infoLockerTempPage():
     LCD.setCursor(4, 0)  # row, column
     LCD.write("INFO LOCKER")
@@ -257,3 +244,59 @@ def infoLockerTempPage():
     LCD.write("Temporary User")
     LCD.setCursor(0, 3)  # row, column
     LCD.write("Unlock?")
+# def exportSuccessPage():
+#     LCD.setCursor(2, 0)  # row, column
+#     LCD.write("EXPORT DATABASE")
+#     LCD.setCursor(7, 1)  # row, column
+#     LCD.write("Done!")
+#     LCD.setCursor(0, 3)  # row, column
+#     LCD.write("Press any to return")
+#
+#
+# def exportFailPage():
+#     LCD.setCursor(2, 0)  # row, column
+#     LCD.write("EXPORT DATABASE")
+#     LCD.setCursor(6, 1)  # row, column
+#     LCD.write("Failed!")
+#     LCD.setCursor(2, 2)  # row, column
+#     LCD.write("Retry")
+#     LCD.setCursor(2, 3)  # row, column
+#     LCD.write("Cancel")
+#
+#
+# def importPage():
+#     LCD.setCursor(2, 0)  # row, column
+#     LCD.write("IMPORT DATABASE")
+#     LCD.setCursor(2, 2)  # row, column
+#     LCD.write("1. Append database")
+#     LCD.setCursor(2, 3)  # row, column
+#     LCD.write("2. New database")
+#
+#
+# def importSuccessPage():
+#     LCD.setCursor(2, 0)  # row, column
+#     LCD.write("IMPORT DATABASE")
+#     LCD.setCursor(7, 1)  # row, column
+#     LCD.write("Done!")
+#     LCD.setCursor(0, 3)  # row, column
+#     LCD.write("Press any to return")
+#
+#
+# def importFailPage():
+#     LCD.setCursor(2, 0)  # row, column
+#     LCD.write("IMPORT DATABASE")
+#     LCD.setCursor(6, 1)  # row, column
+#     LCD.write("Failed!")
+#     LCD.setCursor(2, 2)  # row, column
+#     LCD.write("Retry")
+#     LCD.setCursor(2, 3)  # row, column
+#     LCD.write("Cancel")
+
+
+# def mainLockerPage():
+#     LCD.setCursor(0, 0)  # row, column
+#     LCD.write("ADMIN MENU:")
+#     LCD.setCursor(2, 1)  # row, column
+#     LCD.write("4. Info Locker")  # check any locker that has information in
+#
+

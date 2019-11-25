@@ -1,0 +1,12 @@
+[Unit]
+Description=MISlocker init service
+DefaultDependencies=false
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -u peripheral_init.py
+WorkingDirectory=/home/MISlocker/MISlocker/main_code
+Restart=no
+
+[Install]
+WantedBy=sysinit.target
