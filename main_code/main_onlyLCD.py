@@ -13,6 +13,12 @@ def main():  # Main program block
     time.sleep(3)
 
     lcd.clear()
+    lcd.addExtraInfoPage('Dao Minh An', 'B1509360')
+    lcd.pointerPos(2, 1)
+    
+    time.sleep(3)
+
+    lcd.clear()
     lcd.unknownIDPage()
     lcd.pointerPos(2, 1)
 
@@ -96,9 +102,6 @@ def main():  # Main program block
     lcd.unlockConfirmPage(3)
 
 
-# lcd.addInfoPage()
-#    lcd.addExtraInfoPage('Dao Minh An', 'B1509360')
-#    lcd.pointerPos(2, 1)
 
 
 if __name__ == '__main__':
