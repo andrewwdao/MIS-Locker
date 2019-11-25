@@ -64,10 +64,6 @@ def main():  # Main program block
     lcd.addRFIDFailPage()
     lcd.pointerPos(2, 1)
 
-    time.sleep(3)
-
-    lcd.clear()
-    lcd.addInfoPage()
 
     time.sleep(3)
 
