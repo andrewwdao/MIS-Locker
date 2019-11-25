@@ -13,7 +13,7 @@ from app import saveInfo_app
 
 if __name__ == "__main__":
   # use this for raspberry pi
-  saveInfo_app.run(host='127.0.0.1', port=5000, debug=True)
+  saveInfo_app.run(host='0.0.0.0', port=7497, debug=True)
   # saveInfo_app.run(debug=False)
   print("save info done")
   

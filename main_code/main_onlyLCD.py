@@ -15,7 +15,7 @@ def main():  # Main program block
     lcd.clear()
     lcd.addExtraInfoPage('Dao Minh An', 'B1509360')
     lcd.pointerPos(2, 1)
-    
+
     time.sleep(3)
 
     lcd.clear()

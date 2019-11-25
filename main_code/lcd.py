@@ -185,7 +185,7 @@ def addRFIDFailPage():
     LCD.write("Cancel")
 
 
-def addInfoPage():
+def ls():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD NEW INFO:Connect")
     LCD.setCursor(0, 1)  # row, column
