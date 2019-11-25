@@ -4,7 +4,7 @@ DefaultDependencies=false
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 -u peripheral_init.py
+ExecStart=/usr/bin/python3 -u initialization.py
 WorkingDirectory=/home/MISlocker/MISlocker/main_code
 Restart=no
 
