@@ -51,7 +51,7 @@ def main():  # Main program block
     time.sleep(3)
 
     lcd.clear()
-    # lcd.addExtraInfoPage()
+    lcd.addInfoPage()
 
     time.sleep(3)
 

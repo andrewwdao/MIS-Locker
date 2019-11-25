@@ -186,7 +186,7 @@ def addRFIDFailPage():
 
 
 def addInfoPage():
-    LCD.setCursor(5, 0)  # row, column
+    LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD NEW INFO:Connect")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("to MIS-CTU wifi & ")
@@ -207,7 +207,7 @@ def mainAdminPage():
 
 
 def modifyDatabaseInfoPage():
-    LCD.setCursor(5, 0)  # row, column
+    LCD.setCursor(0, 0)  # row, column
     LCD.write("Connect to SSH with:")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("MISlocker@")
