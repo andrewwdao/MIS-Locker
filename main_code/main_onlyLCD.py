@@ -8,6 +8,16 @@ def main():  # Main program block
     time.sleep(3)
 
     lcd.clear()
+    lcd.infoLockerTempPage()
+
+    time.sleep(3)
+
+    lcd.clear()
+    lcd.welcomeTempPage(3)
+
+    time.sleep(3)
+
+    lcd.clear()
     lcd.waitPage()
 
     time.sleep(3)

@@ -95,3 +95,9 @@ class Database:
             return [False, None, None, None, None, None]
         else:  # if user existed
             return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+
+    def getAllUserInfo(self):
+        user = User.query.all()
+        print(user)
+        return
+

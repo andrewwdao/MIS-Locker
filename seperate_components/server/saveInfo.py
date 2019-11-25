@@ -10,10 +10,6 @@
  --------------------------------------------------------------"""
 from app import saveInfo_app
 
-
 if __name__ == "__main__":
-  # use this for raspberry pi
-  saveInfo_app.run(host='0.0.0.0', port=7497, debug=True)
-  # saveInfo_app.run(debug=False)
-  print("save info done")
-  
+    # use raspberry pi IP address instead of 0.0.0.0 and local IP address for PC (127.0.0.1)
+    saveInfo_app.run(host='0.0.0.0', port=7497, debug=True)

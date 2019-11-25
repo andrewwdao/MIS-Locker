@@ -121,6 +121,8 @@ def welcomeTempPage(locker_num):
 def unknownIDPage():
     LCD.setCursor(1, 0)  # row, column
     LCD.write("NOT RECOGNISED ID!")
+    LCD.setCursor(2, 1)  # row, column
+    LCD.write("One-time User")
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Add New ID")
     LCD.setCursor(2, 3)  # row, column

@@ -20,8 +20,10 @@ class InfoForm(FlaskForm):
     save = SubmitField('Save')
 
     def validate_mssv(self, mssv):
-        if len(mssv.data) != 8:
+
+        if len(mssv.data) != 8:  # check length of the mssv typed in
             raise ValidationError('Wrong format. Try again.')
-        user = User.query.filter_by(mssv=mssv.data).first()
+
+        user = User.query.filter_by(mssv=mssv.data).first()  # search in the database if this mssv is existed or not
         if user is not None:
             raise ValidationError('This ID existed!')

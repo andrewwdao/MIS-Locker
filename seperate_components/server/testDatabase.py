@@ -9,7 +9,6 @@
  *
  --------------------------------------------------------------"""
 from database import Database
-import time
 
 
 def main():

@@ -37,6 +37,7 @@
       <w>gwiot</w>
       <w>incomming</w>
       <w>khoa</w>
+      <w>lastest</w>
       <w>lindegaard</w>
       <w>maxbits</w>
       <w>minh</w>
@@ -57,6 +58,7 @@
       <w>setcgramaddr</w>
       <w>setddramaddr</w>
       <w>smbus</w>
+      <w>sqlalchemy</w>
       <w>startcode</w>
       <w>stcp</w>
       <w>stdint</w>
