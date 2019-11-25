@@ -55,7 +55,7 @@ def main():  # Main program block
     time.sleep(0.5)
 
     lcd.clear()
-    lcd.addFingerPage(1)
+    lcd.addFingerPage()
 
     print(switches.read())
     time.sleep(0.5)

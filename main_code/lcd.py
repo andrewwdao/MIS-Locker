@@ -127,13 +127,13 @@ def unknownIDPage():
     LCD.write("Add Existed ID")
 
 
-def addFingerPage(number):
+def addFingerPage():
     LCD.setCursor(2, 0)  # row, column
     LCD.write("ADD  FINGERPRINT")
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Put your finger")
     LCD.setCursor(2, 3)  # row, column
-    LCD.write("in position " + str(number))
+    LCD.write("in the scanner")
 
 
 def addFingerSuccessPage():
@@ -208,11 +208,11 @@ def mainAdminPage():
 
 def modifyDatabaseInfoPage():
     LCD.setCursor(5, 0)  # row, column
-    LCD.write("Connect to ssh with:")
+    LCD.write("Connect to SSH with:")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("MISlocker@192.168.1")
+    LCD.write("MISlocker@")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write(".111")
+    LCD.write("192.168.1.111")
     LCD.setCursor(0, 3)  # row, column
     LCD.write("Pass: raspberry")
 

@@ -19,7 +19,7 @@ def main():  # Main program block
     time.sleep(3)
 
     lcd.clear()
-    lcd.addFingerPage(1)
+    lcd.addFingerPage()
 
     time.sleep(3)
 
@@ -78,7 +78,7 @@ def main():  # Main program block
 
     lcd.clear()
     lcd.mainAdminPage()
-    lcd.pointerPos(2, 1)
+    lcd.pointerPos(3, 1)
 
     time.sleep(3)
 
