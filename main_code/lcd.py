@@ -76,7 +76,7 @@ def returnPage(name, locker_num):
     LCD.write("Hello " + name + "!")
     LCD.setCursor(0, 2)  # row, column
     LCD.write("Your Locker is " + str(locker_num))
-    LCD.setCursor(0, 2)  # row, column
+    LCD.setCursor(0, 3)  # row, column
     LCD.write("Unlocked!")
 
 
@@ -91,9 +91,9 @@ def questionPage():
 
 def continueUsingPage():
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("YES command received.")
+    LCD.write("YES command received")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("Your locker remained!")
+    LCD.write("Your locker remained")
 
 
 def addExtraInfoPage(name, mssv):
@@ -229,12 +229,12 @@ def infoLockerPage(name, mssv):
 
 
 def unlockConfirmPage(locker_num):
-    LCD.setCursor(4, 0)  # row, column
+    LCD.setCursor(0, 0)  # row, column
     LCD.write("UNLOCKED!")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("Locker: " + str(locker_num))
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("All info deleted!")
+    LCD.write("User deleted!")
 
 
 def infoLockerTempPage():
