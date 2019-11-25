@@ -92,7 +92,7 @@ def questionPage():
 def continueUsingPage():
     LCD.setCursor(0, 1)  # row, column
     LCD.write("YES command received")
-    LCD.setCursor(0, 2)  # row, column
+    LCD.setCursor(0, 3)  # row, column
     LCD.write("Your locker remained")
 
 
@@ -210,9 +210,9 @@ def modifyDatabaseInfoPage():
     LCD.setCursor(5, 0)  # row, column
     LCD.write("Connect to ssh with:")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("ssh MISlocker@192")
+    LCD.write("MISlocker@192.168.1")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write(".168.1.111")
+    LCD.write(".111")
     LCD.setCursor(0, 3)  # row, column
     LCD.write("Pass: raspberry")
 
