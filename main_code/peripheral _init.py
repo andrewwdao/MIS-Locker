@@ -10,12 +10,12 @@
  *
  --------------------------------------------------------------"""
 import subprocess as subpro
-import time
+import lcd
 
 pi_dir = "./peripheral_init"
 
 if __name__ == '__main__':
-
+    lcd.begin()
     try:
         subpro.Popen([pi_dir], shell=False)
     except KeyboardInterrupt:

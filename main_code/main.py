@@ -1,6 +1,7 @@
 import lcd
-from adc import adc_button,adc_switches
+from adc import adc_button, adc_switches
 import time
+
 button = adc_button()
 switches = adc_switches()
 
@@ -202,7 +203,6 @@ def main():  # Main program block
     lcd.clear()
     lcd.questionPage()
 
-
     print(switches.read())
     time.sleep(0.5)
     print(switches.read())
@@ -265,7 +265,6 @@ def main():  # Main program block
     print(switches.read())
     time.sleep(0.5)
 
-
     lcd.clear()
     lcd.infoLockerPage('Dao Minh An', 'B1509360')
 
@@ -285,7 +284,8 @@ def main():  # Main program block
     lcd.clear()
     lcd.unlockConfirmPage(3)
 
-#lcd.addInfoPage()
+
+# lcd.addInfoPage()
 #    lcd.addExtraInfoPage('Dao Minh An', 'B1509360')
 #    lcd.pointerPos(2, 1)
 
