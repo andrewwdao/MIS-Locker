@@ -25,12 +25,12 @@ import time
 rfid = RDM6300('/dev/ttyUSB0', 9600)
 
 try:
-    time.sleep(1)
+    # time.sleep(1)
     print('waiting for tag... ')
     while True:
         if rfid.hasID():
-            print(rfid.debugInfo)
-            print(rfid.tagID)
+            rfid.debugInfo()
+            print(rfid.tagID())
 except KeyboardInterrupt:
     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass
