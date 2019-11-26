@@ -16,7 +16,7 @@ from ads1115.analog_in import AnalogIn
 ACTIVATE_MODULE02 = False
 # -----Address and Screen parameter:
 ADS_ADDRESS = 0x48
-BUTTON = ADS.P0
+BUTTON = ADS.P3
 SWITCH_M1 = ADS.P1
 SWITCH_M2 = ADS.P2
 
