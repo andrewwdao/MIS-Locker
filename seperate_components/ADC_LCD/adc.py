@@ -9,8 +9,8 @@
  *
  *
  --------------------------------------------------------------"""
-import ADC.ads1115 as ADS
-from ADC.analog_in import AnalogIn
+import ads1115.ads1115 as ADS
+from ads1115.analog_in import AnalogIn
 
 # ---------------------------- Private Parameters:
 ACTIVATE_MODULE02 = False
@@ -21,18 +21,18 @@ SWITCH_M1 = ADS.P1
 SWITCH_M2 = ADS.P2
 
 # This adc value may have to be changed if changing power supply
-NO_PRESS_MIN = ALL_CLOSED_MIN = 25000
-NO_PRESS_MAX = ALL_CLOSED_MAX = 30000
+NO_PRESS_MIN = ALL_CLOSED_MIN = 17000
+NO_PRESS_MAX = ALL_CLOSED_MAX = 23000
 
 # This adc value may have to be changed if changing power supply
-CANCEL_MIN = 0
-CANCEL_MAX = 500
-UP_MIN = 1000
-UP_MAX = 1500
-DOWN_MIN = 2000
-DOWN_MAX = 2500
-OK_MIN = 3000
-OK_MAX = 3500
+CANCEL_MIN = 4000
+CANCEL_MAX = 8000
+UP_MIN = 9000
+UP_MAX = 12000
+DOWN_MIN = 13000
+DOWN_MAX = 16000
+OK_MIN = -1000
+OK_MAX = 3000
 
 # This adc value may have to be changed if changing power supply
 DOOR01_MIN = 0
@@ -103,6 +103,9 @@ class adc_button(adc_read):
             return "BUT_OK"
         return "ERROR"
 
+    def readRaw(self):
+        return self.button.value
+
 
 class adc_switches(adc_read):
     def __init__(self):
@@ -167,3 +170,6 @@ class adc_switches(adc_read):
             return "DOOR10"
         # if still nothing return, then must be some error
         return "ERROR"
+
+    def readRaw(self):
+        return self.button.value
