@@ -19,16 +19,19 @@
  *  8(BLACK)  - GND
  *
  --------------------------------------------------------------"""
-import rfid
+from rfid import RDM6300
 import time
+
+rfid = RDM6300('/dev/ttyUSB0', 9600)
+
 try:
-    rfid.start()
     time.sleep(1)
+    print('waiting for tag... ')
     while True:
-        [rfid_available, rfid_tag] = rfid.check()
-        if rfid_available:
-            print(rfid_tag)
+        if rfid.hasID():
+            print(rfid.debugInfo)
+            print(rfid.tagID)
 except KeyboardInterrupt:
-    rfid.stop() # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass
 

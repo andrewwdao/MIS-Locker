@@ -1,10 +1,11 @@
-
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
 PyRfid
 Copyright (C) 2015 Philipp Meisberger <team@pm-codeworks.de>
+Copyright (C) 2019 Minh-An Dao <minhan7497@gmail.com>
+
 All rights reserved.
 
 """
@@ -12,6 +13,15 @@ All rights reserved.
 import serial
 import os
 import struct
+import RPi.GPIO as GPIO  # default as BCM mode!
+
+READY = False
+
+
+def ISR(channel):
+    global READY
+    READY = True
+
 
 class PyRfid(object):
     """
@@ -30,25 +40,34 @@ class PyRfid(object):
     @var string __rawTag
     """
 
+    INT_PIN = 22  # BCM GPIO 22 - wiringPi 3
+    DEBOUNCE = 700
     RFID_STARTCODE = 0x02
     RFID_ENDCODE = 0x03
     __serial = None
     __rawTag = None
 
-    def __init__(self, port = '/dev/ttyUSB0', baudRate = 9600):
+    def __init__(self, port='/dev/ttyUSB0', baudRate=9600):
         """
         Constructor
 
-        @param string port
-        @param integer baudRate
+        @param  port string
+        @param baudRate integer
         """
 
-        ## Validates port
-        if ( os.path.exists(port) == False ):
+        # Validates port
+        if not os.path.exists(port):
             raise Exception('The RFID sensor port "' + port + '" was not found!')
 
-        ## Initializes connection
-        self.__serial = serial.Serial(port = port, baudrate = baudRate, bytesize = serial.EIGHTBITS, timeout = 1)
+        # Initializes connection
+        self.__serial = serial.Serial(port=port, baudrate=baudRate, bytesize=serial.EIGHTBITS, timeout=1)
+
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
+        GPIO.setup(self.INT_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.add_event_detect(self.INT_PIN, GPIO.RISING, callback=ISR, bouncetime=self.DEBOUNCE)
+        global READY
+        READY = False
 
     def __del__(self):
         """
@@ -56,8 +75,8 @@ class PyRfid(object):
 
         """
 
-        ## Closes connection if established
-        if ( ( self.__serial != None ) and ( self.__serial.isOpen() == True ) ):
+        # Closes connection if established
+        if (self.__serial is not None) and (self.__serial.isOpen()):
             self.__serial.close()
 
     def __read(self):
@@ -66,6 +85,7 @@ class PyRfid(object):
 
         @return boolean
         """
+        global READY
 
         self.__rawTag = None
         rawTag = ''
@@ -73,49 +93,50 @@ class PyRfid(object):
         receivedPacketData = []
         index = 0
 
-        while ( True ):
+        while READY:
 
-            ## Reads on byte
+            # Reads on byte
             receivedFragment = self.__serial.read()
 
-            ## Collects RFID data
-            if ( len(receivedFragment) != 0 ):
+            # Collects RFID data
+            if len(receivedFragment) != 0:
 
-                ## Start and stop bytes are string encoded and must be byte encoded
-                if ( ( index == 0 ) or ( index == 13 ) ):
+                # Start and stop bytes are string encoded and must be byte encoded
+                if (index == 0) or (index == 13):
                     receivedFragment = struct.unpack('@B', receivedFragment)[0]
                 else:
                     rawTag += str(struct.unpack('@B', receivedFragment)[0])
                     receivedFragment = int(receivedFragment, 16)
 
-                ## Collects RFID data (hexadecimal)
+                # Collects RFID data (hexadecimal)
                 receivedPacketData.append(receivedFragment)
                 index += 1
 
-            ## Packet completly received
-            if ( index == 14 ):
+            # Packet completely received
+            if index == 14:
 
-                ## Checks for invalid packet data
-                if ( ( receivedPacketData[0] != self.RFID_STARTCODE ) or ( receivedPacketData[13] != self.RFID_ENDCODE ) ):
+                # Checks for invalid packet data
+                if (receivedPacketData[0] != self.RFID_STARTCODE) or (receivedPacketData[13] != self.RFID_ENDCODE):
                     raise Exception('Invalid start or stop bytes!')
 
-                ## Calculates packet checksum
+                # Calculates packet checksum
                 for i in range(1, 11, 2):
                     byte = receivedPacketData[i] << 4
-                    byte = byte | receivedPacketData[i+1]
+                    byte = byte | receivedPacketData[i + 1]
                     calculatedChecksum = calculatedChecksum ^ byte
 
-                ## Gets received packet checksum
+                # Gets received packet checksum
                 receivedChecksum = receivedPacketData[11] << 4
                 receivedChecksum = receivedChecksum | receivedPacketData[12]
 
-                ## Checks for wrong checksum
-                if ( calculatedChecksum != receivedChecksum ):
+                # Checks for wrong checksum
+                if calculatedChecksum != receivedChecksum:
                     raise Exception('Calculated checksum is wrong!')
 
-                ## Sets complete tag for other methods
+                # Sets complete tag for other methods
                 self.__rawTag = rawTag
 
+                READY = False
                 return True
 
     def readTag(self):
@@ -126,13 +147,13 @@ class PyRfid(object):
         """
 
         try:
-            while ( self.__read() != True ):
-                pass
+            if self.__read():
+                return True
+            else:
+                return False
 
         except KeyboardInterrupt:
             return False
-
-        return True
 
     @property
     def rawTag(self):
@@ -152,7 +173,7 @@ class PyRfid(object):
         @return hex (4 bytes)
         """
 
-        if ( self.__rawTag != None ):
+        if self.__rawTag is not None:
             return hex(int(self.__rawTag[0:4], 16))
 
         return None
@@ -165,7 +186,7 @@ class PyRfid(object):
         @return hex (2 bytes)
         """
 
-        if ( self.__rawTag != None ):
+        if self.__rawTag is not None:
             return hex(int(self.__rawTag[0:2], 16))
 
         return None
@@ -178,9 +199,8 @@ class PyRfid(object):
         @return string (10 chars)
         """
 
-        if ( self.__rawTag != None ):
-
-            ## Length of ID is 10 anyway
+        if self.__rawTag is not None:
+            # Length of ID is 10 anyway
             return '%010i' % int(self.__rawTag[4:10], 16)
 
         return None
@@ -193,7 +213,7 @@ class PyRfid(object):
         @return string (9 chars)
         """
 
-        if ( self.__rawTag != None ):
+        if self.__rawTag is not None:
             pre = float.fromhex(self.__rawTag[2:6])
             post = float.fromhex(self.__rawTag[6:10]) / 100000
             tag = pre + post
@@ -209,7 +229,7 @@ class PyRfid(object):
         @return hex (2 bytes)
         """
 
-        if ( self.__rawTag != None ):
+        if self.__rawTag is not None:
             return hex(int(self.__rawTag[10:12], 16))
 
         return None

@@ -51,6 +51,10 @@ class RDM6300:
         print('RFID ready!')
 
     def hasID(self):
+        if self.rfid.readTag():
+            return True
+        else:
+            return False
 
     def tagID(self):
         return self.rfid.tagId
@@ -69,6 +73,7 @@ class RDM6300:
 
     def stop(self):
         return
+
 
 class Gwiot_7304D2:
     def __init__(self):
@@ -91,7 +96,7 @@ class Gwiot_7304D2:
         return self.tag_id
 
     def debugInfo(self):
-        print('ID:       '+ self.tag_id)
+        print('ID:       ' + self.tag_id)
         print('Nothing else to display here')
 
     def stop(self):
@@ -100,8 +105,6 @@ class Gwiot_7304D2:
             self.rfid.terminate()
             self.rfid.kill()
             print('RFID terminated!')
-
-
 
 # def start():
 #     global rfid_object, rfid_mes
