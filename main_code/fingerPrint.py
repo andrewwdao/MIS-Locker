@@ -14,7 +14,7 @@ import time
 
 # ---------------------------- Private Parameters:
 # -----Starting parameter:
-FINGER_PORT = '/dev/ttyUSB0'
+FINGER_PORT = '/dev/ttyUSB1'
 FINGER_BAUDRATE = 57600
 FINGER_ADDRESS = 0xFFFFFFFF
 FINGER_PASSWORD = 0x00000000
