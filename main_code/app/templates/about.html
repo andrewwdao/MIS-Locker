@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <div id="credits">
+      <header>
+        <h1>About</h1>
+      </header>
+      <section>
+        <p id="main-cre">
+          <br />
+          <strong>&copy; 2019 Minh-An Dao</strong>
+          <br />
+          <strong>&copy; 2019 Minh-Luan Nguyen</strong>
+        </p>
+        <p>
+        This is a part of an undergraduate thesis. Created for Maker Innovation Space - Can Tho University, Vietnam<br />
+        Credited libraries:<br />
+         - Esp32 wifi manager, &copy;  2017-2019, Tony Pottier.<br />
+         All Licensed under the MIT License.
+        </p>
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-block" role="button">Ok</a>
+      </section>
+    </div>
+{% endblock %}

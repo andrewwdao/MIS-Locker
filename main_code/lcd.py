@@ -230,6 +230,14 @@ def infoLockerPage(name, mssv):
     LCD.write("Unlock?")
 
 
+def infoLockerNoOnePage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("INFO LOCKER")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("No available")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("information")
+
 def unlockConfirmPage(locker_num):
     LCD.setCursor(0, 0)  # row, column
     LCD.write("UNLOCKED!")
