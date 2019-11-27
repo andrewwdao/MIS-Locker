@@ -40,36 +40,52 @@
  *
  --------------------------------------------------------------"""
 import subprocess as subpro
-from pyrfid.pyrfid import PyRfid
+import serial
 from ContinuousStreamRead import StreamReader
 import sys
+import time
 
 
 class RDM6300:
-    def __init__(self, port='/dev/ttyUSB0', baudRate=9600):
-        self.rfid = PyRfid(port, baudRate)
+    # def __init__(self, port='/dev/ttyUSB0', baudRate=9600):
+    def __init__(self, com_port='/dev/ttyUSB0', baud_rate=115200):
+        # ----------------------------Class variable:
+        self.__serial = serial.Serial(com_port, baudrate=baud_rate,
+                                      parity=serial.PARITY_NONE,
+                                      stopbits=serial.STOPBITS_ONE,
+                                      bytesize=serial.EIGHTBITS
+                                      )
+        if self.__serial.isOpen():
+            self.__serial.close()
+
+        self.__serial.open()
+
+        self.__serial.flushInput()
+        self.tag_id = ""
+        time.sleep(1)
         print('RFID ready!')
 
     def hasID(self):
-        if self.rfid.readTag():
+        buffer = self.__serial.readline()
+        if len(buffer):
+            self.tag_id = buffer
             return True
-        else:
-            return False
+        return False
 
     def tagID(self):
-        return self.rfid.tagId
+        return self.tagID
 
-    def debugInfo(self):
-        print('RAW:      ' + self.rfid.rawTag)
-        print('Checksum: ' + self.rfid.tagChecksum + '\n')
-
-        print('Decimal-format:')
-        print('ID:       ' + self.rfid.tagId)
-        print('Type:     ' + self.rfid.tagType + '\n')
-
-        print('Float-format:')
-        print('ID:       ' + self.rfid.tagIdFloat)
-        print('Type:     ' + self.rfid.tagTypeFloat)
+    # def debugInfo(self):
+    #     print('RAW:      ' + self.rfid.rawTag)
+    #     print('Checksum: ' + self.rfid.tagChecksum + '\n')
+    #
+    #     print('Decimal-format:')
+    #     print('ID:       ' + self.rfid.tagId)
+    #     print('Type:     ' + self.rfid.tagType + '\n')
+    #
+    #     print('Float-format:')
+    #     print('ID:       ' + self.rfid.tagIdFloat)
+    #     print('Type:     ' + self.rfid.tagTypeFloat)
 
     def stop(self):
         return
@@ -95,9 +111,9 @@ class Gwiot_7304D2:
     def tagID(self):
         return self.tag_id
 
-    def debugInfo(self):
-        print('ID:       ' + self.tag_id)
-        print('Nothing else to display here')
+    # def debugInfo(self):
+    #     print('ID:       ' + self.tag_id)
+    #     print('Nothing else to display here')
 
     def stop(self):
         # check if process terminated or not

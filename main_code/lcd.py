@@ -238,6 +238,7 @@ def infoLockerNoOnePage():
     LCD.setCursor(0, 3)  # row, column
     LCD.write("information")
 
+
 def unlockConfirmPage(locker_num):
     LCD.setCursor(0, 0)  # row, column
     LCD.write("UNLOCKED!")

@@ -10,8 +10,8 @@ import time
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
 ADMIN_KEY = 'ABCDEF'
-PROMPT_WAITING_TIME  = 8
-
+PROMPT_WAITING_TIME = 8
+TEMPORARY_USER_ID = 9999
 DOOR = (
     "NULL",
     "DOOR01",
@@ -46,7 +46,8 @@ next_locker_available = 1  # next available locker (default at 1)
 # database id stand with locker that has been rented (20 locker)
 # omit index 0!!!
 lockerArray = [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
-                None, None, None, None, None]
+               None, None, None, None, None]
+
 
 def dumpDebug(iid, name, mssv, rrfid, fing):
     print('member_id: ' + str(iid))
@@ -220,11 +221,61 @@ def adminCase():
 
 
 def lockerInfo(choosing_pointer):
-    if (not None) in lockerArray:  # there are something to display
-        current_index = lockerArray.index(not None)  # get first available parameter
-        current_locker = lockerArray[current_index]
-        if current_locker
-    else:  # no information is saved
+    global lockerArray
+    current_locker = 0
+    while True:
+        current_locker += 1
+        showInfo(current_locker, choosing_pointer)
+            # ------------------Button part ------------------
+            while True:
+                status = button.read()
+                if status is "BUT_OK":
+                    lcd.unlockConfirmPage(current_locker)
+                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
+                    pr.locker(current_locker, pr.OPEN)  # Open locker stand with this user id
+                    lockerArray[current_locker] = None
+
+                    last_millis = datetime.now(timezone.utc)
+                    while switches.read() is not DOOR[current_locker]:  # if the door is not open
+                        # then wait
+                        # wait for 10 seconds, if no signal then automatically use 'No' command
+                        if (datetime.now(timezone.utc) - last_millis).seconds > PROMPT_WAITING_TIME:
+                            break
+                    # now the door is open!
+                    time.sleep(2)  # wait for 2 second before proceeding
+                    pr.locker(current_locker, pr.CLOSE)  # close locker stand with this user id
+
+                    # --- wait for the locker is closed
+                    while switches.read() is not "ALL_CLOSED":  # wait for the locker to be closed
+                        # wait and print something to debug!
+                        print(switches.read())
+                    # --- closed
+
+                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
+
+                    return
+                elif status is "BUT_CANCEL":
+                    lcd.clear()
+                    lcd.mainAdminPage()
+                    lcd.pointerPos(3, choosing_pointer)
+                    return  # return to main menu
+                elif status is "BUT_UP":
+                    if current_locker == 20:  # limit to 20 locker
+                        pass
+                    else:
+                        choosing_pointer += 1
+                    showInfo(current_locker,choosing_pointer)
+                elif status is "BUT_DOWN":
+                    if choosing_pointer == 2:  # limit to 2
+                        pass
+                    else:
+                        choosing_pointer += 1
+                    lcd.mainAdminPage()
+                    lcd.pointerPos(3, choosing_pointer)  # option, pointer
+
+
+def showInfo(current_locker,choosing_pointer):
+    if current_locker > 20:  # no info found at all
         lcd.clear()
         lcd.infoLockerNoOnePage()
 
@@ -235,6 +286,19 @@ def lockerInfo(choosing_pointer):
         lcd.clear()
         lcd.mainAdminPage()
         lcd.pointerPos(3, choosing_pointer)
+        return
+    if lockerArray[current_locker] is None:  # no info
+        pass
+    else:  # info existed
+        current_user = lockerArray[current_locker]
+        if current_user == TEMPORARY_USER_ID:
+            lcd.clear()
+            lcd.infoLockerTempPage()
+        else:  # a real user
+            data = dtb.getInfo(current_user)
+            [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = data
+            lcd.clear()
+            lcd.infoLockerPage(user_name, user_mssv)
 
 
 def main():  # Main program block
@@ -248,7 +312,7 @@ def main():  # Main program block
             current_tag = rfid.tagID()
             [id_existed, user_id] = dtb.searchRFID(current_tag)
             if id_existed:  # if existed this ID --> User
-                userCase(user_id, lockerArray)
+                userCase(user_id)
             else:  # this ID is not existed in the user database
                 if current_tag == ADMIN_KEY:
                     adminCase()

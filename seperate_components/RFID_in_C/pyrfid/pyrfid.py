@@ -16,7 +16,10 @@ import struct
 import RPi.GPIO as GPIO  # default as BCM mode!
 
 READY = False
-
+BUFFER_SIZE = 14
+CHECKSUM_SIZE = 2
+DATA_SIZE = 10
+RF_DEBOUNCE = 1  # second
 
 def ISR(channel):
     global READY
@@ -93,6 +96,10 @@ class PyRfid(object):
         receivedPacketData = []
         index = 0
 
+        count = 0
+        # buffer with 14 chars
+        buffer = [None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+        buffer_index = 0
         while READY:
 
             # Reads on byte
@@ -101,43 +108,86 @@ class PyRfid(object):
             # Collects RFID data
             if len(receivedFragment) != 0:
 
-                # Start and stop bytes are string encoded and must be byte encoded
-                if (index == 0) or (index == 13):
-                    receivedFragment = struct.unpack('@B', receivedFragment)[0]
-                else:
-                    rawTag += str(struct.unpack('@B', receivedFragment)[0])
-                    receivedFragment = int(receivedFragment, 16)
-
-                # Collects RFID data (hexadecimal)
-                receivedPacketData.append(receivedFragment)
-                index += 1
-
-            # Packet completely received
-            if index == 14:
-
-                # Checks for invalid packet data
-                if (receivedPacketData[0] != self.RFID_STARTCODE) or (receivedPacketData[13] != self.RFID_ENDCODE):
-                    raise Exception('Invalid start or stop bytes!')
-
-                # Calculates packet checksum
-                for i in range(1, 11, 2):
-                    byte = receivedPacketData[i] << 4
-                    byte = byte | receivedPacketData[i + 1]
-                    calculatedChecksum = calculatedChecksum ^ byte
-
-                # Gets received packet checksum
-                receivedChecksum = receivedPacketData[11] << 4
-                receivedChecksum = receivedChecksum | receivedPacketData[12]
-
-                # Checks for wrong checksum
-                if calculatedChecksum != receivedChecksum:
-                    raise Exception('Calculated checksum is wrong!')
+                if receivedFragment == self.RFID_STARTCODE:
+                    count = 0
+                    buffer_index = 1
+                    rawTag += receivedFragment  # everything is alright => copy first letter into buffer
+                    while True:
+                        receivedFragment = self.__serial.read()
+                        buffer_index += 1
+                        rawTag += receivedFragment  # everything is alright => copy current value to buffer
+                        if receivedFragment == self.RFID_ENDCODE:
+                            if buffer_index == BUFFER_SIZE:
+                                print(rawTag)
+                                READY = False
+                                return True
+                            else:
+                                print('error')
 
                 # Sets complete tag for other methods
                 self.__rawTag = rawTag
 
-                READY = False
-                return True
+
+
+    # def __read(self):
+    #     """
+    #     Reads the complete tag and returns status.
+    #
+    #     @return boolean
+    #     """
+    #     global READY
+    #
+    #     self.__rawTag = None
+    #     rawTag = ''
+    #     calculatedChecksum = 0
+    #     receivedPacketData = []
+    #     index = 0
+    #
+    #     while READY:
+    #
+    #         # Reads on byte
+    #         receivedFragment = self.__serial.read()
+    #
+    #         # Collects RFID data
+    #         if len(receivedFragment) != 0:
+    #
+    #             # Start and stop bytes are string encoded and must be byte encoded
+    #             if (index == 0) or (index == 13):
+    #                 receivedFragment = struct.unpack('@B', receivedFragment)[0]
+    #             else:
+    #                 rawTag += str(struct.unpack('@B', receivedFragment)[0])
+    #                 receivedFragment = int(receivedFragment, 16)
+    #
+    #             # Collects RFID data (hexadecimal)
+    #             receivedPacketData.append(receivedFragment)
+    #             index += 1
+    #
+    #         # Packet completely received
+    #         if index == 14:
+    #
+    #             # Checks for invalid packet data
+    #             if (receivedPacketData[0] != self.RFID_STARTCODE) or (receivedPacketData[13] != self.RFID_ENDCODE):
+    #                 raise Exception('Invalid start or stop bytes!')
+    #
+    #             # Calculates packet checksum
+    #             for i in range(1, 11, 2):
+    #                 byte = receivedPacketData[i] << 4
+    #                 byte = byte | receivedPacketData[i + 1]
+    #                 calculatedChecksum = calculatedChecksum ^ byte
+    #
+    #             # Gets received packet checksum
+    #             receivedChecksum = receivedPacketData[11] << 4
+    #             receivedChecksum = receivedChecksum | receivedPacketData[12]
+    #
+    #             # Checks for wrong checksum
+    #             if calculatedChecksum != receivedChecksum:
+    #                 raise Exception('Calculated checksum is wrong!')
+    #
+    #             # Sets complete tag for other methods
+    #             self.__rawTag = rawTag
+    #
+    #             READY = False
+    #             return True
 
     def readTag(self):
         """

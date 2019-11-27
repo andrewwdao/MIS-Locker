@@ -53,7 +53,7 @@ class RDM6300:
     def hasID(self):
         if self.rfid.readTag():
             return True
-        else:
+        else:cd
             return False
 
     def tagID(self):
