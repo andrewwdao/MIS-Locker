@@ -53,7 +53,8 @@ class RDM6300:
         self.__serial = serial.Serial(com_port, baudrate=baud_rate,
                                       parity=serial.PARITY_NONE,
                                       stopbits=serial.STOPBITS_ONE,
-                                      bytesize=serial.EIGHTBITS
+                                      bytesize=serial.EIGHTBITS,
+                                      timeout = 1
                                       )
         if self.__serial.isOpen():
             self.__serial.close()
@@ -66,14 +67,29 @@ class RDM6300:
         print('RFID ready!')
 
     def hasID(self):
-        buffer = self.__serial.readline()
-        if len(buffer):
-            self.tag_id = buffer
+        index = 0
+        # buffer_bytes = []
+        # buffer = self.__serial.read()
+        # if len(buffer) != 0:
+        #     buffer = buffer
+        #     buffer_bytes += buffer
+        #     index += 1
+        #     while index < 10:
+        #         buffer = buffer
+        #         buffer_bytes += buffer
+        #         index += 1
+        #     self.tag_id = "".join(map(bytes.decode, buffer_bytes))
+        try:
+            line = self.__serial.readline().decode()
+        except:
+            line = ""
+        if len(line):
+            self.tag_id = line
             return True
         return False
 
     def tagID(self):
-        return self.tagID
+        return self.tag_id
 
     # def debugInfo(self):
     #     print('RAW:      ' + self.rfid.rawTag)

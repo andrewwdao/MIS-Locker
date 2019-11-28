@@ -219,9 +219,9 @@ def modifyDatabaseInfoPage():
     LCD.write("Pass: raspberry")
 
 
-def infoLockerPage(name, mssv):
+def infoLockerPage(name, mssv, current_locker):
     LCD.setCursor(4, 0)  # row, column
-    LCD.write("INFO LOCKER")
+    LCD.write("INFO LOCKER " + str(current_locker))
     LCD.setCursor(0, 1)  # row, column
     LCD.write("Name: " + name)
     LCD.setCursor(0, 2)  # row, column
@@ -230,9 +230,9 @@ def infoLockerPage(name, mssv):
     LCD.write("Unlock?")
 
 
-def infoLockerNoOnePage():
+def infoLockerNoInfoPage(current_locker):
     LCD.setCursor(4, 0)  # row, column
-    LCD.write("INFO LOCKER")
+    LCD.write("INFO LOCKER" + str(current_locker))
     LCD.setCursor(0, 2)  # row, column
     LCD.write("No available")
     LCD.setCursor(0, 3)  # row, column

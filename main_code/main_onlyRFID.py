@@ -41,7 +41,7 @@
  --------------------------------------------------------------"""
 from rfid import RDM6300
 
-rfid = RDM6300('/dev/ttyUSB0', 9600)
+rfid = RDM6300('/dev/ttyUSB0', 115200)
 
 try:
     print('waiting for tag... ')
