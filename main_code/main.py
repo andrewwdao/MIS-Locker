@@ -54,6 +54,7 @@ pr.init()
 lockerArray = ["NULL", None, None, None]
 NO_ID = 999999
 
+
 def dumpDebug(iid, name, mssv, rrfid, fing):
     print('member_id: ' + str(iid))
     print('Name: ' + str(name))

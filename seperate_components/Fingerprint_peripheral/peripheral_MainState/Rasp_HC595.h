@@ -32,13 +32,9 @@ Initialize BOTH HC595 modules for 20 lockers
 */
 void HC595s_init();
 /**
-Send data for the first HC595 module
+Set BOTH HC595 to its first state (all off)
 */
-void HC595a_send(char, char, char);
-/**
-Send data for the second HC595 module
-*/
-void HC595b_send(char, char, char);
+void HC595s_initState();
 // ------ Public variable -------------------------------------
 
 #endif // __RASP_HC595_H

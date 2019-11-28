@@ -37,6 +37,14 @@
 Slow down the original ShiftOut Function
 */
 void myShiftOut(uint8_t,uint8_t,uint8_t,uint8_t);
+/**
+Send data for the first HC595 module
+*/
+void HC595a_send(char, char, char);
+/**
+Send data for the second HC595 module
+*/
+void HC595b_send(char, char, char);
 // ------ Private variables -----------------------------------
 
 // ------ PUBLIC variable definitions -------------------------
@@ -57,6 +65,11 @@ void HC595s_init() {
 	pinMode(DS_PIN_b, OUTPUT);
 	pinMode(STCP_PIN_b, OUTPUT);
 	pinMode(SHCP_PIN_b, OUTPUT);
+}//end HC595s_init
+//--------------------------------
+void HC595s_initState() {
+  HC595a_send(BEGIN_STATE,BEGIN_STATE,BEGIN_STATE);
+  HC595b_send(BEGIN_STATE,BEGIN_STATE,BEGIN_STATE);
 }//end HC595s_init
 //--------------------------------
 //data will flow as FIFO

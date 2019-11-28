@@ -47,6 +47,7 @@
       <w>nhat</w>
       <w>nobacklight</w>
       <w>ogino</w>
+      <w>oneshot</w>
       <w>optarg</w>
       <w>petter</w>
       <w>phan</w>
@@ -59,12 +60,14 @@
       <w>rubell</w>
       <w>setcgramaddr</w>
       <w>setddramaddr</w>
+      <w>slocker</w>
       <w>smbus</w>
       <w>sqlalchemy</w>
       <w>startcode</w>
       <w>stcp</w>
       <w>stdint</w>
       <w>subpro</w>
+      <w>sysinit</w>
       <w>uart</w>
       <w>weigang</w>
       <w>wiegand</w>
