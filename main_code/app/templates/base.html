@@ -1,0 +1,21 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{super()}}
+<link rel="icon" href="../static/img/MIS.png">
+<link rel="stylesheet"
+      href="{{url_for('.static', filename='../static/style/style.css')}}">
+<!-- <link rel="stylesheet"
+      href="{{url_for('.static', filename='../static/style/normalize.css')}}"> -->
+
+{% endblock %}
+
+{% block title %}
+  {{server_title}}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}

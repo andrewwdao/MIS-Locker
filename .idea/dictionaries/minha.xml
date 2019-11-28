@@ -12,6 +12,8 @@
       <w>charbuffers</w>
       <w>chsize</w>
       <w>cleardisplay</w>
+      <w>complier</w>
+      <w>crypter</w>
       <w>cursoroff</w>
       <w>cursoron</w>
       <w>cursorshift</w>
@@ -21,27 +23,55 @@
       <w>displaymode</w>
       <w>displayoff</w>
       <w>displayon</w>
+      <w>endblock</w>
+      <w>endcode</w>
       <w>entryleft</w>
       <w>entrymodeset</w>
       <w>entryright</w>
       <w>entryshiftdecrement</w>
       <w>entryshiftincrement</w>
+      <w>fflush</w>
+      <w>fing</w>
       <w>functionset</w>
+      <w>getopt</w>
+      <w>gpio</w>
+      <w>gwiot</w>
       <w>incomming</w>
+      <w>khoa</w>
+      <w>lastest</w>
       <w>lindegaard</w>
+      <w>maxbits</w>
       <w>minh</w>
+      <w>minhan</w>
       <w>mssv</w>
+      <w>nhat</w>
       <w>nobacklight</w>
+      <w>ogino</w>
+      <w>oneshot</w>
+      <w>optarg</w>
       <w>petter</w>
+      <w>phan</w>
+      <w>printf</w>
       <w>raschke</w>
       <w>returnhome</w>
       <w>rfid</w>
+      <w>rled</w>
+      <w>rrfid</w>
       <w>rubell</w>
       <w>setcgramaddr</w>
       <w>setddramaddr</w>
+      <w>slocker</w>
       <w>smbus</w>
+      <w>sqlalchemy</w>
       <w>startcode</w>
+      <w>stcp</w>
+      <w>stdint</w>
+      <w>subpro</w>
+      <w>sysinit</w>
       <w>uart</w>
+      <w>weigang</w>
+      <w>wiegand</w>
+      <w>yasuhiro</w>
     </words>
   </dictionary>
 </component>

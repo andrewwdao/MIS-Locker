@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from "_formhelper.html" import render_button %}
+
+{% block app_content %}
+    <div id="app">
+      <div id="avatar">
+        <img src="../static/img/MIS.png"> <!-- logo for the system -->
+        <h1>{{main_title}}</h1>
+        <p>{{main_func}}<br /><br /><br /><br /></p>
+      </div>
+      <hr>
+      <div id="pwrdby">
+        <strong><br /><a id="acredits" href="{{url_for('about')}}"> &copy; 2019 Minh-An Dao.</a></strong><br />
+        <strong>Maker Innovation Space, Can Tho University</strong>
+      </div>
+    </div>
+{% endblock %}

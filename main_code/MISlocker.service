@@ -1,0 +1,16 @@
+[Unit]
+Description=MISlocker main service
+After=multi-user.target
+DefaultDependencies=true
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -u main.py
+WorkingDirectory=/home/MISlocker/MISlocker/main_code
+StandardOutput=inherit
+StandardError=inherit
+Restart=yes
+User=MISlocker
+
+[Install]
+WantedBy=sysinit.target multi-user.target
