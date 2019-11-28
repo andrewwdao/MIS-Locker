@@ -67,18 +67,6 @@ class RDM6300:
         print('RFID ready!')
 
     def hasID(self):
-        index = 0
-        # buffer_bytes = []
-        # buffer = self.__serial.read()
-        # if len(buffer) != 0:
-        #     buffer = buffer
-        #     buffer_bytes += buffer
-        #     index += 1
-        #     while index < 10:
-        #         buffer = buffer
-        #         buffer_bytes += buffer
-        #         index += 1
-        #     self.tag_id = "".join(map(bytes.decode, buffer_bytes))
         try:
             line = self.__serial.readline().decode()
         except:
@@ -87,6 +75,11 @@ class RDM6300:
             self.tag_id = line
             return True
         return False
+
+    def flush(self):
+        # dump buffer out, flush all the left over from buffer
+        self.__serial.flushInput()
+
 
     def tagID(self):
         return self.tag_id

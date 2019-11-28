@@ -71,9 +71,38 @@ def welcomePage(name, mssv, locker_num):
     LCD.write("Your Locker is " + str(locker_num))
 
 
-def returnPage(name, locker_num):
+def welcomeTempPage(locker_num):
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("TEMPORARY USER")
     LCD.setCursor(0, 1)  # row, column
+    LCD.write("This is a one-time")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("user only.")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Your Locker is " + str(locker_num))
+
+
+def outOfVacancyPage():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("DEAR USER")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("We are out of")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("vacancy. Sorry!")
+
+
+def returnPage(name, locker_num):
+    LCD.setCursor(0, 0)  # row, column
     LCD.write("Hello " + name + "!")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Your Locker is " + str(locker_num))
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Unlocked!")
+
+
+def returnTempPage(locker_num):
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("Hello User!")
     LCD.setCursor(0, 2)  # row, column
     LCD.write("Your Locker is " + str(locker_num))
     LCD.setCursor(0, 3)  # row, column
@@ -105,17 +134,6 @@ def addExtraInfoPage(name, mssv):
     LCD.write("New RFID")
     LCD.setCursor(2, 3)  # row, column
     LCD.write("New fingerprint")
-
-
-def welcomeTempPage(locker_num):
-    LCD.setCursor(3, 0)  # row, column
-    LCD.write("TEMPORARY USER")
-    LCD.setCursor(0, 1)  # row, column
-    LCD.write("This is a one-time")
-    LCD.setCursor(0, 2)  # row, column
-    LCD.write("user only.")
-    LCD.setCursor(0, 3)  # row, column
-    LCD.write("Your Locker is " + str(locker_num))
 
 
 def unknownIDPage():
@@ -187,7 +205,7 @@ def addRFIDFailPage():
     LCD.write("Cancel")
 
 
-def ls():
+def addNewInfo():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD NEW INFO:Connect")
     LCD.setCursor(0, 1)  # row, column
@@ -230,6 +248,15 @@ def infoLockerPage(name, mssv, current_locker):
     LCD.write("Unlock?")
 
 
+def infoLockerTempPage(current_locker):
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("INFO LOCKER " + str(current_locker))
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Temporary User")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Unlock?")
+
+
 def infoLockerNoInfoPage(current_locker):
     LCD.setCursor(4, 0)  # row, column
     LCD.write("INFO LOCKER " + str(current_locker))
@@ -247,14 +274,6 @@ def unlockConfirmPage(locker_num):
     LCD.setCursor(0, 2)  # row, column
     LCD.write("User deleted!")
 
-
-def infoLockerTempPage():
-    LCD.setCursor(4, 0)  # row, column
-    LCD.write("INFO LOCKER")
-    LCD.setCursor(0, 1)  # row, column
-    LCD.write("Temporary User")
-    LCD.setCursor(0, 3)  # row, column
-    LCD.write("Unlock?")
 # def exportSuccessPage():
 #     LCD.setCursor(2, 0)  # row, column
 #     LCD.write("EXPORT DATABASE")
