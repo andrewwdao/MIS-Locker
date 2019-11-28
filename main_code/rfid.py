@@ -80,7 +80,6 @@ class RDM6300:
         # dump buffer out, flush all the left over from buffer
         self.__serial.flushInput()
 
-
     def tagID(self):
         return self.tag_id
 

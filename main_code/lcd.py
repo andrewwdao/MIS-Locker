@@ -125,15 +125,24 @@ def continueUsingPage():
     LCD.write("Your locker remained")
 
 
-def addExtraInfoPage(name, mssv):
+def addExtraInfoPage():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("MODIFY INFO")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Please use your")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("registered rfid/fing")
+
+
+def addExtraMainPage(name, mssv):
     LCD.setCursor(0, 0)  # row, column
     LCD.write("Name: " + name)
     LCD.setCursor(0, 1)  # row, column
     LCD.write("MSSV: " + mssv)
     LCD.setCursor(2, 2)  # row, column
-    LCD.write("New RFID")
+    LCD.write("Add/Change RFID")
     LCD.setCursor(2, 3)  # row, column
-    LCD.write("New fingerprint")
+    LCD.write("Add/Change Finger")
 
 
 def unknownIDPage():
@@ -191,7 +200,7 @@ def addRFIDSuccessPage():
     LCD.setCursor(4, 1)  # row, column
     LCD.write("RFID added!")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
+    LCD.write("Please press OK")
 
 
 def addRFIDFailPage():
@@ -213,7 +222,7 @@ def addNewInfo():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("open browser to")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("192.168.1.111:7497")
+    LCD.write("192.168.43.111:7497")
 
 
 # ------------------------------ Admin level interfaces ------------------------------

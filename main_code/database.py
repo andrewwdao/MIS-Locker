@@ -20,13 +20,47 @@ class Database:
     def number_of_member(self):
         return User.query.count()
 
+    def getMemberInfoByID(self, member_id):
+        user = User.query.filter_by(id=member_id).first()
+        if user is None:  # if user doesn't exist
+            return [False, None, None, None, None, None]
+        else:  # if user existed
+            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+
+    def getMemberInfoByMSSV(self, member_mssv):
+        user = User.query.filter_by(mssv=member_mssv).first()
+        if user is None:  # if user doesn't exist
+            return [False, None, None, None, None, None]
+        else:  # if user existed
+            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+
+    def getMemberInfoByRFID(self, rfid_key):
+        user = User.query.filter_by(rfid=rfid_key).first()
+        if user is None:  # if user doesn't exist
+            return [False, None, None, None, None, None]
+        else:  # if user existed
+            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+
+    def getLastMemberInfo(self):
+        user = User.query.order_by(User.timestamp.desc()).first()
+        if user is None:  # if user doesn't exist
+            return [False, None, None, None, None, None]
+        else:  # if user existed
+            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+
+    def getAllUserInfo(self):
+        user = User.query.all()
+        print(user)
+        return
+
     def addRFID(self, rfid):
         user = User.query.filter_by(rfid=rfid).first()
         if user is None:  # if user doesn't exist yet
             newUser = User(rfid=rfid)
             db.session.add(newUser)
             db.session.commit()
-            newUser = User.query.order_by(User.id.desc()).first()  # get the last user out (user we just added)
+            # newUser = User.query.order_by(User.id.desc()).first()  # get the last user out (user we just added)
+            newUser = User.query.filter_by(rfid=rfid).first() # get id from the database
             return [True, newUser.id]
         else:  # if user already existed
             return [False, 0]
@@ -47,16 +81,8 @@ class Database:
             db.session.commit()
             return True
 
-    def addFinger(self, fingerNum):
-        user = User.query.filter_by(fing=fingerNum).first()
-        if user is None:  # if user doesn't exist yet
-            newUser = User(fing=fingerNum)
-            db.session.add(newUser)
-            db.session.commit()
-            newUser = User.query.order_by(User.id.desc()).first()  # get the last user out (user we just added)
-            return [True, newUser.id]
-        else:  # if user already existed
-            return [True, 0]
+    def addFinger(self, member_id, fingerNum):
+        return self.changeFinger(member_id,fingerNum)
 
     def searchFinger(self, fingerNum):
         user = User.query.filter_by(fing=fingerNum).first()
@@ -88,16 +114,4 @@ class Database:
         for u in users:
             db.session.delete(u)
         db.session.commit()
-
-    def getInfo(self, member_id):
-        user = User.query.filter_by(id=member_id).first()
-        if user is None:  # if user doesn't exist
-            return [False, None, None, None, None, None]
-        else:  # if user existed
-            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
-
-    def getAllUserInfo(self):
-        user = User.query.all()
-        print(user)
-        return
 

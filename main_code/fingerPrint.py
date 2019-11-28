@@ -45,7 +45,7 @@ def begin():  # Tries to initialize the sensor
         return False
 
 
-def enroll():
+def first_enroll():
     try:
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
@@ -62,8 +62,12 @@ def enroll():
             print('Finger already exists at #' + str(positionNumber))
             return ["EXISTED", positionNumber]
 
-        print('Done.')
-        time.sleep(WAIT_TIME)
+        print('First enroll done.')
+        return ["DONE",0]
+
+
+def second_enroll():
+    try:
         print('Second time. Waiting for finger...')
 
         while not Finger.readImage():  # Wait that finger is read again
