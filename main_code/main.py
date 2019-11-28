@@ -55,6 +55,25 @@ lockerArray = ["NULL", None, None, None]
 NO_ID = 999999
 
 
+def ShortenName(name, limit):
+    name_length = len(name)
+    name += ' '
+    if name_length <= limit:
+        return name
+    else:
+        name_buffer = ""
+        shorten_name = name[0]
+        for i in range(1, name_length):
+            if name[i] == ' ':
+                shorten_name += '.'
+                shorten_name += name[i + 1]
+                name_buffer = ""  # not the last word, reset the buffer
+            else:
+                name_buffer += name[i + 1]
+        shorten_name += name_buffer
+        return shorten_name
+
+
 def dumpDebug(iid, name, mssv, rrfid, fing):
     print('member_id: ' + str(iid))
     print('Name: ' + str(name))
@@ -118,7 +137,8 @@ def userCase(userID):
         if user_id in lockerArray:  # if user is renting a locker
             current_locker = lockerArray.index(user_id)
             lcd.clear()
-            lcd.returnPage(user_name, current_locker)  # Name, locker_num
+            shorten_name = ShortenName(user_name,13)
+            lcd.returnPage(shorten_name, current_locker)  # Name, locker_num
             lockerArray[current_locker] = user_id
             openDoorProcedure(current_locker)
 
@@ -188,7 +208,8 @@ def userCase(userID):
                 return
             else:  # new locker available
                 lcd.clear()
-                lcd.welcomePage(user_name, user_mssv, current_locker)  # Name, mssv, locker_num
+                shorten_name = ShortenName(user_name,14)
+                lcd.welcomePage(shorten_name, user_mssv, current_locker)  # Name, mssv, locker_num
                 lockerArray[current_locker] = user_id
                 openDoorProcedure(current_locker)
 
@@ -450,7 +471,8 @@ def addExistedIDCase():
                 data = dtb.getMemberInfoByID(user_id)
                 user_name = data[2]
                 user_mssv = data[3]
-                lcd.addExtraMainPage(user_name, user_mssv)
+                shorten_name = ShortenName(user_name,13)
+                lcd.addExtraMainPage(shorten_name, user_mssv)
                 choosing_pointer = 2  # default at first position
                 lcd.pointerPos(3, choosing_pointer)
                 # ------------------Button part ------------------
