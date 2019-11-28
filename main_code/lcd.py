@@ -232,7 +232,7 @@ def infoLockerPage(name, mssv, current_locker):
 
 def infoLockerNoInfoPage(current_locker):
     LCD.setCursor(4, 0)  # row, column
-    LCD.write("INFO LOCKER" + str(current_locker))
+    LCD.write("INFO LOCKER " + str(current_locker))
     LCD.setCursor(0, 2)  # row, column
     LCD.write("No available")
     LCD.setCursor(0, 3)  # row, column
