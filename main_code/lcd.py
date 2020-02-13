@@ -8,6 +8,7 @@
  *
  --------------------------------------------------------------"""
 from LCD.LCD_I2C import LCD_I2C
+import subprocess as subpro
 
 # ---------------------------- Private Parameters:
 # -----Address and Screen parameter:
@@ -222,7 +223,8 @@ def addNewInfo():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("open browser to")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("192.168.43.111:7497")
+    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
+    LCD.write(my_ip) # get current ip address
 
 
 # ------------------------------ Admin level interfaces ------------------------------
@@ -241,7 +243,7 @@ def modifyDatabaseInfoPage():
     LCD.setCursor(0, 1)  # row, column
     LCD.write("MISlocker@")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("192.168.1.111")
+    LCD.write(subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     LCD.setCursor(0, 3)  # row, column
     LCD.write("Pass: raspberry")
 
