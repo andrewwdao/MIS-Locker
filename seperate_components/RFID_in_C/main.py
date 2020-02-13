@@ -19,18 +19,19 @@
  *  8(BLACK)  - GND
  *
  --------------------------------------------------------------"""
-from rfid import RDM6300
+from rfid import Gwiot_7304D2
+# from rfid import RDM6300 # deprecated
 import time
 
-rfid = RDM6300('/dev/ttyUSB0', 9600)
+rfid = Gwiot_7304D2()
+# rfid = RDM6300('/dev/ttyUSB0', 9600) #deprecated
 
 try:
     # time.sleep(1)
     print('waiting for tag... ')
     while True:
         if rfid.hasID():
-            rfid.debugInfo()
-            print(rfid.tagID())
+            print(repr(rfid.tagID())) # print out all the tag even \r or \n
 except KeyboardInterrupt:
     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass

@@ -1,6 +1,5 @@
 import lcd
 from adc import adc_button, adc_switches
-# from rfid import RDM6300
 from rfid import Gwiot_7304D2
 from database import Database
 import peripheral as pr
@@ -11,7 +10,7 @@ import time
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
-ADMIN_KEY = '810093B8D6'
+ADMIN_KEY = '0x93B8D6'
 PROMPT_WAITING_TIME = 8
 # TEMPORARY_USER_ID = 9999
 DOOR = (
@@ -41,7 +40,6 @@ DOOR = (
 lcd.begin()
 button = adc_button()
 switches = adc_switches()
-# rfid = RDM6300('/dev/ttyUSB0', 115200)
 rfid = Gwiot_7304D2()
 dtb = Database()
 pr.init()
