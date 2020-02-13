@@ -11,7 +11,7 @@ import time
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
-ADMIN_KEY = '810093B8D6\r\n'
+ADMIN_KEY = '810093B8D6'
 PROMPT_WAITING_TIME = 8
 # TEMPORARY_USER_ID = 9999
 DOOR = (
