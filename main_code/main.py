@@ -1,6 +1,7 @@
 import lcd
 from adc import adc_button, adc_switches
-from rfid import RDM6300
+# from rfid import RDM6300
+from rfid import Gwiot_7304D2
 from database import Database
 import peripheral as pr
 from datetime import datetime, timezone
@@ -40,7 +41,8 @@ DOOR = (
 lcd.begin()
 button = adc_button()
 switches = adc_switches()
-rfid = RDM6300('/dev/ttyUSB0', 115200)
+# rfid = RDM6300('/dev/ttyUSB0', 115200)
+rfid = Gwiot_7304D2()
 dtb = Database()
 pr.init()
 # fingerPrint.begin()
