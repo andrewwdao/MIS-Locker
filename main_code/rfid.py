@@ -63,6 +63,8 @@ class Gwiot_7304D2:
             return False
     
     def flush(self):
+        while self.hasID():
+            pass # clear out buffer
         sys.stdout.flush() # flush all the left over from buffer
         return
     
