@@ -115,7 +115,10 @@ class Gwiot_7304D2:
             return True
         if mes is None or mes == 'CHECKSUM_FAILED':
             return False
-
+    
+    def flush(self):
+        return # dumb method for compatible with RDM6300 class
+    
     def tagID(self):
         return self.tag_id
 
