@@ -4,7 +4,7 @@ from rfid import Gwiot_7304D2
 from database import Database
 import peripheral as pr
 from datetime import datetime, timezone
-# import fingerPrint
+import fingerPrint
 from app import saveInfo_app
 import time
 
@@ -52,8 +52,8 @@ switches = adc_switches()
 rfid = Gwiot_7304D2()
 dtb = Database()
 pr.init()
-# fingerPrint.begin()
-# fingerPrint.activate()
+fingerPrint.begin()
+fingerPrint.activate()
 
 
 
@@ -132,11 +132,8 @@ def waitForConfirmation():
         pass
 
 
-def userCase(userID):
+def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
     global lockerArray
-    data = dtb.getMemberInfoByID(userID)
-    [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = data
-
     if got_data:  # if get info from database successfully
         # ------------  OLD LOCKER!!! -----------------
         if user_id in lockerArray:  # if user is renting a locker
@@ -364,17 +361,11 @@ def addNewIDCase():
     user_id = NO_ID  # create user id
     # add RFID
     [status_rfid, user_id_rfid] = addRFID()
-    # now time to add fingerPrint
-    [status_fing, user_id_fing] = addFingerPrint(status_rfid, user_id)
+    # now time to add fingerPrint (optional)
+    addFingerPrint(status_rfid, user_id_rfid)
 
-    if status_rfid or status_fing:  # rfid or fing is available
-        if user_id_rfid != user_id_fing:
-            if user_id_fing == NO_ID:
-                user_id = user_id_rfid
-            elif user_id_rfid == NO_ID:
-                user_id = user_id_fing
-        else:  # they are equal
-            user_id = user_id_rfid
+    if status_rfid :  # rfid availables is mandatory
+        user_id = user_id_rfid
 
         if user_id == NO_ID:
             raise Exception("Error with database, please check again")
@@ -391,11 +382,15 @@ def addNewIDCase():
         user_mssv = data[3]
         if user_valid:
             if (user_name and user_mssv) is not None:
-                userCase(user_id)
+                [got_data, userID, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(user_id)
+                userCase(got_data, userID, user_name, user_mssv, user_rfid, user_fing)
                 return
             return
         return
-    else:  # no rfid or fingerPrint is available
+    else:  # no rfid is available
+        lcd.clear()
+        lcd.cancelNewUserPage()
+        time.sleep(1.5)
         choosing_pointer = 2  # because we are at the Add new ID
         lcd.clear()
         lcd.unknownIDPage()
@@ -405,14 +400,13 @@ def addNewIDCase():
 
 def addRFID():
     lcd.clear()
-    lcd.addRFIDPage()
     rfid.flush()  # clear everything before starting
     while True:
         lcd.addRFIDPage()
         # wait for signal here
         if rfid.hasID():
             current_tag = rfid.tagID()
-            [status, user_id] = dtb.addRFID(current_tag)
+            [status, user_id] = dtb.addRFID(current_tag) # add rfid to database and return the user id from dtb
             if status:  # RFID added
                 lcd.clear()
                 lcd.addRFIDSuccessPage()
@@ -429,7 +423,7 @@ def addRFID():
                     if status is "BUT_OK":
                         if choosing_pointer == 1:  # retry
                             lcd.clear()
-                            lcd.addRFIDPage()
+                            # lcd.addRFIDPage()
                             rfid.flush()  # clear everything before starting
                             break
                         elif choosing_pointer == 2: # cancel
@@ -461,15 +455,135 @@ def addRFID():
 
 
 def addFingerPrint(status_rfid, user_id):
-    lcd.clear()
-    lcd.addFingerPage()
-    while True:
-        # fingerPrint.first_enroll()
-        # ...
-        if button.read() is "BUT_CANCEL":
-            # clean rfid and finger buffer, if existed
-            rfid.flush()  # flush out old buffer before get out
-            return [False, NO_ID]
+    if status_rfid: # if rfid was added successfully, then save the fingerPrint to the same user_id
+        lcd.clear()
+        while True: # not an usual infinitive loop, it existed for the sake of adding fingerPrint fail
+            lcd.addFingerPage01()
+            status = fingerPrint.first_enroll() # this function return ["DONE",0]
+            if status[0] == "CANCEL":
+                return # someone press cancel button, so cancel the process
+            if status[0] == "EXISTED":
+                lcd.clear()
+                lcd.addFingerExistedPage()
+                waitForConfirmation()
+                return
+            if status[0] == "DONE": # first enroll success
+                lcd.clear()
+                lcd.addFingerPage02()
+                time.sleep(1.5)
+                lcd.clear()
+                lcd.addFingerPage03()
+                [status, position_number] = fingerPrint.second_enroll() # this function return ["DONE", positionNumber]
+                if status[0] == "CANCEL":
+                    return # someone press cancel button, so cancel the process
+                if status[0] == "DONE": # second enroll success
+                    status = dtb.addFinger(user_id, position_number) # add fingerPrint to database and return the user id from dtb
+                    if status:  # fingerPrint added to database
+                        lcd.clear()
+                        lcd.addFingerSuccessPage()
+                        waitForConfirmation()
+                        return
+                    else:  # fingerPrint failed to add to database
+                        print('fingerPrint failed to add to database') # for debug
+                        lcd.clear()
+                        lcd.addFingerFailPage()
+                        choosing_pointer = 1  # default at first position
+                        lcd.pointerPos(2, choosing_pointer)
+                        # ------------------Button part ------------------
+                        while True:
+                            status = button.read()
+                            if status is "BUT_OK":
+                                if choosing_pointer == 1:  # retry
+                                    lcd.clear()
+                                    break # try adding again
+                                elif choosing_pointer == 2: # cancel
+                                    return  # return the optional fingerPrint adding function
+                                return  # return the optional fingerPrint adding function
+                            elif status is "BUT_CANCEL":
+                                return  # return the optional fingerPrint adding function
+                            elif status is "BUT_UP":
+                                if choosing_pointer == 1:  # limit to 1
+                                    pass
+                                else:
+                                    choosing_pointer -= 1
+                                    lcd.addFingerFailPage()
+                                    lcd.pointerPos(2, choosing_pointer)
+                            elif status is "BUT_DOWN":
+                                if choosing_pointer == 2:  # limit to 2
+                                    pass
+                                else:
+                                    choosing_pointer += 1
+                                    lcd.addFingerFailPage()
+                                    lcd.pointerPos(2, choosing_pointer)
+                else:  # second enroll failed
+                    print('second enroll failed') # for debug
+                    print(status) # for debug
+                    lcd.clear()
+                    lcd.addFingerFailPage()
+                    choosing_pointer = 1  # default at first position
+                    lcd.pointerPos(2, choosing_pointer)
+                    # ------------------Button part ------------------
+                    while True:
+                        status = button.read()
+                        if status is "BUT_OK":
+                            if choosing_pointer == 1:  # retry
+                                lcd.clear()
+                                break # try adding again
+                            elif choosing_pointer == 2: # cancel
+                                return  # return the optional fingerPrint adding function
+                            return  # return the optional fingerPrint adding function
+                        elif status is "BUT_CANCEL":
+                            return  # return the optional fingerPrint adding function
+                        elif status is "BUT_UP":
+                            if choosing_pointer == 1:  # limit to 1
+                                pass
+                            else:
+                                choosing_pointer -= 1
+                                lcd.addFingerFailPage()
+                                lcd.pointerPos(2, choosing_pointer)
+                        elif status is "BUT_DOWN":
+                            if choosing_pointer == 2:  # limit to 2
+                                pass
+                            else:
+                                choosing_pointer += 1
+                                lcd.addFingerFailPage()
+                                lcd.pointerPos(2, choosing_pointer)
+            else:  # first enroll failed
+                print('first enroll failed') # for debug
+                print(status) # for debug
+                lcd.clear()
+                lcd.addFingerFailPage()
+                choosing_pointer = 1  # default at first position
+                lcd.pointerPos(2, choosing_pointer)
+                # ------------------Button part ------------------
+                while True:
+                    status = button.read()
+                    if status is "BUT_OK":
+                        if choosing_pointer == 1:  # retry
+                            lcd.clear()
+                            break # try adding again
+                        elif choosing_pointer == 2: # cancel
+                            return  # return the optional fingerPrint adding function
+                        return  # return the optional fingerPrint adding function
+                    elif status is "BUT_CANCEL":
+                        return  # return the optional fingerPrint adding function
+                    elif status is "BUT_UP":
+                        if choosing_pointer == 1:  # limit to 1
+                            pass
+                        else:
+                            choosing_pointer -= 1
+                            lcd.addFingerFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
+                    elif status is "BUT_DOWN":
+                        if choosing_pointer == 2:  # limit to 2
+                            pass
+                        else:
+                            choosing_pointer += 1
+                            lcd.addFingerFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
+                    
+    else: # rfid was not added successfully
+        return  # let other function take care
 
 
 def addExistedIDCase():
@@ -641,17 +755,21 @@ def main():  # Main program block
 
         if rfid.hasID():
             current_tag = rfid.tagID()
-            [id_existed, user_id] = dtb.searchRFID(current_tag)
-            if id_existed:  # if existed this ID --> User
-                userCase(user_id)
+            [id_existed, userID] = dtb.searchRFID(current_tag)
+            [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
+            if id_existed and (user_name or user_mssv is None): # if we have unfinished data
+                dtb.delMember(user_id) # delete it from database
+                id_existed = False # reset it
+            if id_existed:  # if existed this ID --> User (maybe incomplete data user)
+                userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
             else:  # this ID is not existed in the user database
-                if current_tag in lockerArray:  # temporary user
+                if current_tag in lockerArray:  # return case for temporary user
                     oneTimeUser_returnCase(current_tag)
                 elif current_tag == ADMIN_KEY:
                     adminCase()
                 else:
                     print('RFID not found!')
-                    noInfoCase(current_tag)
+                    noInfoCase(current_tag)  # one time user case
             rfid.flush()  # flush out old buffer before get out
 
 

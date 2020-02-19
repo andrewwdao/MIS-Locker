@@ -132,7 +132,7 @@ def addExtraInfoPage():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("Please use your")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("registered rfid/fing")
+    LCD.write("registered rfid")
 
 
 def addExtraMainPage(name, mssv):
@@ -157,27 +157,59 @@ def unknownIDPage():
     LCD.write("Add Existed ID")
 
 
-def addFingerPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("ADD  FINGERPRINT")
+def cancelNewUserPage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("ADD NEW USER")
+    LCD.setCursor(6, 2)  # row, column
+    LCD.write("CANCELED")
+
+
+def addFingerPage01():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Put your finger")
     LCD.setCursor(2, 3)  # row, column
     LCD.write("in the scanner")
 
 
+def addFingerPage02():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
+    LCD.setCursor(8, 3)  # row, column
+    LCD.write("Done")
+
+
+def addFingerPage03():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Put your finger in")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("the scanner again")
+
+
 def addFingerSuccessPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("ADD  FINGERPRINT")
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint added!")
     LCD.setCursor(0, 3)  # row, column
     LCD.write("Press any to return")
 
 
+def addFingerExistedPage():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
+    LCD.setCursor(1, 1)  # row, column
+    LCD.write("Fingerprint exised!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press check again")
+
+
 def addFingerFailPage():
-    LCD.setCursor(2, 0)  # row, column
-    LCD.write("ADD  FINGERPRINT")
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD USER:FINGERPRINT")
     LCD.setCursor(6, 1)  # row, column
     LCD.write("Failed!")
     LCD.setCursor(2, 2)  # row, column
@@ -187,8 +219,8 @@ def addFingerFailPage():
 
 
 def addRFIDPage():
-    LCD.setCursor(6, 0)  # row, column
-    LCD.write("ADD RFID")
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("ADD USER: RFID")
     LCD.setCursor(3, 2)  # row, column
     LCD.write("Put your RFID")
     LCD.setCursor(3, 3)  # row, column
@@ -196,8 +228,8 @@ def addRFIDPage():
 
 
 def addRFIDSuccessPage():
-    LCD.setCursor(6, 0)  # row, column
-    LCD.write("ADD RFID")
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("ADD USER: RFID")
     LCD.setCursor(4, 1)  # row, column
     LCD.write("RFID added!")
     LCD.setCursor(0, 3)  # row, column
@@ -205,8 +237,8 @@ def addRFIDSuccessPage():
 
 
 def addRFIDFailPage():
-    LCD.setCursor(6, 0)  # row, column
-    LCD.write("ADD RFID")
+    LCD.setCursor(3, 0)  # row, column
+    LCD.write("ADD USER: RFID")
     LCD.setCursor(6, 1)  # row, column
     LCD.write("Failed!")
     LCD.setCursor(2, 2)  # row, column
