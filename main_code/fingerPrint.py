@@ -26,7 +26,7 @@ DEBOUNCE = 10
 START_CHECKING = False
 Finger = None
 button_cancel = adc_button()
-
+positionNumber = int()
 # ------------------------------ Basic functions ------------------------------
 def begin():  # Tries to initialize the sensor
     global Finger
@@ -47,14 +47,15 @@ def begin():  # Tries to initialize the sensor
         return False
 
 
-def __scan():  # Search for the incoming finger in database
+def __scan():  # Search for the incoming finger in database, DO NOT do this all the time since it will reduce the lifetime of the sensor --> the reason for the existance of the ISR
     try:
+        global position_number
         last_millis = datetime.now(timezone.utc).second
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
             # only wait for WAIT_TIME seconds
             if (datetime.now(timezone.utc).second - last_millis) > WAIT_TIME:
-                return ["NO DATA", 0]
+                return "NO DATA"
             # pass
 
         # Converts read image to characteristics and stores it in charbuffer 1
@@ -67,24 +68,26 @@ def __scan():  # Search for the incoming finger in database
 
         if positionNumber == -1:
             print('No match found!')
-            print(["NOT MATCHED", 0])
-            return ["NOT MATCHED", 0]
+            print("NOT MATCHED")
+            return "NOT MATCHED"
         else:
             print('Template found at #' + str(positionNumber))
             print('Accuracy: ' + str(accuracyScore))
-            print(["MATCHED", positionNumber])
-            return ["MATCHED", positionNumber]
+            print("MATCHED. Position Number: "+ positionNumber)
+            return "MATCHED"
     except Exception as e:
         print('Operation failed!')
         print('Exception message: ' + str(e))
-        print(["ERROR", e])
-        return ["ERROR", e]
+        print("ERROR")
+        return "ERROR"
 
 
 def __touchISR(channel):
     global START_CHECKING
     START_CHECKING = True
 
+def user_position():
+    return positionNumber
 
 def activate():
     GPIO.add_event_detect(TOUCH_PIN, GPIO.FALLING, callback=__touchISR, bouncetime=DEBOUNCE)

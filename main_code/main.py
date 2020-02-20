@@ -12,8 +12,10 @@ import time
 # -----Admin ID key:
 ADMIN_KEY = '0x93B8D6'
 PROMPT_WAITING_TIME = 7 # time the lock has to wait each time user open a door 
-# database id stand with locker that has been rented (maximum 20 locker)
-# lockerArray has to omit index 0!!!
+# INFO:
+# lockerArray stores the rfid ID or fingerprint ID stand with locker that has been rented (maximum 20 locker)
+# Index of LockerArray is also the number of the locker.
+# Therefore, lockerArray has to omit index 0!!!
 # 10 lockers
 lockerArray = ["NULL", None, None, None]
 # 20 lockers
@@ -753,6 +755,7 @@ def main():  # Main program block
     while True:
         lcd.waitPage()
 
+        # ================== RFID case ==================
         if rfid.hasID():
             current_tag = rfid.tagID()
             [id_existed, userID] = dtb.searchRFID(current_tag)
@@ -769,9 +772,25 @@ def main():  # Main program block
                     adminCase()
                 else:
                     print('RFID not found!')
-                    noInfoCase(current_tag)  # one time user case
+                    noInfoCase(current_tag)  # user have no info case
             rfid.flush()  # flush out old buffer before get out
 
+        # ================== FingerPrint case ==================
+        if fingerPrint.check() == "MATCHED":
+            current_fingerprint = fingerPrint.user_position
+            [id_existed, userID] = dtb.searchFinger(current_fingerprint)
+            [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
+            if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
+                dtb.delMember(user_id) # delete it from database
+                id_existed = False # reset it
+            if id_existed:  # if existed this ID --> Crucial Data Filled User
+                userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
+            else:  # this ID is not existed in the user database
+                if current_fingerprint in lockerArray:  # return case for temporary user
+                    oneTimeUser_returnCase(current_fingerprint)
+                else:
+                    print('Fingerprint not found!')
+                    oneTimeUserCase(current_fingerprint)  # one time user case
 
 if __name__ == '__main__':
 
