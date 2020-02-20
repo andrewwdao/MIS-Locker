@@ -459,26 +459,26 @@ def addFingerPrint(status_rfid, user_id):
         lcd.clear()
         while True: # not an usual infinitive loop, it existed for the sake of adding fingerPrint fail
             lcd.addFingerPage01()
-            status = fingerPrint.first_enroll() # this function return ["DONE",0]
-            if status[0] == "CANCEL":
+            [status, position_number] = fingerPrint.first_enroll() # this function return ["DONE",0]
+            if status == "CANCEL":
                 return # someone press cancel button, so cancel the process
-            if status[0] == "EXISTED":
+            if status == "EXISTED":
                 lcd.clear()
                 lcd.addFingerExistedPage()
                 waitForConfirmation()
                 return
-            if status[0] == "DONE": # first enroll success
+            if status == "DONE": # first enroll success
                 lcd.clear()
                 lcd.addFingerPage02()
                 time.sleep(1.5)
                 lcd.clear()
                 lcd.addFingerPage03()
                 [status, position_number] = fingerPrint.second_enroll() # this function return ["DONE", positionNumber]
-                if status[0] == "CANCEL":
+                if status == "CANCEL":
                     return # someone press cancel button, so cancel the process
-                if status[0] == "DONE": # second enroll success
-                    status = dtb.addFinger(user_id, position_number) # add fingerPrint to database and return the user id from dtb
-                    if status:  # fingerPrint added to database
+                if status == "DONE": # second enroll success
+                    status_2 = dtb.addFinger(user_id, position_number) # add fingerPrint to database and return the user id from dtb
+                    if status_2:  # fingerPrint added to database
                         lcd.clear()
                         lcd.addFingerSuccessPage()
                         waitForConfirmation()
@@ -611,7 +611,7 @@ def addExistedIDCase():
                             ChangeRFID(user_id)
                             return
                         elif choosing_pointer == 3:  # Add/Change Finger
-                            ChangeFinger(user_id)
+                            # ChangeFinger(user_id)
                             return
                     elif status is "BUT_CANCEL":
                         # clean rfid and finger buffer, if existed
@@ -690,16 +690,16 @@ def ChangeRFID(user_id):
             return False
 
 
-def ChangeFinger(user_id):
-    lcd.clear()
-    lcd.addFingerPage()
-    while True:
-        # fingerPrint.first_enroll()
-        # ...
-        if button.read() is "BUT_CANCEL":
-            # clean rfid and finger buffer, if existed
-            rfid.flush()  # flush out old buffer before get out
-            return False
+# def ChangeFinger(user_id):
+#     lcd.clear()
+#     lcd.addFingerPage()
+#     while True:
+#         # fingerPrint.first_enroll()
+#         # ...
+#         if button.read() is "BUT_CANCEL":
+#             # clean rfid and finger buffer, if existed
+#             rfid.flush()  # flush out old buffer before get out
+#             return False
 
 
 def noInfoCase(current_tag):
@@ -757,10 +757,10 @@ def main():  # Main program block
             current_tag = rfid.tagID()
             [id_existed, userID] = dtb.searchRFID(current_tag)
             [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
-            if id_existed and (user_name or user_mssv is None): # if we have unfinished data
+            if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
                 dtb.delMember(user_id) # delete it from database
                 id_existed = False # reset it
-            if id_existed:  # if existed this ID --> User (maybe incomplete data user)
+            if id_existed:  # if existed this ID --> Crucial Data Filled User
                 userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
             else:  # this ID is not existed in the user database
                 if current_tag in lockerArray:  # return case for temporary user

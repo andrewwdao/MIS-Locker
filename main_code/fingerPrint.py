@@ -170,3 +170,13 @@ def delete(pos):  # Delete the template of the finger
         return False
 
 
+def deleteAll():  # Delete all of the templates
+    try:
+        if Finger.clearDatabase():
+            print('All Templates deleted!')
+            return True
+    except Exception as e:
+        print('Operation failed!')
+        print('Exception message: ' + str(e))
+        return False
+
