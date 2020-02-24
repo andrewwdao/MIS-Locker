@@ -91,11 +91,11 @@ def openDoorProcedure(locker):
     pr.locker_nowBusy(locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
     pr.locker(locker, pr.OPEN)  # Open locker stand with this user id
 
-    last_millis = datetime.now(timezone.utc)
+    last_millis = datetime.now(timezone.utc).second
     while switches.read() is not DOOR[locker]:  # if the door is not open
         # then wait
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now(timezone.utc) - last_millis).seconds > PROMPT_WAITING_TIME:
+        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME:
             break
         # if human push ok button
         if button.read() is "BUT_OK":
@@ -156,7 +156,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
             lcd.clear()
             lcd.questionPage()
             lcd.pointerPos(2, choosing_pointer)  # option, pointer
-            last_millis = datetime.now(timezone.utc)
+            last_millis = datetime.now(timezone.utc).second
             while True:
                 status = button.read()
                 if status is "BUT_OK":
@@ -194,7 +194,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
                     lcd.pointerPos(2, choosing_pointer)  # option, pointer
 
                 # wait for few seconds, if no signal then automatically use 'No' command
-                if (datetime.now(timezone.utc) - last_millis).seconds > PROMPT_WAITING_TIME/2:
+                if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME/2:
                     lockerArray[current_locker] = None  # clear info in this locker
                     pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
                     lcd.clear()
@@ -710,6 +710,7 @@ def noInfoCase(current_tag):
     lcd.clear()
     lcd.unknownIDPage()
     lcd.pointerPos(3, choosing_pointer)
+    last_millis = datetime.now(timezone.utc).second
     while True:
         status = button.read()
         if status is "BUT_OK":
@@ -721,12 +722,10 @@ def noInfoCase(current_tag):
                 addNewIDCase()
                 lcd.clear()
                 return
-
             elif choosing_pointer == 3:  # Add existed ID command
                 addExistedIDCase()
                 lcd.clear()
                 return
-
         elif status is "BUT_CANCEL":
             lcd.clear()
             # clean rfid and finger buffer, if existed
@@ -746,6 +745,13 @@ def noInfoCase(current_tag):
                 choosing_pointer += 1
             lcd.unknownIDPage()
             lcd.pointerPos(3, choosing_pointer)  # option, pointer
+
+        # wait for few seconds, if no signal then automatically use 'No' command
+        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME*2:
+            lcd.clear()
+            # clean rfid and finger buffer, if existed
+            rfid.flush()  # flush out old buffer before get out
+            return  # return to waiting state
 
 
 def main():  # Main program block
@@ -801,20 +807,6 @@ def main():  # Main program block
         else:  # if current pattern is not found in the database
             buz.beep(2)  # decline to proceed
 
-                
-
-            
-            # if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
-            #     dtb.delMember(user_id) # delete it from database
-            #     id_existed = False # reset it
-            # if id_existed:  # if existed this ID --> Crucial Data Filled User
-            #     userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
-            # else:  # this ID is not existed in the user database
-            #     if current_fingerprint in lockerArray:  # return case for temporary user
-            #         oneTimeUser_returnCase(current_fingerprint)
-            #     else:
-            #         print('Fingerprint not found!')
-            #         oneTimeUserCase(current_fingerprint)  # one time user case
 
 if __name__ == '__main__':
 
