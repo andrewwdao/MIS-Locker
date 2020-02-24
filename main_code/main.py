@@ -25,29 +25,29 @@ lockerArray = ["NULL", None, None, None]
 
 NO_ID = 999999
 
-DOOR = (
-    "NULL",
-    "DOOR01",
-    "DOOR02",
-    "DOOR03",
-    "DOOR04",
-    "DOOR05",
-    "DOOR06",
-    "DOOR07",
-    "DOOR08",
-    "DOOR09",
-    "DOOR10",
-    "DOOR11",
-    "DOOR12",
-    "DOOR13",
-    "DOOR14",
-    "DOOR15",
-    "DOOR16",
-    "DOOR17",
-    "DOOR18",
-    "DOOR19",
-    "DOOR20"
-)
+# DOOR = (
+#     "NULL",
+#     "DOOR01",
+#     "DOOR02",
+#     "DOOR03",
+#     "DOOR04",
+#     "DOOR05",
+#     "DOOR06",
+#     "DOOR07",
+#     "DOOR08",
+#     "DOOR09",
+#     "DOOR10",
+#     "DOOR11",
+#     "DOOR12",
+#     "DOOR13",
+#     "DOOR14",
+#     "DOOR15",
+#     "DOOR16",
+#     "DOOR17",
+#     "DOOR18",
+#     "DOOR19",
+#     "DOOR20"
+# )
 # --------------------------- Set Up ----------------------------------------
 lcd.begin()
 button = adc_button()
@@ -91,7 +91,7 @@ def __openDoorProcedure(locker):
     pr.locker(locker, pr.OPEN)  # Open locker stand with this user id
 
     last_millis = datetime.now(timezone.utc).second
-    while switches.read() is not DOOR[locker]:  # if the door is not open
+    while switches.read() is "ALL_CLOSED":  # if the door is not open
         # then wait
         # wait for few seconds, if no signal then automatically use 'No' command
         if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME:
@@ -104,13 +104,19 @@ def __openDoorProcedure(locker):
     time.sleep(0.5)  # wait for 0.5 second before proceeding for stablization
     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
 
-    # --- infinity loop to wait for the locker to be closed
-    while switches.read() is not "ALL_CLOSED":
+    # --- infinity loop to wait for the locker to be closed before proceeding to other process
+    last_millis = datetime.now(timezone.utc).second
+    while switches.read() is "OPEN":  # only get out if the door is close
         
         # wait and print something to debug!
         print(switches.read())
+        
+        # wait for few seconds, if no signal then automatically use 'No' command
+        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME*3:
+            buz.beep(1)
+            time.sleep(0.2)
 
-        # if human push ok button
+        # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
         if button.read() is "BUT_OK":
             pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
             return
