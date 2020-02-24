@@ -56,7 +56,7 @@ def clear():
 # ------------------------------ User level interfaces ------------------------------
 def waitPage():  # user can use RFID or their fingerprint
     LCD.setCursor(4, 0)  # row, column
-    LCD.write("SYSTEM READY")
+    LCD.write("LOCKER READY")
     LCD.setCursor(5, 2)  # row, column
     LCD.write("waiting...")
 
