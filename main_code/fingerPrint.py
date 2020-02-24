@@ -49,7 +49,7 @@ def begin():  # Tries to initialize the sensor
 
 def __scan():  # Search for the incoming finger in database, DO NOT do this all the time since it will reduce the lifetime of the sensor --> the reason for the existance of the ISR
     try:
-        global position_number
+        global positionNumber
         last_millis = datetime.now(timezone.utc).second
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
@@ -73,7 +73,7 @@ def __scan():  # Search for the incoming finger in database, DO NOT do this all 
         else:
             print('Template found at #' + str(positionNumber))
             print('Accuracy: ' + str(accuracyScore))
-            print("MATCHED. Position Number: "+ positionNumber)
+            print("MATCHED. Position Number: "+ str(positionNumber))
             return "MATCHED"
     except Exception as e:
         print('Operation failed!')
@@ -102,7 +102,7 @@ def check():
     if START_CHECKING:
         START_CHECKING = False
         return __scan()
-    return ["NO DATA", 0]
+    return "NO DATA"
 
 
 def first_enroll():

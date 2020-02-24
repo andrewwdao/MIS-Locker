@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 import fingerPrint
 from app import saveInfo_app
 import time
+import buzzer as buz
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
@@ -141,8 +142,8 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
         if user_id in lockerArray:  # if user is renting a locker
             current_locker = lockerArray.index(user_id)
             lcd.clear()
-            shorten_name = ShortenName(user_name,13)
-            lcd.returnPage(shorten_name, current_locker)  # Name, locker_num
+            # shorten_name = ShortenName(user_name,13)
+            lcd.returnPage(ShortenName(user_name,13), current_locker)  # Name, locker_num
             lockerArray[current_locker] = user_id
             openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
 
@@ -167,7 +168,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
                     elif choosing_pointer == 1:  # 'Yes' command
                         lcd.clear()
                         lcd.continueUsingPage()
-                        time.sleep(3)
+                        time.sleep(2)
                         lcd.clear()
                         return  # return to waiting state
                 elif status is "BUT_CANCEL":
@@ -211,8 +212,8 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
                 return
             else:  # new locker available
                 lcd.clear()
-                shorten_name = ShortenName(user_name,14)
-                lcd.welcomePage(shorten_name, user_mssv, current_locker)  # Name, mssv, locker_num
+                # shorten_name = ShortenName(user_name,13)
+                lcd.welcomePage(ShortenName(user_name,13), user_mssv, current_locker)  # Name, mssv, locker_num
                 lockerArray[current_locker] = user_id
                 openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
 
@@ -309,21 +310,21 @@ def lockerInfo():
 
 
 def showInfo(current_locker):
-    lcd.clear()
     if lockerArray[current_locker] is None:  # no info
+        print(lockerArray[current_locker])
         lcd.clear()
         lcd.infoLockerNoInfoPage(current_locker)
     else:  # info existed
         current_user = lockerArray[current_locker]
-        if current_user is not int:
-            lcd.clear()
-            lcd.infoLockerTempPage(current_locker)
-        else:  # a real user
-            data = dtb.getInfo(current_user)
+        if type(current_user) is int: # a real user 
+            data = dtb.getMemberInfoByID(current_user) # with get user information with user_id
             user_name = data[2]
             user_mssv = data[3]
             lcd.clear()
-            lcd.infoLockerPage(user_name, user_mssv, current_locker)
+            lcd.infoLockerPage(ShortenName(user_name,13), user_mssv, current_locker)
+        else:  # temporary user with full rfid string
+            lcd.clear()
+            lcd.infoLockerTempPage(current_locker)
 
 
 def oneTimeUserCase(current_tag):
@@ -601,8 +602,8 @@ def addExistedIDCase():
                 data = dtb.getMemberInfoByID(user_id)
                 user_name = data[2]
                 user_mssv = data[3]
-                shorten_name = ShortenName(user_name,13)
-                lcd.addExtraMainPage(shorten_name, user_mssv)
+                # shorten_name = ShortenName(user_name,13)
+                lcd.addExtraMainPage(ShortenName(user_name,13), user_mssv)
                 choosing_pointer = 2  # default at first position
                 lcd.pointerPos(3, choosing_pointer)
                 # ------------------Button part ------------------
@@ -760,7 +761,7 @@ def main():  # Main program block
             current_tag = rfid.tagID()
             [id_existed, userID] = dtb.searchRFID(current_tag)
             [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
-            if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
+            if (user_name or user_mssv) is None and id_existed: # if we have unfinished data
                 dtb.delMember(user_id) # delete it from database
                 id_existed = False # reset it
             if id_existed:  # if existed this ID --> Crucial Data Filled User
@@ -771,26 +772,49 @@ def main():  # Main program block
                 elif current_tag == ADMIN_KEY:
                     adminCase()
                 else:
+                    buz.beep(1)  # sound notification
                     print('RFID not found!')
                     noInfoCase(current_tag)  # user have no info case
             rfid.flush()  # flush out old buffer before get out
 
         # ================== FingerPrint case ==================
-        if fingerPrint.check() == "MATCHED":
-            current_fingerprint = fingerPrint.user_position
+        status_fingerprint = fingerPrint.check()
+        if status_fingerprint == "NO DATA":
+            pass  # if no data found, then do nothing
+        elif status_fingerprint == "MATCHED":
+            current_fingerprint = fingerPrint.user_position()  # save current fingerprint position to a variable
             [id_existed, userID] = dtb.searchFinger(current_fingerprint)
-            [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
-            if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
-                dtb.delMember(user_id) # delete it from database
-                id_existed = False # reset it
-            if id_existed:  # if existed this ID --> Crucial Data Filled User
-                userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
+            if id_existed:  # if existed this ID --> User
+                [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
+                if (user_name or user_mssv) is None:  # if we have unfinished data
+                    dtb.delMember(user_id) # delete it from database
+                    fingerPrint.delete(current_fingerprint)  # delete fingerprint pattern in the dtb of the fingerprint sensor
+                else: # data is all good and ready to be used
+                    userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
             else:  # this ID is not existed in the user database
-                if current_fingerprint in lockerArray:  # return case for temporary user
+                fingerPrint.delete(current_fingerprint)  # delete fingerprint pattern in the dtb of the fingerprint sensor
+                if current_fingerprint in lockerArray:   # return case for temporary user
                     oneTimeUser_returnCase(current_fingerprint)
                 else:
                     print('Fingerprint not found!')
                     oneTimeUserCase(current_fingerprint)  # one time user case
+        else:  # if current pattern is not found in the database
+            buz.beep(2)  # decline to proceed
+
+                
+
+            
+            # if (user_name or user_mssv is None) and id_existed: # if we have unfinished data
+            #     dtb.delMember(user_id) # delete it from database
+            #     id_existed = False # reset it
+            # if id_existed:  # if existed this ID --> Crucial Data Filled User
+            #     userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
+            # else:  # this ID is not existed in the user database
+            #     if current_fingerprint in lockerArray:  # return case for temporary user
+            #         oneTimeUser_returnCase(current_fingerprint)
+            #     else:
+            #         print('Fingerprint not found!')
+            #         oneTimeUserCase(current_fingerprint)  # one time user case
 
 if __name__ == '__main__':
 
