@@ -59,8 +59,7 @@ fingerPrint.begin()
 fingerPrint.activate()
 
 
-
-def ShortenName(name, limit):
+def __shortenName(name, limit):
     name_length = len(name)
     name += ' '
     if name_length <= limit:
@@ -79,7 +78,7 @@ def ShortenName(name, limit):
         return shorten_name
 
 
-def dumpDebug(iid, name, mssv, rrfid, fing):
+def __dumpDebug(iid, name, mssv, rrfid, fing):
     print('member_id: ' + str(iid))
     print('Name: ' + str(name))
     print('MSSV: ' + str(mssv))
@@ -87,7 +86,7 @@ def dumpDebug(iid, name, mssv, rrfid, fing):
     print('fingerNumber: ' + str(fing))
 
 
-def openDoorProcedure(locker):
+def __openDoorProcedure(locker):
     pr.locker_nowBusy(locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
     pr.locker(locker, pr.OPEN)  # Open locker stand with this user id
 
@@ -120,7 +119,7 @@ def openDoorProcedure(locker):
     return
 
 
-def getNextAvailableLocker():
+def __getNextAvailableLocker():
     if None in lockerArray:  # if still have vacancy
         next_locker_available = lockerArray.index(None)
         return next_locker_available
@@ -128,188 +127,14 @@ def getNextAvailableLocker():
         return None
 
 
-def waitForConfirmation():
+def __waitForConfirmation():
     time.sleep(0.4)  # prevent debounce
     while button.read() is not "BUT_OK":
         # wait for someone to push any button
         pass
 
 
-def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
-    global lockerArray
-    if got_data:  # if get info from database successfully
-        # ------------  OLD LOCKER!!! -----------------
-        if user_id in lockerArray:  # if user is renting a locker
-            current_locker = lockerArray.index(user_id)
-            lcd.clear()
-            # shorten_name = ShortenName(user_name,13)
-            lcd.returnPage(ShortenName(user_name,13), current_locker)  # Name, locker_num
-            lockerArray[current_locker] = user_id
-            openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-
-            pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
-
-            dumpDebug(user_id, user_name, user_mssv, user_rfid, user_fing)
-
-            # --- ask user if they want to continue using the locker
-            choosing_pointer = 2  # equivalent to No
-            lcd.clear()
-            lcd.questionPage()
-            lcd.pointerPos(2, choosing_pointer)  # option, pointer
-            last_millis = datetime.now(timezone.utc).second
-            while True:
-                status = button.read()
-                if status is "BUT_OK":
-                    if choosing_pointer == 2:  # 'No' command
-                        lockerArray[current_locker] = None  # clear info in this locker
-                        pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
-                        lcd.clear()
-                        return  # return to waiting state
-                    elif choosing_pointer == 1:  # 'Yes' command
-                        lcd.clear()
-                        lcd.continueUsingPage()
-                        time.sleep(2)
-                        lcd.clear()
-                        return  # return to waiting state
-                elif status is "BUT_CANCEL":
-                    lockerArray[current_locker] = None  # clear info in this locker
-                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
-                    lcd.clear()
-                    # clean rfid and finger buffer, if existed
-                    rfid.flush()  # flush out old buffer before get out
-                    return  # return to waiting state
-                elif status is "BUT_UP":
-                    if choosing_pointer == 1:  # limit to 1
-                        pass
-                    else:
-                        choosing_pointer -= 1
-                    lcd.questionPage()
-                    lcd.pointerPos(2, choosing_pointer)  # option, pointer
-                elif status is "BUT_DOWN":
-                    if choosing_pointer == 2:  # limit to 2
-                        pass
-                    else:
-                        choosing_pointer += 1
-                    lcd.questionPage()
-                    lcd.pointerPos(2, choosing_pointer)  # option, pointer
-
-                # wait for few seconds, if no signal then automatically use 'No' command
-                if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME/2:
-                    lockerArray[current_locker] = None  # clear info in this locker
-                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
-                    lcd.clear()
-                    return  # return to waiting state
-        # ------------  NEW LOCKER!!! -----------------
-        else:  # if this user don't have any locker yet
-            current_locker = getNextAvailableLocker()
-            if current_locker is None:  # out of vacancy
-                lcd.clear()
-                lcd.outOfVacancy()
-
-                waitForConfirmation()
-
-                lcd.clear()
-                return
-            else:  # new locker available
-                lcd.clear()
-                # shorten_name = ShortenName(user_name,13)
-                lcd.welcomePage(ShortenName(user_name,13), user_mssv, current_locker)  # Name, mssv, locker_num
-                lockerArray[current_locker] = user_id
-                openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-
-                pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
-
-                dumpDebug(user_id, user_name, user_mssv, user_rfid, user_fing)
-
-                lcd.clear()
-                return
-    else:
-        print('cannot get info from database with this user-database-id')
-        lcd.clear()
-        return
-
-
-def adminCase():
-    choosing_pointer = 1  # default at first position
-    lcd.clear()
-    lcd.mainAdminPage()
-    lcd.pointerPos(3, choosing_pointer)
-    while True:
-        status = button.read()
-        if status is "BUT_OK":
-            if choosing_pointer == 1:  # Modify database command
-                lcd.clear()
-                lcd.modifyDatabaseInfoPage()
-
-                waitForConfirmation()
-
-                lcd.clear()
-                lcd.mainAdminPage()
-                lcd.pointerPos(3, choosing_pointer)
-
-            elif choosing_pointer == 2:  # Locker info command
-                lockerInfo()
-                lcd.clear()
-                lcd.mainAdminPage()
-                lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
-
-        elif status is "BUT_CANCEL":
-            lcd.clear()
-            # clean rfid and finger buffer, if existed
-            rfid.flush()  # flush out old buffer before get out
-            return  # return to waiting state
-        elif status is "BUT_UP":
-            if choosing_pointer == 1:  # limit to 1
-                pass
-            else:
-                choosing_pointer -= 1
-            lcd.mainAdminPage()
-            lcd.pointerPos(3, choosing_pointer)  # option, pointer
-        elif status is "BUT_DOWN":
-            if choosing_pointer == 2:  # limit to 2
-                pass
-            else:
-                choosing_pointer += 1
-            lcd.mainAdminPage()
-            lcd.pointerPos(3, choosing_pointer)  # option, pointer
-
-
-def lockerInfo():
-    global lockerArray
-    current_locker = 1
-    showInfo(current_locker)
-    time.sleep(0.5)  # stabilize time
-    # ------------------Button part ------------------
-    while True:
-        status = button.read()
-        if status is "BUT_OK":
-            lcd.clear()
-            lcd.unlockConfirmPage(current_locker)
-            lockerArray[current_locker] = None
-            openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-            return
-        elif status is "BUT_CANCEL":
-            lcd.clear()
-            lcd.mainAdminPage()
-            lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
-            # clean rfid and finger buffer, if existed
-            rfid.flush()  # flush out old buffer before get out
-            return  # return to main menu
-        elif status is "BUT_UP":
-            if current_locker == (len(lockerArray)-1):  # if reached the limit of lockers
-                pass
-            else:
-                current_locker += 1
-            showInfo(current_locker)
-        elif status is "BUT_DOWN":
-            if current_locker == 1:  # limit to 1
-                pass
-            else:
-                current_locker -= 1
-            showInfo(current_locker)
-
-
-def showInfo(current_locker):
+def __showAdminInfo(current_locker):
     if lockerArray[current_locker] is None:  # no info
         print(lockerArray[current_locker])
         lcd.clear()
@@ -321,89 +146,16 @@ def showInfo(current_locker):
             user_name = data[2]
             user_mssv = data[3]
             lcd.clear()
-            lcd.infoLockerPage(ShortenName(user_name,13), user_mssv, current_locker)
+            lcd.infoLockerPage(__shortenName(user_name,13), user_mssv, current_locker)
         else:  # temporary user with full rfid string
             lcd.clear()
             lcd.infoLockerTempPage(current_locker)
 
 
-def oneTimeUserCase(current_tag):
-    current_locker = getNextAvailableLocker()
-    if current_locker is None:  # out of vacancy
-        lcd.clear()
-        lcd.outOfVacancyPage()
-
-        waitForConfirmation()
-
-        lcd.clear()
-        return
-    else:  # new locker available
-        lcd.clear()
-        lcd.welcomeTempPage(current_locker)
-        lockerArray[current_locker] = current_tag
-        openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-
-        pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
-
-        lcd.clear()
-        return
-
-
-def oneTimeUser_returnCase(current_tag):
-    current_locker = lockerArray.index(current_tag)  # get the locker out
-    lcd.clear()
-    lcd.returnTempPage(current_locker)
-    openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-    lockerArray[current_locker] = None
-
-    lcd.clear()
-    return
-
-
-def addNewIDCase():
-    user_id = NO_ID  # create user id
-    # add RFID
-    [status_rfid, user_id_rfid] = addRFID()
-    # now time to add fingerPrint (optional)
-    addFingerPrint(status_rfid, user_id_rfid)
-
-    if status_rfid :  # rfid availables is mandatory
-        user_id = user_id_rfid
-
-        if user_id == NO_ID:
-            raise Exception("Error with database, please check again")
-
-        # Add personal information
-        lcd.clear()
-        lcd.addNewInfo()
-        saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
-
-        data = dtb.getLastMemberInfo()
-        user_valid = data[0]
-        user_id = data[1]
-        user_name = data[2]
-        user_mssv = data[3]
-        if user_valid:
-            if (user_name and user_mssv) is not None:
-                [got_data, userID, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(user_id)
-                userCase(got_data, userID, user_name, user_mssv, user_rfid, user_fing)
-                return
-            return
-        return
-    else:  # no rfid is available
-        lcd.clear()
-        lcd.cancelNewUserPage()
-        time.sleep(1.5)
-        choosing_pointer = 2  # because we are at the Add new ID
-        lcd.clear()
-        lcd.unknownIDPage()
-        lcd.pointerPos(3, choosing_pointer)
-        return  # return to No Info menu
-
-
-def addRFID():
+def __addRFID():
     lcd.clear()
     rfid.flush()  # clear everything before starting
+    fingerPrint.flush() # clear everthing before starting
     while True:
         lcd.addRFIDPage()
         # wait for signal here
@@ -413,7 +165,7 @@ def addRFID():
             if status:  # RFID added
                 lcd.clear()
                 lcd.addRFIDSuccessPage()
-                waitForConfirmation()
+                __waitForConfirmation()
                 return [True, user_id]
             else:  # RFID existed
                 lcd.clear()
@@ -426,17 +178,19 @@ def addRFID():
                     if status is "BUT_OK":
                         if choosing_pointer == 1:  # retry
                             lcd.clear()
-                            # lcd.addRFIDPage()
                             rfid.flush()  # clear everything before starting
+                            fingerPrint.flush() # clear everthing before starting
                             break
                         elif choosing_pointer == 2: # cancel
                             # clean rfid and finger buffer, if existed
                             rfid.flush()  # flush out old buffer before get out
+                            fingerPrint.flush() # clear everthing before starting
                             return [False, NO_ID]
                         return [False, NO_ID]
                     elif status is "BUT_CANCEL":
                         # clean rfid and finger buffer, if existed
                         rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before starting
                         return [False, NO_ID]
                     elif status is "BUT_UP":
                         if choosing_pointer == 1:  # limit to 1
@@ -457,18 +211,78 @@ def addRFID():
             return [False, NO_ID]
 
 
-def addFingerPrint(status_rfid, user_id):
+def __ChangeRFID(user_id):
+    lcd.clear()
+    lcd.addRFIDPage()
+    rfid.flush()  # clear everything before starting
+    fingerPrint.flush() # clear everthing before starting
+    while True:
+        lcd.addRFIDPage()
+        # wait for signal here
+        if rfid.hasID():
+            current_tag = rfid.tagID()
+            if dtb.changeRFID(user_id, current_tag):  # if RFID changed successfully
+                lcd.clear()
+                lcd.addRFIDSuccessPage()
+                __waitForConfirmation()
+                return True
+            else:
+                lcd.clear()
+                lcd.addRFIDFailPage()
+                choosing_pointer = 1  # default at first position
+                lcd.pointerPos(2, choosing_pointer)
+                # ------------------Button part ------------------
+                while True:
+                    status = button.read()
+                    if status is "BUT_OK":
+                        if choosing_pointer == 1:  # retry
+                            lcd.clear()
+                            lcd.addRFIDPage()
+                            rfid.flush()  # clear everything before starting
+                            fingerPrint.flush() # clear everthing before starting
+                            break
+                        elif choosing_pointer == 2:  # cancel
+                            # clean rfid and finger buffer, if existed
+                            rfid.flush()  # flush out old buffer before get out
+                            fingerPrint.flush() # clear everthing before starting
+                            return False
+                        return False
+                    elif status is "BUT_CANCEL":
+                        # clean rfid and finger buffer, if existed
+                        rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before starting
+                        return False
+                    elif status is "BUT_UP":
+                        if choosing_pointer == 1:  # limit to 1
+                            pass
+                        else:
+                            choosing_pointer -= 1
+                        lcd.addRFIDFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
+                    elif status is "BUT_DOWN":
+                        if choosing_pointer == 2:  # limit to 2
+                            pass
+                        else:
+                            choosing_pointer += 1
+                        lcd.addRFIDFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
+            return False
+
+
+def __addFingerPrint(status_rfid, user_id):
     if status_rfid: # if rfid was added successfully, then save the fingerPrint to the same user_id
         lcd.clear()
         while True: # not an usual infinitive loop, it existed for the sake of adding fingerPrint fail
             lcd.addFingerPage01()
             [status, position_number] = fingerPrint.first_enroll() # this function return ["DONE",0]
             if status == "CANCEL":
+                fingerPrint.flush() # clear everthing before starting
                 return # someone press cancel button, so cancel the process
             if status == "EXISTED":
                 lcd.clear()
                 lcd.addFingerExistedPage()
-                waitForConfirmation()
+                __waitForConfirmation()
+                fingerPrint.flush() # clear everthing before starting
                 return
             if status == "DONE": # first enroll success
                 lcd.clear()
@@ -478,13 +292,15 @@ def addFingerPrint(status_rfid, user_id):
                 lcd.addFingerPage03()
                 [status, position_number] = fingerPrint.second_enroll() # this function return ["DONE", positionNumber]
                 if status == "CANCEL":
+                    fingerPrint.flush() # clear everthing before starting
                     return # someone press cancel button, so cancel the process
                 if status == "DONE": # second enroll success
                     status_2 = dtb.addFinger(user_id, position_number) # add fingerPrint to database and return the user id from dtb
                     if status_2:  # fingerPrint added to database
                         lcd.clear()
                         lcd.addFingerSuccessPage()
-                        waitForConfirmation()
+                        __waitForConfirmation()
+                        fingerPrint.flush() # clear everthing before starting
                         return
                     else:  # fingerPrint failed to add to database
                         print('fingerPrint failed to add to database') # for debug
@@ -499,10 +315,11 @@ def addFingerPrint(status_rfid, user_id):
                                 if choosing_pointer == 1:  # retry
                                     lcd.clear()
                                     break # try adding again
-                                elif choosing_pointer == 2: # cancel
-                                    return  # return the optional fingerPrint adding function
+                                # all other option equal to cancel
+                                fingerPrint.flush() # clear everthing before starting
                                 return  # return the optional fingerPrint adding function
                             elif status is "BUT_CANCEL":
+                                fingerPrint.flush() # clear everthing before starting
                                 return  # return the optional fingerPrint adding function
                             elif status is "BUT_UP":
                                 if choosing_pointer == 1:  # limit to 1
@@ -532,10 +349,11 @@ def addFingerPrint(status_rfid, user_id):
                             if choosing_pointer == 1:  # retry
                                 lcd.clear()
                                 break # try adding again
-                            elif choosing_pointer == 2: # cancel
-                                return  # return the optional fingerPrint adding function
+                            # all other option equal to cancel
+                            fingerPrint.flush() # clear everthing before starting
                             return  # return the optional fingerPrint adding function
                         elif status is "BUT_CANCEL":
+                            fingerPrint.flush() # clear everthing before starting
                             return  # return the optional fingerPrint adding function
                         elif status is "BUT_UP":
                             if choosing_pointer == 1:  # limit to 1
@@ -565,10 +383,11 @@ def addFingerPrint(status_rfid, user_id):
                         if choosing_pointer == 1:  # retry
                             lcd.clear()
                             break # try adding again
-                        elif choosing_pointer == 2: # cancel
-                            return  # return the optional fingerPrint adding function
+                        # all other option equal to cancel
+                        fingerPrint.flush() # clear everthing before starting
                         return  # return the optional fingerPrint adding function
                     elif status is "BUT_CANCEL":
+                        fingerPrint.flush() # clear everthing before starting
                         return  # return the optional fingerPrint adding function
                     elif status is "BUT_UP":
                         if choosing_pointer == 1:  # limit to 1
@@ -583,10 +402,292 @@ def addFingerPrint(status_rfid, user_id):
                         else:
                             choosing_pointer += 1
                             lcd.addFingerFailPage()
-                            lcd.pointerPos(2, choosing_pointer)
-                    
+                            lcd.pointerPos(2, choosing_pointer)     
     else: # rfid was not added successfully
+        fingerPrint.flush() # clear everthing before starting
         return  # let other function take care
+
+
+# def __ChangeFinger(user_id):
+#     lcd.clear()
+#     lcd.addFingerPage()
+#     while True:
+#         # fingerPrint.first_enroll()
+#         # ...
+#         if button.read() is "BUT_CANCEL":
+#             # clean rfid and finger buffer, if existed
+#             rfid.flush()  # flush out old buffer before get out
+#             return False
+
+
+def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
+    global lockerArray
+    if got_data:  # if get info from database successfully
+        # ------------  OLD LOCKER!!! -----------------
+        if user_id in lockerArray:  # if user is renting a locker
+            current_locker = lockerArray.index(user_id)
+            lcd.clear()
+            # shorten_name = __shortenName(user_name,13)
+            lcd.returnPage(__shortenName(user_name,13), current_locker)  # Name, locker_num
+            lockerArray[current_locker] = user_id
+            __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
+
+            pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
+
+            __dumpDebug(user_id, user_name, user_mssv, user_rfid, user_fing)
+
+            # --- ask user if they want to continue using the locker
+            choosing_pointer = 2  # equivalent to No
+            lcd.clear()
+            lcd.questionPage()
+            lcd.pointerPos(2, choosing_pointer)  # option, pointer
+            last_millis = datetime.now(timezone.utc).second
+            while True:
+                status = button.read()
+                if status is "BUT_OK":
+                    if choosing_pointer == 2:  # 'No' command
+                        lockerArray[current_locker] = None  # clear info in this locker
+                        pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
+                        lcd.clear()
+                        rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before get out
+                        return  # return to waiting state
+                    elif choosing_pointer == 1:  # 'Yes' command
+                        lcd.clear()
+                        lcd.continueUsingPage()
+                        time.sleep(2)
+                        lcd.clear()
+                        rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before get out
+                        return  # return to waiting state
+                elif status is "BUT_CANCEL":
+                    lockerArray[current_locker] = None  # clear info in this locker
+                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
+                    lcd.clear()
+                    # clean rfid and finger buffer, if existed
+                    rfid.flush()  # flush out old buffer before get out
+                    fingerPrint.flush() # clear everthing before get out
+                    return  # return to waiting state
+                elif status is "BUT_UP":
+                    if choosing_pointer == 1:  # limit to 1
+                        pass
+                    else:
+                        choosing_pointer -= 1
+                    lcd.questionPage()
+                    lcd.pointerPos(2, choosing_pointer)  # option, pointer
+                elif status is "BUT_DOWN":
+                    if choosing_pointer == 2:  # limit to 2
+                        pass
+                    else:
+                        choosing_pointer += 1
+                    lcd.questionPage()
+                    lcd.pointerPos(2, choosing_pointer)  # option, pointer
+
+                # wait for few seconds, if no signal then automatically use 'No' command
+                if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME/2:
+                    lockerArray[current_locker] = None  # clear info in this locker
+                    pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
+                    lcd.clear()
+                    rfid.flush()  # flush out old buffer before get out
+                    fingerPrint.flush() # clear everthing before get out
+                    return  # return to waiting state
+        # ------------  NEW LOCKER!!! -----------------
+        else:  # if this user don't have any locker yet
+            current_locker = __getNextAvailableLocker()
+            if current_locker is None:  # out of vacancy
+                lcd.clear()
+                lcd.outOfVacancy()
+
+                __waitForConfirmation()
+
+                lcd.clear()
+                rfid.flush()  # flush out old buffer before get out
+                fingerPrint.flush() # clear everthing before get out
+                return
+            else:  # new locker available
+                lcd.clear()
+                # shorten_name = __shortenName(user_name,13)
+                lcd.welcomePage(__shortenName(user_name,13), user_mssv, current_locker)  # Name, mssv, locker_num
+                lockerArray[current_locker] = user_id
+                __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
+
+                pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
+
+                __dumpDebug(user_id, user_name, user_mssv, user_rfid, user_fing)
+
+                lcd.clear()
+                rfid.flush()  # flush out old buffer before get out
+                fingerPrint.flush() # clear everthing before get out
+                return
+    else:
+        print('cannot get info from database with this user-database-id')
+        lcd.clear()
+        rfid.flush()  # flush out old buffer before get out
+        fingerPrint.flush() # clear everthing before get out
+        return
+
+
+def adminCase():
+    choosing_pointer = 1  # default at first position
+    lcd.clear()
+    lcd.mainAdminPage()
+    lcd.pointerPos(3, choosing_pointer)
+    while True:
+        status = button.read()
+        if status is "BUT_OK":
+            # //////////////// MODIFY DATABASE /////////////////
+            if choosing_pointer == 1:  # Modify database command
+                lcd.clear()
+                lcd.modifyDatabaseInfoPage()
+
+                __waitForConfirmation()
+
+                lcd.clear()
+                lcd.mainAdminPage()
+                lcd.pointerPos(3, choosing_pointer)
+
+            # //////////////// LOCKER INFO ///////////////////
+            elif choosing_pointer == 2:  # Locker info command
+                global lockerArray
+                current_locker = 1
+                __showAdminInfo(current_locker)
+                time.sleep(0.5)  # stabilize time
+                # ------------------Button part ------------------
+                while True:
+                    status = button.read()
+                    if status is "BUT_OK":
+                        lcd.clear()
+                        lcd.unlockConfirmPage(current_locker)
+                        lockerArray[current_locker] = None
+                        __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
+                        break
+                    elif status is "BUT_CANCEL":
+                        lcd.clear()
+                        lcd.mainAdminPage()
+                        lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
+                        # clean rfid and finger buffer, if existed
+                        rfid.flush()  # flush out old buffer before get out
+                        break  # return to main menu
+                    elif status is "BUT_UP":
+                        if current_locker == (len(lockerArray)-1):  # if reached the limit of lockers
+                            pass
+                        else:
+                            current_locker += 1
+                            __showAdminInfo(current_locker)
+                    elif status is "BUT_DOWN":
+                        if current_locker == 1:  # limit to 1
+                            pass
+                        else:
+                            current_locker -= 1
+                            __showAdminInfo(current_locker)
+                lcd.clear()
+                lcd.mainAdminPage()
+                lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
+
+        elif status is "BUT_CANCEL":
+            lcd.clear()
+            # clean rfid and finger buffer, if existed
+            rfid.flush()  # flush out old buffer before get out
+            break  # return to waiting state
+        elif status is "BUT_UP":
+            if choosing_pointer == 1:  # limit to 1
+                pass
+            else:
+                choosing_pointer -= 1
+            lcd.mainAdminPage()
+            lcd.pointerPos(3, choosing_pointer)  # option, pointer
+        elif status is "BUT_DOWN":
+            if choosing_pointer == 2:  # limit to 2
+                pass
+            else:
+                choosing_pointer += 1
+            lcd.mainAdminPage()
+            lcd.pointerPos(3, choosing_pointer)  # option, pointer
+    
+    rfid.flush()  # flush out old buffer before get out
+    fingerPrint.flush() # clear everthing before get out
+
+
+def oneTimeUserCase(current_tag):
+    current_locker = __getNextAvailableLocker()
+    if current_locker is None:  # out of vacancy
+        lcd.clear()
+        lcd.outOfVacancyPage()
+
+        __waitForConfirmation()
+
+        lcd.clear()
+        rfid.flush()  # flush out old buffer before get out
+        fingerPrint.flush() # clear everthing before get out
+        return
+    else:  # new locker available
+        lcd.clear()
+        lcd.welcomeTempPage(current_locker)
+        lockerArray[current_locker] = current_tag
+        __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
+
+        pr.locker_nowBusy(current_locker, pr.ON)  # OPEN RED LED stand with this LOCKER
+
+        lcd.clear()
+        rfid.flush()  # flush out old buffer before get out
+        fingerPrint.flush() # clear everthing before get out
+        return
+
+
+def oneTimeUser_returnCase(current_tag):
+    current_locker = lockerArray.index(current_tag)  # get the locker out
+    lcd.clear()
+    lcd.returnTempPage(current_locker)
+    __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
+    lockerArray[current_locker] = None
+
+    lcd.clear()
+    rfid.flush()  # flush out old buffer before get out
+    fingerPrint.flush() # clear everthing before get out
+    return
+
+
+def addNewIDCase():
+    user_id = NO_ID  # create user id
+    # add RFID
+    [status_rfid, user_id_rfid] = __addRFID()
+    # now time to add fingerPrint (optional)
+    __addFingerPrint(status_rfid, user_id_rfid)
+
+    if status_rfid :  # rfid availables is mandatory
+        user_id = user_id_rfid
+
+        if user_id == NO_ID:
+            raise Exception("Error with database, please check again")
+
+        # Add personal information
+        lcd.clear()
+        lcd.addNewInfo()
+        saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+
+        data = dtb.getLastMemberInfo()
+        user_valid = data[0]
+        user_id = data[1]
+        user_name = data[2]
+        user_mssv = data[3]
+        if user_valid:
+            if (user_name and user_mssv) is not None:
+                [got_data, userID, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(user_id)
+                userCase(got_data, userID, user_name, user_mssv, user_rfid, user_fing)
+        rfid.flush()  # flush out old buffer before get out
+        fingerPrint.flush() # clear everthing before get out
+        return # return to No Info menu
+    else:  # no rfid is available
+        lcd.clear()
+        lcd.cancelNewUserPage()
+        time.sleep(1.5)
+        choosing_pointer = 2  # because we are at the Add new ID
+        lcd.clear()
+        lcd.unknownIDPage()
+        lcd.pointerPos(3, choosing_pointer)
+        rfid.flush()  # flush out old buffer before get out
+        fingerPrint.flush() # clear everthing before get out
+        return  # return to No Info menu
 
 
 def addExistedIDCase():
@@ -602,8 +703,8 @@ def addExistedIDCase():
                 data = dtb.getMemberInfoByID(user_id)
                 user_name = data[2]
                 user_mssv = data[3]
-                # shorten_name = ShortenName(user_name,13)
-                lcd.addExtraMainPage(ShortenName(user_name,13), user_mssv)
+                # shorten_name = __shortenName(user_name,13)
+                lcd.addExtraMainPage(__shortenName(user_name,13), user_mssv)
                 choosing_pointer = 2  # default at first position
                 lcd.pointerPos(3, choosing_pointer)
                 # ------------------Button part ------------------
@@ -611,14 +712,19 @@ def addExistedIDCase():
                     status = button.read()
                     if status is "BUT_OK":
                         if choosing_pointer == 2:  # Add/Change RFID
-                            ChangeRFID(user_id)
+                            __ChangeRFID(user_id)
+                            rfid.flush()  # flush out old buffer before get out
+                            fingerPrint.flush() # clear everthing before get out
                             return
                         elif choosing_pointer == 3:  # Add/Change Finger
                             # ChangeFinger(user_id)
+                            rfid.flush()  # flush out old buffer before get out
+                            fingerPrint.flush() # clear everthing before get out
                             return
                     elif status is "BUT_CANCEL":
                         # clean rfid and finger buffer, if existed
                         rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before get out
                         return
                     elif status is "BUT_UP":
                         if choosing_pointer == 2:  # limit to 2
@@ -639,72 +745,6 @@ def addExistedIDCase():
                     oneTimeUser_returnCase(current_tag)
 
 
-def ChangeRFID(user_id):
-    lcd.clear()
-    lcd.addRFIDPage()
-    rfid.flush()  # clear everything before starting
-    while True:
-        lcd.addRFIDPage()
-        # wait for signal here
-        if rfid.hasID():
-            current_tag = rfid.tagID()
-            if dtb.changeRFID(user_id, current_tag):  # if RFID changed successfully
-                lcd.clear()
-                lcd.addRFIDSuccessPage()
-                waitForConfirmation()
-                return True
-            else:
-                lcd.clear()
-                lcd.addRFIDFailPage()
-                choosing_pointer = 1  # default at first position
-                lcd.pointerPos(2, choosing_pointer)
-                # ------------------Button part ------------------
-                while True:
-                    status = button.read()
-                    if status is "BUT_OK":
-                        if choosing_pointer == 1:  # retry
-                            lcd.clear()
-                            lcd.addRFIDPage()
-                            rfid.flush()  # clear everything before starting
-                            break
-                        elif choosing_pointer == 2:  # cancel
-                            # clean rfid and finger buffer, if existed
-                            rfid.flush()  # flush out old buffer before get out
-                            return False
-                        return False
-                    elif status is "BUT_CANCEL":
-                        # clean rfid and finger buffer, if existed
-                        rfid.flush()  # flush out old buffer before get out
-                        return False
-                    elif status is "BUT_UP":
-                        if choosing_pointer == 1:  # limit to 1
-                            pass
-                        else:
-                            choosing_pointer -= 1
-                        lcd.addRFIDFailPage()
-                        lcd.pointerPos(2, choosing_pointer)
-                    elif status is "BUT_DOWN":
-                        if choosing_pointer == 2:  # limit to 2
-                            pass
-                        else:
-                            choosing_pointer += 1
-                        lcd.addRFIDFailPage()
-                        lcd.pointerPos(2, choosing_pointer)
-            return False
-
-
-# def ChangeFinger(user_id):
-#     lcd.clear()
-#     lcd.addFingerPage()
-#     while True:
-#         # fingerPrint.first_enroll()
-#         # ...
-#         if button.read() is "BUT_CANCEL":
-#             # clean rfid and finger buffer, if existed
-#             rfid.flush()  # flush out old buffer before get out
-#             return False
-
-
 def noInfoCase(current_tag):
     choosing_pointer = 1  # default at first position
     lcd.clear()
@@ -717,19 +757,26 @@ def noInfoCase(current_tag):
             if choosing_pointer == 1:  # One-time user command
                 oneTimeUserCase(current_tag)
                 lcd.clear()
+                rfid.flush()  # flush out old buffer before get out
+                fingerPrint.flush() # clear everthing before get out
                 return
             elif choosing_pointer == 2:  # Add new ID command
                 addNewIDCase()
                 lcd.clear()
+                rfid.flush()  # flush out old buffer before get out
+                fingerPrint.flush() # clear everthing before get out
                 return
             elif choosing_pointer == 3:  # Add existed ID command
                 addExistedIDCase()
                 lcd.clear()
+                rfid.flush()  # flush out old buffer before get out
+                fingerPrint.flush() # clear everthing before get out
                 return
         elif status is "BUT_CANCEL":
             lcd.clear()
             # clean rfid and finger buffer, if existed
             rfid.flush()  # flush out old buffer before get out
+            fingerPrint.flush() # clear everthing before get out
             return  # return to waiting state
         elif status is "BUT_UP":
             if choosing_pointer == 1:  # limit to 1
@@ -751,11 +798,12 @@ def noInfoCase(current_tag):
             lcd.clear()
             # clean rfid and finger buffer, if existed
             rfid.flush()  # flush out old buffer before get out
+            fingerPrint.flush() # clear everthing before get out
             return  # return to waiting state
 
 
 def main():  # Main program block
-    # ---------------------------- Setup -------------------------------
+    # ---------------------------- Setup ----------------------------------------
     lcd.clear()
     print("System ready!")
     # ---------------------------- Loop -----------------------------------------
@@ -766,12 +814,15 @@ def main():  # Main program block
         if rfid.hasID():
             current_tag = rfid.tagID()
             [id_existed, userID] = dtb.searchRFID(current_tag)
-            [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
-            if (user_name or user_mssv) is None and id_existed: # if we have unfinished data
-                dtb.delMember(user_id) # delete it from database
-                id_existed = False # reset it
-            if id_existed:  # if existed this ID --> Crucial Data Filled User
-                userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
+            if id_existed:  # if existed this ID --> User
+                [got_data, user_id, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(userID)
+                if (user_name or user_mssv) is None:  # if we have unfinished data
+                    dtb.delMember(user_id) # delete it from database
+                    buz.beep(1)  # sound notification
+                    print('RFID not found!')
+                    noInfoCase(current_tag)  # turn user to no info case
+                else: # data is all good and ready to be used
+                    userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
             else:  # this ID is not existed in the user database
                 if current_tag in lockerArray:  # return case for temporary user
                     oneTimeUser_returnCase(current_tag)
@@ -780,7 +831,7 @@ def main():  # Main program block
                 else:
                     buz.beep(1)  # sound notification
                     print('RFID not found!')
-                    noInfoCase(current_tag)  # user have no info case
+                    noInfoCase(current_tag)  # user have no info yet
             rfid.flush()  # flush out old buffer before get out
 
         # ================== FingerPrint case ==================
@@ -795,17 +846,14 @@ def main():  # Main program block
                 if (user_name or user_mssv) is None:  # if we have unfinished data
                     dtb.delMember(user_id) # delete it from database
                     fingerPrint.delete(current_fingerprint)  # delete fingerprint pattern in the dtb of the fingerprint sensor
+                    buz.beep(2)  # sound notification of declining to proceed
                 else: # data is all good and ready to be used
                     userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing)
             else:  # this ID is not existed in the user database
                 fingerPrint.delete(current_fingerprint)  # delete fingerprint pattern in the dtb of the fingerprint sensor
-                if current_fingerprint in lockerArray:   # return case for temporary user
-                    oneTimeUser_returnCase(current_fingerprint)
-                else:
-                    print('Fingerprint not found!')
-                    oneTimeUserCase(current_fingerprint)  # one time user case
+                buz.beep(2)  # sound notification of declining to proceed
         else:  # if current pattern is not found in the database
-            buz.beep(2)  # decline to proceed
+            buz.beep(2)  # sound notification of declining to proceed
 
 
 if __name__ == '__main__':

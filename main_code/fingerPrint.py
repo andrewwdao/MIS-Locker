@@ -105,6 +105,11 @@ def check():
     return "NO DATA"
 
 
+def flush():
+    global START_CHECKING
+    START_CHECKING = False
+
+
 def first_enroll():
     try:
         print('Waiting for finger...')
