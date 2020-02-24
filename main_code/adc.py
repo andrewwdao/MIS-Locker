@@ -80,11 +80,11 @@ OK_MAX = 1000
 # DOOR20_MAX = 500
 
 
+
 class adc_read:
     def __init__(self, address=ADS_ADDRESS):
         # Create the ADC object using the I2C bus
         self.ads = ADS.ADS1115(address)
-
 
 class adc_button(adc_read):
     def __init__(self):
@@ -110,10 +110,13 @@ class adc_button(adc_read):
         last_status = self.status
         self.status = self.__read()
         time.sleep(DEBOUNCE)  # debounce for DEBOUNCE time
-        if self.status != last_status:
+        if self.status != last_status or self.status == "BUT_NO_PRESS":
             return self.status
         else:
             return "NO_CHANGE"
+
+    def readSysMode(self):  # for reading system mode only
+        return self.__read()
 
     def readRaw(self):
         return self.button.value

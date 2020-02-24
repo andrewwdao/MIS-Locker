@@ -54,9 +54,16 @@ def clear():
 
 
 # ------------------------------ User level interfaces ------------------------------
-def waitPage():  # user can use RFID or their fingerprint
-    LCD.setCursor(4, 0)  # row, column
-    LCD.write("LOCKER READY")
+def waitPage_normal():  # user can use RFID or their fingerprint to access
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("   LOCKER READY  ")
+    LCD.setCursor(5, 2)  # row, column
+    LCD.write("waiting...")
+
+
+def waitPage_system():  # user can use RFID or their fingerprint to access
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("SYSTEM MODE READY")
     LCD.setCursor(5, 2)  # row, column
     LCD.write("waiting...")
 
@@ -126,22 +133,13 @@ def continueUsingPage():
     LCD.write("Your locker remained")
 
 
-def addExtraInfoPage():
+def changeInfoPage(name):
     LCD.setCursor(0, 0)  # row, column
-    LCD.write("MODIFY INFO")
-    LCD.setCursor(0, 2)  # row, column
-    LCD.write("Please use your")
-    LCD.setCursor(0, 3)  # row, column
-    LCD.write("registered rfid")
-
-
-def addExtraMainPage(name, mssv):
-    LCD.setCursor(0, 0)  # row, column
-    LCD.write("Name: " + name)
-    LCD.setCursor(0, 1)  # row, column
-    LCD.write("MSSV: " + mssv)
+    LCD.write("Hello " + name)
+    LCD.setCursor(2, 1)  # row, column
+    LCD.write("Change name/MSSV")
     LCD.setCursor(2, 2)  # row, column
-    LCD.write("Add/Change RFID")
+    LCD.write("Change RFID")
     LCD.setCursor(2, 3)  # row, column
     LCD.write("Add/Change Finger")
 
@@ -153,8 +151,8 @@ def unknownIDPage():
     LCD.write("One-time User")
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Add New ID")
-    LCD.setCursor(2, 3)  # row, column
-    LCD.write("Add Existed ID")
+    # LCD.setCursor(2, 3)  # row, column
+    # LCD.write("Add Existed ID")
 
 
 def cancelNewUserPage():
@@ -264,9 +262,9 @@ def mainAdminPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADMIN MENU:")
     LCD.setCursor(2, 1)  # row, column
-    LCD.write("1. Modify Database")  # export will export everything
+    LCD.write("1. Info Locker")  # show info of all lockers to admin
     LCD.setCursor(2, 2)  # row, column
-    LCD.write("2. Info Locker")  # import will have 2 options: append and override
+    LCD.write("2. Modify Database")  # instruction on how to modify the database
 
 
 def modifyDatabaseInfoPage():
