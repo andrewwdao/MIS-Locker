@@ -342,7 +342,16 @@ def addNewInfo():
     LCD.write(my_ip) # get current ip address
 
 
-def changeInfo():
+def confirmChangeInfo():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("CHANGE INFO")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("Do you really ")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("want to change?")
+
+
+def changeNameMSSV():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("CHANGE INFO:Connect")
     LCD.setCursor(0, 1)  # row, column
@@ -352,6 +361,7 @@ def changeInfo():
     LCD.setCursor(0, 3)  # row, column
     my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
     LCD.write(my_ip) # get current ip address
+
 
 # ------------------------------ Admin level interfaces ------------------------------
 def mainAdminPage():

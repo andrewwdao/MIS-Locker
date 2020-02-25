@@ -166,7 +166,16 @@ def __ChangeName(user_id):
 
     # Add personal information
     lcd.clear()
-    lcd.changeInfo()
+    lcd.confirmChangeInfo()
+
+    # wait for confirm or cancel
+    time.sleep(0.4)  # prevent debounce
+    while button.read() is not "BUT_OK":
+        if button.read() is "BUT_CANCEL":
+            return
+
+    lcd.clear()
+    lcd.changeNameMSSV()
     saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
 
     # get info from server and then delete the incomplete user
@@ -180,7 +189,6 @@ def __ChangeName(user_id):
     dtb.changeInfo(user_id, new_user_name, new_user_mssv)
 
     return
-
 
 
 def __addRFID():
