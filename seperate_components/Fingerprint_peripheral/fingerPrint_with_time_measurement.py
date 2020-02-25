@@ -11,8 +11,7 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
-from datetime import datetime
-from adc import adc_button  # for the cancel button
+from datetime import datetime, timezone
 
 # ---------------------------- Private Parameters:
 # -----Starting parameter:
@@ -25,8 +24,8 @@ WAIT_TIME = 5  # waiting time between first and second scan of enroll func
 DEBOUNCE = 10
 START_CHECKING = False
 Finger = None
-button_cancel = adc_button()
-positionNumber = int()
+
+
 # ------------------------------ Basic functions ------------------------------
 def begin():  # Tries to initialize the sensor
     global Finger
@@ -47,76 +46,11 @@ def begin():  # Tries to initialize the sensor
         return False
 
 
-def __scan():  # Search for the incoming finger in database, DO NOT do this all the time since it will reduce the lifetime of the sensor --> the reason for the existance of the ISR
-    try:
-        global positionNumber
-        last_millis = datetime.now().second
-        print('Waiting for finger...')
-        while not Finger.readImage():  # Wait for incoming finger is read
-            # only wait for WAIT_TIME seconds
-            if (datetime.now().second - last_millis) > WAIT_TIME:
-                return "NO DATA"
-            # pass
-
-        # Converts read image to characteristics and stores it in charbuffer 1
-        Finger.convertImage(0x01)
-
-        # Search for template info in the database of the R301T
-        result = Finger.searchTemplate()
-        positionNumber = result[0]
-        accuracyScore = result[1]
-
-        if positionNumber == -1:
-            print('No match found!')
-            print("NOT MATCHED")
-            return "NOT MATCHED"
-        else:
-            print('Template found at #' + str(positionNumber))
-            print('Accuracy: ' + str(accuracyScore))
-            print("MATCHED. Position Number: "+ str(positionNumber))
-            return "MATCHED"
-    except Exception as e:
-        print('Operation failed!')
-        print('Exception message: ' + str(e))
-        print("ERROR")
-        return "ERROR"
-
-
-def __touchISR(channel):
-    global START_CHECKING
-    START_CHECKING = True
-
-def user_position():
-    return positionNumber
-
-def activate():
-    GPIO.add_event_detect(TOUCH_PIN, GPIO.FALLING, callback=__touchISR, bouncetime=DEBOUNCE)
-
-
-def deactivate():
-    GPIO.remove_event_detect(TOUCH_PIN)
-
-
-def check():
-    global START_CHECKING
-    if START_CHECKING:
-        START_CHECKING = False
-        return __scan()
-    return "NO DATA"
-
-
-def flush():
-    global START_CHECKING
-    START_CHECKING = False
-
-
-def first_enroll():
+def enroll():
     try:
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
-            if button_cancel.read() is "BUT_CANCEL":
-                return ["CANCEL", 0]
-            # pass
+            pass
 
         # Converts read image to characteristics and stores it in charbuffer 1
         Finger.convertImage(0x01)
@@ -129,22 +63,12 @@ def first_enroll():
             print('Finger already exists at #' + str(positionNumber))
             return ["EXISTED", positionNumber]
 
-        print('First enroll done.')
-        return ["DONE",0]
-    except Exception as e:
-        print('Operation failed!')
-        print('Exception message: ' + str(e))
-        return ["ERROR", e]
-
-
-def second_enroll():
-    try:
+        print('Done.')
+        time.sleep(WAIT_TIME)
         print('Second time. Waiting for finger...')
 
         while not Finger.readImage():  # Wait that finger is read again
-            if button_cancel.read() is "BUT_CANCEL":
-                return ["CANCEL", 0]
-            # pass
+            pass
 
         # Converts read image to characteristics and stores it in charbuffer 2
         Finger.convertImage(0x02)
@@ -178,13 +102,57 @@ def delete(pos):  # Delete the template of the finger
         return False
 
 
-def deleteAll():  # Delete all of the templates
+def scan():  # Search for the incoming finger in database
+    last_millis = int()
     try:
-        if Finger.clearDatabase():
-            print('All Templates deleted!')
-            return True
+        print('Waiting for finger...')
+        while not Finger.readImage():  # Wait for incoming finger is read
+            last_millis = datetime.now(timezone.utc).microsecond
+            #  pass
+        
+
+        # Converts read image to characteristics and stores it in charbuffer 1
+        Finger.convertImage(0x01)
+
+        # Search for template info in the database of the R301T
+        result = Finger.searchTemplate()
+        positionNumber = result[0]
+        accuracyScore = result[1]
+
+        print(datetime.now(timezone.utc).microsecond - last_millis)
+
+        if positionNumber == -1:
+            print('No match found!')
+            print(["NOT MATCHED", 0])
+            return ["NOT MATCHED", 0]
+        else:
+            print('Template found at #' + str(positionNumber))
+            print('Accuracy: ' + str(accuracyScore))
+            print(["MATCHED", positionNumber])
+            return ["MATCHED", positionNumber]
     except Exception as e:
         print('Operation failed!')
         print('Exception message: ' + str(e))
-        return False
+        print(["ERROR", e])
+        return ["ERROR", e]
 
+
+def touchISR(channel):
+    global START_CHECKING
+    START_CHECKING = True
+
+
+def activate():
+    GPIO.add_event_detect(TOUCH_PIN, GPIO.FALLING, callback=touchISR, bouncetime=DEBOUNCE)
+
+
+def deactivate():
+    GPIO.remove_event_detect(TOUCH_PIN)
+
+
+def check():
+    global START_CHECKING
+    if START_CHECKING:
+        START_CHECKING = False
+        return scan()
+    return ["NO DATA", 0]

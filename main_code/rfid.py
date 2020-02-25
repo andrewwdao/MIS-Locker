@@ -45,60 +45,6 @@ from ContinuousStreamRead import StreamReader
 import sys
 import time
 
-
-class RDM6300:
-    # def __init__(self, port='/dev/ttyUSB0', baudRate=9600):
-    def __init__(self, com_port='/dev/ttyUSB0', baud_rate=115200):
-        # ----------------------------Class variable:
-        self.__serial = serial.Serial(com_port, baudrate=baud_rate,
-                                      parity=serial.PARITY_NONE,
-                                      stopbits=serial.STOPBITS_ONE,
-                                      bytesize=serial.EIGHTBITS,
-                                      timeout = 1
-                                      )
-        if self.__serial.isOpen():
-            self.__serial.close()
-
-        self.__serial.open()
-
-        self.__serial.flushInput()
-        self.tag_id = ""
-        time.sleep(1)
-        print('RFID ready!')
-
-    def hasID(self):
-        try:
-            line = self.__serial.readline().decode()
-        except:
-            line = ""
-        if len(line):
-            self.tag_id = line
-            return True
-        return False
-
-    def flush(self):
-        # dump buffer out, flush all the left over from buffer
-        self.__serial.flushInput()
-
-    def tagID(self):
-        return self.tag_id
-
-    # def debugInfo(self):
-    #     print('RAW:      ' + self.rfid.rawTag)
-    #     print('Checksum: ' + self.rfid.tagChecksum + '\n')
-    #
-    #     print('Decimal-format:')
-    #     print('ID:       ' + self.rfid.tagId)
-    #     print('Type:     ' + self.rfid.tagType + '\n')
-    #
-    #     print('Float-format:')
-    #     print('ID:       ' + self.rfid.tagIdFloat)
-    #     print('Type:     ' + self.rfid.tagTypeFloat)
-
-    def stop(self):
-        return
-
-
 class Gwiot_7304D2:
     def __init__(self):
         self.TARGET = './rfid_main'
@@ -115,7 +61,13 @@ class Gwiot_7304D2:
             return True
         if mes is None or mes == 'CHECKSUM_FAILED':
             return False
-
+    
+    def flush(self):
+        while self.hasID():
+            pass # clear out buffer
+        sys.stdout.flush() # flush all the left over from buffer
+        return
+    
     def tagID(self):
         return self.tag_id
 
@@ -130,13 +82,6 @@ class Gwiot_7304D2:
             self.rfid.kill()
             print('RFID terminated!')
 
-# def start():
-#     global rfid_object, rfid_mes
-#     rfid_object = subpro.Popen([TARGET], shell=False, stdout=subpro.PIPE, stderr=subpro.PIPE)
-#     rfid_mes = StreamReader(rfid_object.stdout)
-#     print('RFID ready!')
-#
-#
 # def check():
 #     mes = rfid_mes.readline(0.05)  # 0.05 secs to let the shell output the result
 #     sys.stdout.flush()
@@ -146,11 +91,64 @@ class Gwiot_7304D2:
 #         return [False, '']
 #
 #     return [True, mes]
-#
-#
-# def stop():
-#     # check if process terminated or not
-#     if rfid_object.poll() is None:
-#         rfid_object.terminate()
-#         rfid_object.kill()
-#         print('RFID terminated!')
+
+
+
+
+
+############ DEPRECATED ###############
+
+# sample key:
+# ADMIN_KEY = '810093B8D6\r\n'
+
+# class RDM6300:
+#     # def __init__(self, port='/dev/ttyUSB0', baudRate=9600):
+#     def __init__(self, com_port='/dev/ttyUSB0', baud_rate=115200):
+#         # ----------------------------Class variable:
+#         self.__serial = serial.Serial(com_port, baudrate=baud_rate,
+#                                       parity=serial.PARITY_NONE,
+#                                       stopbits=serial.STOPBITS_ONE,
+#                                       bytesize=serial.EIGHTBITS,
+#                                       timeout = 1
+#                                       )
+#         if self.__serial.isOpen():
+#             self.__serial.close()
+
+#         self.__serial.open()
+
+#         self.__serial.flushInput()
+#         self.tag_id = ""
+#         time.sleep(1)
+#         print('RFID ready!')
+
+#     def hasID(self):
+#         try:
+#             line = self.__serial.readline().decode()
+#         except:
+#             line = ""
+#         if len(line):
+#             self.tag_id = line
+#             return True
+#         return False
+
+#     def flush(self):
+#         # dump buffer out, flush all the left over from buffer
+#         self.__serial.flushInput()
+
+#     def tagID(self):
+#         return self.tag_id
+
+#     # def debugInfo(self):
+#     #     print('RAW:      ' + self.rfid.rawTag)
+#     #     print('Checksum: ' + self.rfid.tagChecksum + '\n')
+#     #
+#     #     print('Decimal-format:')
+#     #     print('ID:       ' + self.rfid.tagId)
+#     #     print('Type:     ' + self.rfid.tagType + '\n')
+#     #
+#     #     print('Float-format:')
+#     #     print('ID:       ' + self.rfid.tagIdFloat)
+#     #     print('Type:     ' + self.rfid.tagTypeFloat)
+
+#     def stop(self):
+#         return

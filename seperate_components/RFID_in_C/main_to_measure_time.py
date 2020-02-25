@@ -20,6 +20,7 @@
  *
  --------------------------------------------------------------"""
 from rfid import Gwiot_7304D2
+from datetime import datetime, timezone
 # from rfid import RDM6300 # deprecated
 import time
 
@@ -27,11 +28,12 @@ rfid = Gwiot_7304D2()
 # rfid = RDM6300('/dev/ttyUSB0', 9600) #deprecated
 
 try:
-    # time.sleep(1)
     print('waiting for tag... ')
     while True:
-        if rfid.hasID():
-            print(repr(rfid.tagID())) # print out all the tag even \r or \n
+      last_millis = datetime.now(timezone.utc).microsecond
+      if rfid.hasID():
+        print((datetime.now(timezone.utc).microsecond - last_millis))
+        print(repr(rfid.tagID()))
 except KeyboardInterrupt:
     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     pass

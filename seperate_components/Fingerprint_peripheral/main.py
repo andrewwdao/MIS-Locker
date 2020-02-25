@@ -9,22 +9,26 @@
  *
  *
  --------------------------------------------------------------"""
-import peripheral as per
+# import peripheral as per
 import fingerPrint
 import time
 
 
 def main():
-    per.init()
+    # per.init()
     fingerPrint.begin()
     fingerPrint.activate()
+    # fingerPrint.enroll() # first time
+    # fingerPrint.enroll() # second time
     while True:
-        fingerBuffer = fingerPrint.check()
-        if fingerBuffer[0] == "MATCHED":
-            if fingerBuffer[1] == 0:
-                per.lock01(per.ON)
-            if fingerBuffer[1] == 2:
-                per.lock01(per.OFF)
+        fingerBuffer = fingerPrint.scan()
+        # if fingerBuffer[0] == "MATCHED":
+        #     if fingerBuffer[1] == 0:
+        #         # per.lock01(per.ON)
+        #         print('Correct')
+        #     if fingerBuffer[1] == 2:
+        #         # per.lock01(per.OFF)
+        #         print('Wrong')
 
 
 if __name__ == '__main__':

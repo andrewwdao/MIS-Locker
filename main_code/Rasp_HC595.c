@@ -17,8 +17,8 @@
  *  8 - GND     9  - QH'    - left floated when using only 1 74HC595, connect to pin 14 (SER) of the next 74HC595 if using multiple ones.
  * 
  -------------------------------------------------------------- */
-#ifndef  __RASP_HC595_CPP 
-#define  __RASP_HC595_CPP
+#ifndef  __RASP_HC595_C
+#define  __RASP_HC595_C
 #include "Rasp_HC595.h"
 
 // ------ Private constants -----------------------------------
@@ -37,14 +37,6 @@
 Slow down the original ShiftOut Function
 */
 void myShiftOut(uint8_t,uint8_t,uint8_t,uint8_t);
-/**
-Send data for the first HC595 module
-*/
-void HC595a_send(char, char, char);
-/**
-Send data for the second HC595 module
-*/
-void HC595b_send(char, char, char);
 // ------ Private variables -----------------------------------
 
 // ------ PUBLIC variable definitions -------------------------
@@ -101,10 +93,10 @@ void myShiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val
     }//end if else
 
     digitalWrite(clockPin, HIGH);
-    delayMicroseconds(5);
+    delayMicroseconds(3);
     digitalWrite(clockPin, LOW);
-    delayMicroseconds(5);
+    delayMicroseconds(3);
   }//end for
 }//end myShiftOut
 //--------------------------------
-#endif //__RASP_HC595_CPP
+#endif //__RASP_HC595_C
