@@ -162,6 +162,7 @@ def cancelNewUserPage():
     LCD.write("CANCELED")
 
 
+# ================================================ FINGERPRINT ======================================
 def addFingerPage01():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD USER:FINGERPRINT")
@@ -201,8 +202,8 @@ def addFingerExistedPage():
     LCD.write("ADD USER:FINGERPRINT")
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint exised!")
-    LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press check again")
+    LCD.setCursor(1, 3)  # row, column
+    LCD.write("Please check again")
 
 
 def addFingerFailPage():
@@ -216,6 +217,61 @@ def addFingerFailPage():
     LCD.write("Cancel")
 
 
+def changeFingerPage01():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Put your finger")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("in the scanner")
+
+
+def changeFingerPage02():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(8, 3)  # row, column
+    LCD.write("Done")
+
+
+def changeFingerPage03():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Put your finger in")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("the scanner again")
+
+
+def changeFingerSuccessPage():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(1, 1)  # row, column
+    LCD.write("Fingerprint added!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Press any to return")
+
+
+def changeFingerExistedPage():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(1, 1)  # row, column
+    LCD.write("Fingerprint exised!")
+    LCD.setCursor(1, 3)  # row, column
+    LCD.write("Please check again")
+
+
+def changeFingerFailPage():
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("CHANGE FINGERPRINT")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
+
+
+# ================================================ RFID ======================================
 def addRFIDPage():
     LCD.setCursor(3, 0)  # row, column
     LCD.write("ADD USER: RFID")
@@ -245,6 +301,35 @@ def addRFIDFailPage():
     LCD.write("Cancel")
 
 
+def changeRFIDPage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("CHANGE RFID")
+    LCD.setCursor(3, 2)  # row, column
+    LCD.write("Put your RFID")
+    LCD.setCursor(3, 3)  # row, column
+    LCD.write("in the reader")
+
+
+def changeRFIDSuccessPage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("CHANGE RFID")
+    LCD.setCursor(4, 1)  # row, column
+    LCD.write("RFID added!")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Please press OK")
+
+
+def changeRFIDFailPage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("CHANGE RFID")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("Failed!")
+    LCD.setCursor(2, 2)  # row, column
+    LCD.write("Retry")
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("Cancel")
+# ================================================ INFOMATION ======================================
+
 def addNewInfo():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD NEW INFO:Connect")
@@ -256,6 +341,17 @@ def addNewInfo():
     my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
     LCD.write(my_ip) # get current ip address
 
+
+def changeInfo():
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("CHANGE INFO:Connect")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("to MIS-CTU wifi & ")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("open browser to")
+    LCD.setCursor(0, 3)  # row, column
+    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
+    LCD.write(my_ip) # get current ip address
 
 # ------------------------------ Admin level interfaces ------------------------------
 def mainAdminPage():

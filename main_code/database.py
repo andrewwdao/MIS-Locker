@@ -54,6 +54,21 @@ class Database:
         print(user)
         return
 
+    def changeInfo(self, member_id, name, mssv):
+        user = User.query.filter_by(id=member_id).first()
+        if user is None:  # if user doesn't exist
+            return False
+        else:  # if user existed
+            user.name = name
+            user.mssv = mssv
+            db.session.commit()
+            return True
+
+    def addDumbUser(self): # create a dumb user with the latest timestamp for server to catch
+        newUser = User()
+        db.session.add(newUser)
+        db.session.commit()
+
     def addRFID(self, rfid):
         user = User.query.filter_by(rfid=rfid).first()
         if user is None:  # if user doesn't exist yet

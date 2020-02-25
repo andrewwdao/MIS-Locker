@@ -161,7 +161,26 @@ def __showAdminInfo(current_locker):
 
 
 def __ChangeName(user_id):
-    pass
+    # Create dumb user in the database
+    dtb.addDumbUser()
+    
+    # Add personal information
+    lcd.clear()
+    lcd.changeInfo()
+    saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+
+    # get info from server and then delete the incomplete user
+    data = dtb.getLastMemberInfo()
+    temp_user_id  = data[1]
+    new_user_name = data[2]
+    new_user_mssv = data[3]
+    dtb.delMember(temp_user_id)
+
+    # make change to the database
+    dtb.changeInfo(user_id, new_user_name, new_user_mssv)
+
+    return
+
 
 
 def __addRFID():
@@ -219,73 +238,76 @@ def __addRFID():
                         lcd.addRFIDFailPage()
                         lcd.pointerPos(2, choosing_pointer)
 
-        if button.read() is "BUT_CANCEL":
-            return [False, NO_ID]
+        # At anytime, if cancel was pressed, cancel the whole process
+        if button.readSysMode() is "BUT_CANCEL":
+            return False
 
 
 def __ChangeRFID(user_id):
-    pass
-    # lcd.clear()
-    # lcd.addRFIDPage()
-    # rfid.flush()  # clear everything before starting
-    # fingerPrint.flush() # clear everthing before starting
-    # while True:
-    #     lcd.addRFIDPage()
-    #     # wait for signal here
-    #     if rfid.hasID():
-    #         current_tag = rfid.tagID()
-    #         if dtb.changeRFID(user_id, current_tag):  # if RFID changed successfully
-    #             lcd.clear()
-    #             lcd.addRFIDSuccessPage()
-    #             __waitForConfirmation()
-    #             return True
-    #         else:
-    #             lcd.clear()
-    #             lcd.addRFIDFailPage()
-    #             choosing_pointer = 1  # default at first position
-    #             lcd.pointerPos(2, choosing_pointer)
-    #             # ------------------Button part ------------------
-    #             while True:
-    #                 status = button.read()
-    #                 if status is "BUT_OK":
-    #                     if choosing_pointer == 1:  # retry
-    #                         lcd.clear()
-    #                         lcd.addRFIDPage()
-    #                         rfid.flush()  # clear everything before starting
-    #                         fingerPrint.flush() # clear everthing before starting
-    #                         break
-    #                     elif choosing_pointer == 2:  # cancel
-    #                         # clean rfid and finger buffer, if existed
-    #                         rfid.flush()  # flush out old buffer before get out
-    #                         fingerPrint.flush() # clear everthing before starting
-    #                         return False
-    #                     return False
-    #                 elif status is "BUT_CANCEL":
-    #                     # clean rfid and finger buffer, if existed
-    #                     rfid.flush()  # flush out old buffer before get out
-    #                     fingerPrint.flush() # clear everthing before starting
-    #                     return False
-    #                 elif status is "BUT_UP":
-    #                     if choosing_pointer == 1:  # limit to 1
-    #                         pass
-    #                     else:
-    #                         choosing_pointer -= 1
-    #                     lcd.addRFIDFailPage()
-    #                     lcd.pointerPos(2, choosing_pointer)
-    #                 elif status is "BUT_DOWN":
-    #                     if choosing_pointer == 2:  # limit to 2
-    #                         pass
-    #                     else:
-    #                         choosing_pointer += 1
-    #                     lcd.addRFIDFailPage()
-    #                     lcd.pointerPos(2, choosing_pointer)
-    #         return False
+    lcd.clear()
+    rfid.flush()  # clear everything before starting
+    fingerPrint.flush() # clear everthing before starting
+    while True:
+        lcd.changeRFIDPage()
+        # wait for signal here
+        if rfid.hasID():
+            current_tag = rfid.tagID()
+            status = dtb.changeRFID(user_id, current_tag) # add rfid to database and return the user id from dtb
+            if status:  # RFID change successfully
+                lcd.clear()
+                lcd.changeRFIDSuccessPage()
+                __waitForConfirmation()
+                return True
+            else:  # RFID failed to change
+                lcd.clear()
+                lcd.changeRFIDFailPage()
+                choosing_pointer = 1  # default at first position
+                lcd.pointerPos(2, choosing_pointer)
+                # ------------------Button part ------------------
+                while True:
+                    status = button.read()
+                    if status is "BUT_OK":
+                        if choosing_pointer == 1:  # retry
+                            lcd.clear()
+                            rfid.flush()  # clear everything before starting
+                            fingerPrint.flush() # clear everthing before starting
+                            break
+                        elif choosing_pointer == 2: # cancel
+                            # clean rfid and finger buffer, if existed
+                            rfid.flush()  # flush out old buffer before get out
+                            fingerPrint.flush() # clear everthing before starting
+                            return False
+                        return False
+                    elif status is "BUT_CANCEL":
+                        # clean rfid and finger buffer, if existed
+                        rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before starting
+                        return False
+                    elif status is "BUT_UP":
+                        if choosing_pointer == 1:  # limit to 1
+                            pass
+                        else:
+                            choosing_pointer -= 1
+                        lcd.changeRFIDFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
+                    elif status is "BUT_DOWN":
+                        if choosing_pointer == 2:  # limit to 2
+                            pass
+                        else:
+                            choosing_pointer += 1
+                        lcd.changeRFIDFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
+
+        # At anytime, if cancel was pressed, cancel the whole process
+        if button.readSysMode() is "BUT_CANCEL":
+            return False
 
 
 def __addFingerPrint(status_rfid, user_id):
     if status_rfid: # if rfid was added successfully, then save the fingerPrint to the same user_id
         lcd.clear()
-        while True: # not an usual infinitive loop, it existed for the sake of adding fingerPrint fail
+        # IN NORMAL OPERATION, THIS FUNCTION INTENDED TO GO THROUGH WHILE LOOP ONLY ONCE
+        while True: # NOT AN USUAL INFINITY LOOP, it existed for the sake of adding fingerPrint fail
             lcd.addFingerPage01()
             [status, position_number] = fingerPrint.first_enroll() # this function return ["DONE",0]
             if status == "CANCEL":
@@ -415,23 +437,148 @@ def __addFingerPrint(status_rfid, user_id):
                         else:
                             choosing_pointer += 1
                             lcd.addFingerFailPage()
-                            lcd.pointerPos(2, choosing_pointer)     
+                            lcd.pointerPos(2, choosing_pointer)    
     else: # rfid was not added successfully
         fingerPrint.flush() # clear everthing before starting
         return  # let other function take care
 
 
 def __ChangeFinger(user_id):
-    pass
-#     lcd.clear()
-#     lcd.addFingerPage()
-#     while True:
-#         # fingerPrint.first_enroll()
-#         # ...
-#         if button.read() is "BUT_CANCEL":
-#             # clean rfid and finger buffer, if existed
-#             rfid.flush()  # flush out old buffer before get out
-#             return False
+    lcd.clear()
+    # IN NORMAL OPERATION, THIS FUNCTION INTENDED TO GO THROUGH WHILE LOOP ONLY ONCE
+    while True: # NOT AN USUAL INFINITY LOOP, it existed for the sake of adding fingerPrint fail
+        lcd.changeFingerPage01()
+        [status, position_number] = fingerPrint.first_enroll() # this function return ["DONE",0]
+        if status == "CANCEL":
+            fingerPrint.flush() # clear everthing before starting
+            return # someone press cancel button, so cancel the process
+        if status == "EXISTED":
+            lcd.clear()
+            lcd.changeFingerExistedPage()
+            __waitForConfirmation()
+            fingerPrint.flush() # clear everthing before starting
+            return
+        if status == "DONE": # first enroll success
+            lcd.clear()
+            lcd.changeFingerPage02()
+            time.sleep(1.5)
+            lcd.clear()
+            lcd.changeFingerPage03()
+            [status, position_number] = fingerPrint.second_enroll() # this function return ["DONE", positionNumber]
+            if status == "CANCEL":
+                fingerPrint.flush() # clear everthing before starting
+                return # someone press cancel button, so cancel the process
+            if status == "DONE": # second enroll success
+                old_pattern = dtb.getMemberInfoByID(user_id)[5]  # get old fingerprint pattern out
+                fingerPrint.delete(old_pattern)  # delete it
+                status_2 = dtb.changeFinger(user_id, position_number)  # add fingerPrint to database and return the user id from dtb
+                if status_2:  # fingerPrint added to database
+                    lcd.clear()
+                    lcd.changeFingerSuccessPage()
+                    __waitForConfirmation()
+                    fingerPrint.flush() # clear everthing before getout
+                    return
+                else:  # fingerPrint failed to change in database
+                    print('fingerPrint failed to change in database') # for debug
+                    lcd.clear()
+                    lcd.changeFingerFailPage()
+                    choosing_pointer = 1  # default at first position
+                    lcd.pointerPos(2, choosing_pointer)
+                    # ------------------Button part ------------------
+                    while True:
+                        status = button.read()
+                        if status is "BUT_OK":
+                            if choosing_pointer == 1:  # retry
+                                lcd.clear()
+                                break # try adding again
+                            # all other option equal to cancel
+                            fingerPrint.flush() # clear everthing before starting
+                            return  # return the optional fingerPrint adding function
+                        elif status is "BUT_CANCEL":
+                            fingerPrint.flush() # clear everthing before starting
+                            return  # return the optional fingerPrint adding function
+                        elif status is "BUT_UP":
+                            if choosing_pointer == 1:  # limit to 1
+                                pass
+                            else:
+                                choosing_pointer -= 1
+                                lcd.changeFingerFailPage()
+                                lcd.pointerPos(2, choosing_pointer)
+                        elif status is "BUT_DOWN":
+                            if choosing_pointer == 2:  # limit to 2
+                                pass
+                            else:
+                                choosing_pointer += 1
+                                lcd.changeFingerFailPage()
+                                lcd.pointerPos(2, choosing_pointer)
+            else:  # second enroll failed
+                print('second enroll failed') # for debug
+                print(status) # for debug
+                lcd.clear()
+                lcd.changeFingerFailPage()
+                choosing_pointer = 1  # default at first position
+                lcd.pointerPos(2, choosing_pointer)
+                # ------------------Button part ------------------
+                while True:
+                    status = button.read()
+                    if status is "BUT_OK":
+                        if choosing_pointer == 1:  # retry
+                            lcd.clear()
+                            break # try adding again
+                        # all other option equal to cancel
+                        fingerPrint.flush() # clear everthing before starting
+                        return  # return the optional fingerPrint adding function
+                    elif status is "BUT_CANCEL":
+                        fingerPrint.flush() # clear everthing before starting
+                        return  # return the optional fingerPrint adding function
+                    elif status is "BUT_UP":
+                        if choosing_pointer == 1:  # limit to 1
+                            pass
+                        else:
+                            choosing_pointer -= 1
+                            lcd.changeFingerFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
+                    elif status is "BUT_DOWN":
+                        if choosing_pointer == 2:  # limit to 2
+                            pass
+                        else:
+                            choosing_pointer += 1
+                            lcd.changeFingerFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
+        else:  # first enroll failed
+            print('first enroll failed') # for debug
+            print(status) # for debug
+            lcd.clear()
+            lcd.changeFingerFailPage()
+            choosing_pointer = 1  # default at first position
+            lcd.pointerPos(2, choosing_pointer)
+            # ------------------Button part ------------------
+            while True:
+                status = button.read()
+                if status is "BUT_OK":
+                    if choosing_pointer == 1:  # retry
+                        lcd.clear()
+                        break # try adding again
+                    # all other option equal to cancel
+                    fingerPrint.flush() # clear everthing before starting
+                    return  # return the optional fingerPrint adding function
+                elif status is "BUT_CANCEL":
+                    fingerPrint.flush() # clear everthing before starting
+                    return  # return the optional fingerPrint adding function
+                elif status is "BUT_UP":
+                    if choosing_pointer == 1:  # limit to 1
+                        pass
+                    else:
+                        choosing_pointer -= 1
+                        lcd.changeFingerFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
+                elif status is "BUT_DOWN":
+                    if choosing_pointer == 2:  # limit to 2
+                        pass
+                    else:
+                        choosing_pointer += 1
+                        lcd.changeFingerFailPage()
+                        lcd.pointerPos(2, choosing_pointer)
 
 
 def __oneTimeUserCase(current_tag):
