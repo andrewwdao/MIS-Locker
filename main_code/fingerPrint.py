@@ -11,7 +11,7 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
-from datetime import datetime, timezone
+from datetime import datetime
 from adc import adc_button  # for the cancel button
 
 # ---------------------------- Private Parameters:
@@ -50,11 +50,11 @@ def begin():  # Tries to initialize the sensor
 def __scan():  # Search for the incoming finger in database, DO NOT do this all the time since it will reduce the lifetime of the sensor --> the reason for the existance of the ISR
     try:
         global positionNumber
-        last_millis = datetime.now(timezone.utc).second
+        last_millis = datetime.now().second
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
             # only wait for WAIT_TIME seconds
-            if (datetime.now(timezone.utc).second - last_millis) > WAIT_TIME:
+            if (datetime.now().second - last_millis) > WAIT_TIME:
                 return "NO DATA"
             # pass
 

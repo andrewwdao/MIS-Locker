@@ -3,7 +3,7 @@ from adc import adc_button, adc_switches
 from rfid import Gwiot_7304D2
 from database import Database
 import peripheral as pr
-from datetime import datetime, timezone
+from datetime import datetime
 import fingerPrint
 from app import saveInfo_app
 import time
@@ -26,7 +26,7 @@ lockerArray = ["NULL", None, None, None]
 NO_ID = 999999
 
 SYS_MODE = False  # default mode is normal (use locker), turn true to turn to system mode (user can change their credentials)
-
+last_second = 0   # for automatically return to locker mode
 # DOOR = (
 #     "NULL",
 #     "DOOR01",
@@ -92,11 +92,11 @@ def __openDoorProcedure(locker):
     pr.locker_nowBusy(locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
     pr.locker(locker, pr.OPEN)  # Open locker stand with this user id
 
-    last_millis = datetime.now(timezone.utc).second
+    last_millis = datetime.now().second
     while switches.read() is "ALL_CLOSED":  # if the door is not open
         # then wait
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME:
+        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME:
             break
         # if human push ok button
         if button.read() is "BUT_OK":
@@ -107,14 +107,14 @@ def __openDoorProcedure(locker):
     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
 
     # --- infinity loop to wait for the locker to be closed before proceeding to other process
-    last_millis = datetime.now(timezone.utc).second
+    last_millis = datetime.now().second
     while switches.read() is "OPEN":  # only get out if the door is close
         
         # wait and print something to debug!
         print(switches.read())
         
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME*3:
+        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*3:
             buz.beep(1)
             time.sleep(0.2)
 
@@ -684,7 +684,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
             lcd.clear()
             lcd.questionPage()
             lcd.pointerPos(2, choosing_pointer)  # option, pointer
-            last_millis = datetime.now(timezone.utc).second
+            last_millis = datetime.now().second
             while True:
                 status = button.read()
                 if status is "BUT_OK":
@@ -727,7 +727,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
                     lcd.pointerPos(2, choosing_pointer)  # option, pointer
 
                 # wait for few seconds, if no signal then automatically use 'No' command
-                if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME/2:
+                if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME/2:
                     lockerArray[current_locker] = None  # clear info in this locker
                     pr.locker_nowBusy(current_locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
                     lcd.clear()
@@ -775,7 +775,7 @@ def changeDataCase(user_id, user_name):
     lcd.changeInfoPage(__shortenName(user_name,13))
     choosing_pointer = 1  # default at first position
     lcd.pointerPos(3, choosing_pointer)
-    last_millis = datetime.now(timezone.utc).second
+    last_millis = datetime.now().second
     while True:
         status = button.read()
         if status is "BUT_OK":
@@ -818,7 +818,7 @@ def changeDataCase(user_id, user_name):
             lcd.pointerPos(3, choosing_pointer)  # option, pointer
 
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME*3:
+        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*3:
             lcd.clear()
             rfid.flush()  # flush out old buffer before get out
             fingerPrint.flush() # clear everthing before get out
@@ -834,6 +834,22 @@ def adminCase():
     while True:
         status = button.read()
         if status is "BUT_OK":
+            # //////////////// DELETE ALL DATABASE /////////////////
+            if choosing_pointer == 3:  # Delete All database command
+                lcd.clear()
+                lcd.warningDeletePage()
+
+                __waitForConfirmation()
+
+                dtb.delAllMember() # delete all member in the database
+                fingerPrint.deleteAll() # delete all fingerprint pattern in fingerprint sensor database
+                
+                lcd.clear()
+                lcd.DBdeleteDonePage()
+                time.sleep(2)
+                lcd.clear()
+                lcd.mainAdminPage()
+                lcd.pointerPos(3, choosing_pointer)
             # //////////////// MODIFY DATABASE /////////////////
             if choosing_pointer == 2:  # Modify database command
                 lcd.clear()
@@ -857,15 +873,12 @@ def adminCase():
                     if status is "BUT_OK":
                         lcd.clear()
                         lcd.unlockConfirmPage(current_locker)
-                        lockerArray[current_locker] = None
+                        lockerArray[current_locker] = None # clear buffer
                         __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
-                        break
+                        __showAdminInfo(current_locker)
                     elif status is "BUT_CANCEL":
-                        lcd.clear()
-                        lcd.mainAdminPage()
-                        lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
-                        # clean rfid and finger buffer, if existed
                         rfid.flush()  # flush out old buffer before get out
+                        fingerPrint.flush() # clear everthing before get out
                         break  # return to main menu
                     elif status is "BUT_UP":
                         if current_locker == (len(lockerArray)-1):  # if reached the limit of lockers
@@ -881,13 +894,13 @@ def adminCase():
                             __showAdminInfo(current_locker)
                 lcd.clear()
                 lcd.mainAdminPage()
-                lcd.pointerPos(3, 2)  # choosing_pointer = 2 since the last time
+                lcd.pointerPos(3, choosing_pointer)  # choosing_pointer = 2 since the last time
 
         elif status is "BUT_CANCEL":
             lcd.clear()
-            # clean rfid and finger buffer, if existed
             rfid.flush()  # flush out old buffer before get out
-            break  # return to waiting state
+            fingerPrint.flush() # clear everthing before get out
+            return  # return to waiting state
         elif status is "BUT_UP":
             if choosing_pointer == 1:  # limit to 1
                 pass
@@ -896,15 +909,13 @@ def adminCase():
             lcd.mainAdminPage()
             lcd.pointerPos(3, choosing_pointer)  # option, pointer
         elif status is "BUT_DOWN":
-            if choosing_pointer == 2:  # limit to 2
+            if choosing_pointer == 3:  # limit to 3
                 pass
             else:
                 choosing_pointer += 1
             lcd.mainAdminPage()
             lcd.pointerPos(3, choosing_pointer)  # option, pointer
-    
-    rfid.flush()  # flush out old buffer before get out
-    fingerPrint.flush() # clear everthing before get out
+    # end while loop
 
 
 def noInfoCase(current_tag):
@@ -912,7 +923,7 @@ def noInfoCase(current_tag):
     lcd.unknownIDPage()
     choosing_pointer = 1  # default at first position
     lcd.pointerPos(3, choosing_pointer)
-    last_millis = datetime.now(timezone.utc).second
+    last_millis = datetime.now().second
     while True:
         status = button.read()
         if status is "BUT_OK":
@@ -950,7 +961,7 @@ def noInfoCase(current_tag):
             lcd.pointerPos(3, choosing_pointer)  # option, pointer
 
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now(timezone.utc).second - last_millis) > PROMPT_WAITING_TIME*3:
+        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*3:
             lcd.clear()
             # clean rfid and finger buffer, if existed
             rfid.flush()  # flush out old buffer before get out
@@ -1028,9 +1039,11 @@ def main():  # Main program block
         
         # ================== Mode changing ==================
         sys_command = button.readSysMode()
-        if sys_command is "BUT_UP":
-            SYS_MODE = True
         if sys_command is "BUT_DOWN":
+            SYS_MODE = True
+            global last_second
+            last_second = datetime.now().second
+        if sys_command is "BUT_UP" or (datetime.now().second - last_second) > PROMPT_WAITING_TIME*3:
             SYS_MODE = False
 
 if __name__ == '__main__':

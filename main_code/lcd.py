@@ -361,6 +361,24 @@ def mainAdminPage():
     LCD.write("1. Info Locker")  # show info of all lockers to admin
     LCD.setCursor(2, 2)  # row, column
     LCD.write("2. Modify Database")  # instruction on how to modify the database
+    LCD.setCursor(2, 3)  # row, column
+    LCD.write("3. Delete Database")  # delete all the database
+
+
+def warningDeletePage():
+    LCD.setCursor(6, 0)  # row, column
+    LCD.write("CAUTION")
+    LCD.setCursor(0, 1)  # row, column
+    LCD.write("Do this will delete")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("all database (system")
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("and fingerprint).Ok?")
+
+
+def DBdeleteDonePage():
+    LCD.setCursor(1, 2)  # row, column
+    LCD.write("DATABASE DELETED!")
 
 
 def modifyDatabaseInfoPage():
@@ -408,7 +426,7 @@ def unlockConfirmPage(locker_num):
     LCD.write("UNLOCKED!")
     LCD.setCursor(0, 1)  # row, column
     LCD.write("Locker: " + str(locker_num))
-    LCD.setCursor(0, 2)  # row, column
+    LCD.setCursor(0, 3)  # row, column
     LCD.write("User deleted!")
 
 # def exportSuccessPage():
