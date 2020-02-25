@@ -141,7 +141,7 @@ def changeInfoPage(name):
     LCD.setCursor(2, 2)  # row, column
     LCD.write("Change RFID")
     LCD.setCursor(2, 3)  # row, column
-    LCD.write("Add/Change Finger")
+    LCD.write("Change Finger")
 
 
 def unknownIDPage():
