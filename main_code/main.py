@@ -163,7 +163,7 @@ def __showAdminInfo(current_locker):
 def __ChangeName(user_id):
     # Create dumb user in the database
     dtb.addDumbUser()
-    
+
     # Add personal information
     lcd.clear()
     lcd.changeInfo()
@@ -994,8 +994,13 @@ def main():  # Main program block
                 else:
                     buz.beep(1)  # sound notification
                     print('RFID not found!')
-                    noInfoCase(current_tag)  # user have no info yet
+                    if SYS_MODE:  # system mode for user --> change personal info, rfid, fingerprint
+                        noInfoCase(current_tag)  # user have no info yet
+                    else:         # normal mode for user --> only use locker 
+                        __oneTimeUserCase(current_tag)
+                        lcd.clear()
             rfid.flush()  # flush out old buffer before get out
+            fingerPrint.flush() # clear everthing before get out
 
         # ================== FingerPrint case ==================
         status_fingerprint = fingerPrint.check()

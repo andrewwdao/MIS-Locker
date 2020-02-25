@@ -63,7 +63,7 @@ def waitPage_normal():  # user can use RFID or their fingerprint to access
 
 def waitPage_system():  # user can use RFID or their fingerprint to access
     LCD.setCursor(1, 0)  # row, column
-    LCD.write("SYSTEM MODE READY")
+    LCD.write("SYSTEM INFO READY")
     LCD.setCursor(5, 2)  # row, column
     LCD.write("waiting...")
 
