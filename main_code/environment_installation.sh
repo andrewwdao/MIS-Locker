@@ -5,12 +5,13 @@ set -eu -o pipefail # fail on error , debug all lines
 sudo -n true
 test $? -eq 0 || exit 1 "you should have sudo priveledge to run this script"
 
+echo This program will install the must-have pre-requisites for MISlocker system
 echo You must install pip3 and git before proceed. Confirm? [Y/N]
 
 read input
 
 if [ $input == "y" ] || [ $input == "Y" ]; then
-	echo Installing the must-have pre-requisites for MISlocker
+	echo Installing...
 
 	sudo apt-get update && sudo apt-get upgrade
 
