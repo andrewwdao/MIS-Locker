@@ -16,7 +16,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo apt-get update && sudo apt-get upgrade
 
 	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
-	if ! [ grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ]; then
+	if ! grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ; then
 		echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
 		wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
 	fi
@@ -26,16 +26,16 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	
 	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
-	if ! [ grep -Fxq "enable_uart = 1" /boot/config.txt ]; then
+	if ! grep -Fxq "enable_uart = 1" /boot/config.txt ; then
 		echo "enable_uart = 1" | sudo tee -a /boot/config.txt
 	fi
 	
 											## https://pypi.org/project/smbus2/
 	# I2C package install - smbus - smbus2  ## https://raspberry-projects.com/pi/programming-in-python/i2c-programming-in-python/using-the-i2c-interface-2
-	if ! [ grep -Fxq "i2c-dev" /etc/modules ]; then
+	if ! grep -Fxq "i2c-dev" /etc/modules ; then
 		echo "i2c-dev" | sudo tee -a /etc/modules
 	fi
-	if ! [ grep -Fxq "i2c-bcm2708" /etc/modules ]; then
+	if ! grep -Fxq "i2c-bcm2708" /etc/modules ; then
 		echo "i2c-bcm2708" | sudo tee -a /etc/modules
 	fi
 	sudo apt-get install -y python-smbus python3-smbus i2c-tools
