@@ -248,7 +248,7 @@ def __addRFID():
 
         # At anytime, if cancel was pressed, cancel the whole process
         if button.readSysMode() is "BUT_CANCEL":
-            return False
+            return [False, NO_ID]
 
 
 def __ChangeRFID(user_id):
@@ -935,13 +935,13 @@ def noInfoCase(current_tag):
     while True:
         status = button.read()
         if status is "BUT_OK":
-            if choosing_pointer == 1:  # One-time user command
+            if choosing_pointer == 2:  # One-time user command
                 __oneTimeUserCase(current_tag)
                 lcd.clear()
                 rfid.flush()  # flush out old buffer before get out
                 fingerPrint.flush() # clear everthing before get out
                 return
-            elif choosing_pointer == 2:  # Add new ID command
+            elif choosing_pointer == 1:  # Add new ID command
                 __addNewIDCase()
                 lcd.clear()
                 rfid.flush()  # flush out old buffer before get out
@@ -1053,6 +1053,7 @@ def main():  # Main program block
             last_second = datetime.now().second
         if sys_command is "BUT_UP" or (datetime.now().second - last_second) > PROMPT_WAITING_TIME*3:
             SYS_MODE = False
+
 
 if __name__ == '__main__':
     try:
