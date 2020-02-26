@@ -44,7 +44,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	pip3 install flask-migrate
 	pip3 install flask-bootstrap
 	
-	echo Done.
+	echo Done. Please restart to the changes take effect!
 fi
 
 # (c) 2020 Minh-An Dao, Can Tho University
