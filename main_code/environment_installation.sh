@@ -15,17 +15,18 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 
 	sudo apt-get update && sudo apt-get upgrade
 
-	# fingerprint package install ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
+	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 	echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
 	wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
 	sudo apt-get install python3-fingerprint -y
 	sudo usermod -a -G dialout MISlocker
 	
-	# Pyserial package install
+	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
 	echo "enable_uart = 1" | sudo tee -a /boot/config.txt
 	
-	# I2C package install - smbus - smbus2
+											## https://pypi.org/project/smbus2/
+	# I2C package install - smbus - smbus2  ## https://raspberry-projects.com/pi/programming-in-python/i2c-programming-in-python/using-the-i2c-interface-2
 	echo "i2c-dev" | sudo tee -a /etc/modules
 	echo "i2c-bcm2708" | sudo tee -a /etc/modules
 	sudo apt-get install -y python-smbus python3-smbus i2c-tools
@@ -34,10 +35,10 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# RPi.GPIO
 	pip3 install RPi.GPIO
 	
-	# WiringPi
+	# WiringPi  ## http://wiringpi.com/
 	sudo apt-get install wiringpi -y
 	
-	#Flask - WTForm - SQLAlchemy - Migrate - Bootstrap
+	#Flask - WTForm - SQLAlchemy - Migrate - Bootstrap  ## https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 	pip3 install flask
 	pip3 install python-dotenv
 	pip3 install flask-wtf
