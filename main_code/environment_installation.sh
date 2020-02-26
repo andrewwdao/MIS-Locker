@@ -17,11 +17,11 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# fingerprint package install ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 	echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
 	wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
-	sudo apt-get install python3-fingerprint
+	sudo apt-get install python3-fingerprint -y
 	sudo usermod -a -G dialout MISlocker
 	
 	# Pyserial package install
-	sudo apt-get install python3-serial
+	sudo apt-get install python3-serial -y
 	echo "enable_uart = 1" | sudo tee -a /boot/config.txt
 	
 	# I2C package install - smbus - smbus2
@@ -34,7 +34,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	pip3 install RPi.GPIO
 	
 	# WiringPi
-	sudo apt-get install wiringpi
+	sudo apt-get install wiringpi -y
 	
 	#Flask - WTForm - SQLAlchemy - Migrate - Bootstrap
 	pip3 install flask
@@ -43,7 +43,8 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	pip3 install flask-sqlalchemy
 	pip3 install flask-migrate
 	pip3 install flask-bootstrap
-	
+	echo 
+	echo 
 	echo Done. Please restart to the changes take effect!
 fi
 
