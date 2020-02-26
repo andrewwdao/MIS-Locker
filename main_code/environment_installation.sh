@@ -17,7 +17,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# fingerprint package install ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 	echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
 	wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
-	sudo apt-get install python-fingerprint
+	sudo apt-get install python3-fingerprint
 	sudo usermod -a -G dialout MISlocker
 	
 	# Pyserial package install
