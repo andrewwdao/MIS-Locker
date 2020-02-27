@@ -6,23 +6,33 @@ sudo -n true
 test $? -eq 0 || exit 1 "you should have sudo priveledge to run this script"
 
 echo This program will install the must-have pre-requisites for MISlocker system
-echo You must install pip3 and git before proceed. Confirm? [Y/N]
+echo Confirm to install? [Y/N]
 
 read input
 
 if [ $input == "y" ] || [ $input == "Y" ]; then
 	echo Installing...
-
-	sudo apt-get update && sudo apt-get upgrade
-
+	
+	# automatically get and set time from the internet (workaround for proxy setting)
+	sudo date -s "$(wget -qSO- --max-redirect=0 google.vn 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
+	
+	sudo apt-get update && sudo apt-get upgrade -y
+	
+	# pip installation
+	sudo apt-get install python3-pip -y
+	
+	# git installation
+	sudo apt-get install wget git -y
+	
 	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 	if ! grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ; then
 		echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
 		wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
+		sudo apt-get update && sudo apt-get upgrade -y #update catch again before install the package below
 	fi
-	sleep 0.5
+	
 	sudo apt-get install python3-fingerprint -y
-	sudo usermod -a -G dialout MISlocker
+	sudo usermod -a -G dialout $USER
 	
 	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
@@ -55,7 +65,19 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	pip3 install flask-migrate
 	pip3 install flask-bootstrap
 	
-	# clean the c binary files and re-create them
+	# download system files from git repository
+	if [ -d "./system" ] ; then  # check if the directory exist or not
+		rm -rf ./system
+	fi
+	mkdir ./system
+	cd ./system
+	git init
+	git remote add origin https://github.com/minhan74/MIS-Locker.git
+	git pull origin master
+	
+	
+	# go to main code section, clean the c binary files and re-create them
+	cd ./main_code #./system/main_code
 	make clean
 	rm -rf ./obj
 	mkdir ./obj
