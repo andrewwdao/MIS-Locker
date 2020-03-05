@@ -1,4 +1,4 @@
--------------- FOR THE FINGERPRINT LIBRARY FOR RASPBERRY PI-----------------
+# --- FOR THE FINGERPRINT LIBRARY FOR RASPBERRY PI---
 Copyright (c) 2016 Bastian Raschke <bastian.raschke@posteo.de>
 All rights reserved.
 
@@ -429,7 +429,7 @@ Section 10 Applicable Law
 
 The License is governed by German law.
 
------------------------ FOR THE ADC CONVERTER ADS1115 ----------------------
+# --- FOR THE ADC CONVERTER ADS1115 ---
 The MIT License (MIT)
 
 Copyright (c) 2017 Carter Nelson for Adafruit Industries
@@ -452,7 +452,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
----------------------------------------- FOR pySerial ----------------------
+# --- FOR pySerial ---
 Copyright (c) 2001-2016 Chris Liechti <cliechti@gmx.net>
 All Rights Reserved.
 
@@ -493,7 +493,7 @@ Individual files contain the following tag instead of the full license text.
 This enables machine processing of license information based on the SPDX
 License Identifiers that are here available: http://spdx.org/licenses/
 
------------------------------------------- FOR smbus2 ----------------------
+# --- FOR smbus2 ---
 Licensed under the MIT License.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -514,7 +514,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
----------------------------------------- FOR RPi.GPIO ----------------------
+# --- FOR RPi.GPIO ---
 Licensed under the MIT License.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -535,7 +535,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------------------- FOR Flask ----------------------
+# --- FOR Flask ---
 Copyright 2010 Pallets
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -545,7 +545,7 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
------------------------------------------- FOR WTForm ----------------------
+# --- FOR WTForm ---
 Copyright © 2008 by the WTForms team.
 
 All rights reserved.
@@ -557,7 +557,7 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 THIS SOFTWARE AND DOCUMENTATION IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE AND DOCUMENTATION, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
--------------------------------------- FOR SQLAlchemy ----------------------
+# --- FOR SQLAlchemy ---
 Copyright 2005-2020 SQLAlchemy authors and contributors <see AUTHORS file>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -578,7 +578,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------------ FOR Flask-Migrate ----------------------
+# --- FOR Flask-Migrate ---
 The MIT License (MIT)
 
 Copyright (c) 2013 Miguel Grinberg
@@ -600,8 +600,8 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
---------------------------------- FOR Flask-Bootstrap ----------------------
-# Flask Bootstrap
+# --- FOR Flask-Bootstrap ---
+## Flask Bootstrap
 
 The Flask-Bootstrap portions of the code are triple licensed under the following licenses:
 
