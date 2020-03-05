@@ -5,8 +5,8 @@
 System code for MIS-CTU Locker system. Designed for [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi) based devices.
 Tested on Raspberry Pi 3B+.
 
-[![Latest release](https://img.shields.io/github/release/minhan74/MIS-Locker.svg)](https://github.com/minhan74/MIS-Locker/releases/latest)
-[![Release Date](https://img.shields.io/github/release-date/minhan74/MIS-Locker.svg?style=plastic)](https://github.com/minhan74/MIS-Locker/releases/latest/)
+[![Latest release](https://img.shields.io/github/v/release/minhan74/MIS-Locker?include_prereleases)](https://github.com/minhan74/MIS-Locker/releases/latest)
+[![Release Date](https://img.shields.io/github/release-date/minhan74/MIS-Locker.svg?include_prereleases)](https://github.com/minhan74/MIS-Locker/releases/latest/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE) <!-- [![License](https://img.shields.io/github/license/minhan74/MIS-Locker.svg)](LICENSE) -->
 ![Size](https://img.shields.io/github/repo-size/minhan74/MIS-Locker.svg)
 
