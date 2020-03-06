@@ -45,7 +45,7 @@ _(c) 2019 - 2020 [Minh-An Dao] - Minh-Luan Nguyen. Licensed under the MIT Licens
 [Software Installation]: /docs/Installation.md
 [Software Configuration]: /docs/Configuration.md
 [Hardware Documentation]: /docs/Hardware-Documentation.md
-[Undergrad Thesis Report]: /docs/Dao_Minh_An_LVTN_2019.pdf
+[Undergrad Thesis Report]: https://drive.google.com/file/d/1YyH5sE2MzJecpU8ndQ6ftUlrxf_dyREV/view?usp=sharing
 
 [Python3-fingerprint]: https://github.com/bastianraschke/pyfingerprint
 [Adafruit CircuitPython ADS1x15]: https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15
