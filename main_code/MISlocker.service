@@ -5,7 +5,7 @@ DefaultDependencies=true
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 -u main.py
+ExecStart=sudo /usr/bin/python3 -u main.py
 WorkingDirectory=/home/MISlocker/system/main_code
 StandardOutput=inherit
 StandardError=inherit
