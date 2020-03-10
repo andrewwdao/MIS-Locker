@@ -88,6 +88,8 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# activate system in start-up
 	sudo cp sysinit.service /etc/systemd/system
 	sudo systemctl enable sysinit.service
+	sudo cp MISlocker.service /etc/systemd/system
+	sudo systemctl enable MISlocker.service
 	
 	echo 
 	echo 
