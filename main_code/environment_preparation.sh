@@ -66,7 +66,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo pip3 install flask-bootstrap
 	
 	# download system files from git repository
-	cd ~/ # return to home folder
+	cd /home/MISlocker/ # return to home folder
 	if [ -d "./system" ] ; then  # check if the directory exist or not
 		sudo rm -rf ./system
 	fi
