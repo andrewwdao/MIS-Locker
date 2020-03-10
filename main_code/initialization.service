@@ -1,10 +1,10 @@
 [Unit]
-Description=MISlocker init service
+Description=MISlocker initialization service
 DefaultDependencies=false
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/python3 -u initialization.py
+ExecStart=sudo ./peripheral_init
 WorkingDirectory=/home/MISlocker/MISlocker/main_code
 Restart=no
 
