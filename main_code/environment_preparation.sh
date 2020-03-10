@@ -83,6 +83,9 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	mkdir ./obj
 	make rfid_main peripheral_init peripheral_main buzzer_main
 	
+	# activate system in start-up
+	sudo cp sysinit.service /etc/systemd/system
+	sudo systemctl enable sysinit.service
 	
 	echo 
 	echo 
