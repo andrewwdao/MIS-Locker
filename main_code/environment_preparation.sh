@@ -49,39 +49,40 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 		echo "i2c-bcm2708" | sudo tee -a /etc/modules
 	fi
 	sudo apt-get install -y python-smbus python3-smbus i2c-tools
-	pip3 install smbus2
+	sudo pip3 install smbus2
 	
 	# RPi.GPIO
-	pip3 install RPi.GPIO
+	sudo pip3 install RPi.GPIO
 	
 	# WiringPi  ## http://wiringpi.com/
 	sudo apt-get install wiringpi -y
 	
 	#Flask - WTForm - SQLAlchemy - Migrate - Bootstrap  ## https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
-	pip3 install flask
-	pip3 install python-dotenv
-	pip3 install flask-wtf
-	pip3 install flask-sqlalchemy
-	pip3 install flask-migrate
-	pip3 install flask-bootstrap
+	sudo pip3 install flask
+	sudo pip3 install python-dotenv
+	sudo pip3 install flask-wtf
+	sudo pip3 install flask-sqlalchemy
+	sudo pip3 install flask-migrate
+	sudo pip3 install flask-bootstrap
 	
 	# download system files from git repository
+	cd # return to home folder
 	if [ -d "./system" ] ; then  # check if the directory exist or not
-		rm -rf ./system
+		sudo rm -rf ./system
 	fi
-	mkdir ./system
+	sudo mkdir ./system
 	cd ./system
-	git init
-	git remote add origin https://github.com/minhan74/MIS-Locker.git
-	git pull origin master
+	sudo git init
+	sudo git remote add origin https://github.com/minhan74/MIS-Locker.git
+	sudo git pull origin master
 	
 	
 	# go to main code section, clean the c binary files and re-create them
 	cd ./main_code #./system/main_code
-	make clean
-	rm -rf ./obj
-	mkdir ./obj
-	make rfid_main peripheral_init peripheral_main buzzer_main
+	sudo make clean
+	sudo rm -rf ./obj
+	sudo mkdir ./obj
+	sudo make rfid_main peripheral_init peripheral_main buzzer_main
 	
 	# activate system in start-up
 	sudo cp sysinit.service /etc/systemd/system
