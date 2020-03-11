@@ -23,12 +23,12 @@ try:
                 if ans == 'g':
                         print('Locker on - Green LED on')
                         pr.locker(LOCKER,pr.OPEN)
-                        time.sleep(TIME)
+                        input('Stop?')
                         pr.locker(LOCKER,pr.CLOSE)
                 if ans == 'r':
                         print('Locker busy - Red LED on')
                         pr.locker_nowBusy(LOCKER,pr.ON)
-                        time.sleep(TIME)
+                        input('Stop?')
                         pr.locker_nowBusy(LOCKER,pr.OFF)
                 
         
