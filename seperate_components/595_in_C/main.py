@@ -14,22 +14,34 @@ import time
 
 pr.init()
 
-LOCKER = 10
+LOCKER = 1
+TIME = 3
 try:
 #    time.sleep(3)
-#    while True:
-        print('Locker on')
-        pr.locker(LOCKER,pr.OPEN)
-        time.sleep(1)
-        print('Locker off')
-        pr.locker(LOCKER,pr.CLOSE)
-        time.sleep(1)
-        print('Locker busy')
-        pr.locker_nowBusy(LOCKER,pr.ON)
-        time.sleep(1)
-        print('Locker off')
-        pr.locker_nowBusy(LOCKER,pr.OFF)
-        time.sleep(1)
+        while True:
+                ans = input('Green (g) or Red (r)?')
+                if ans == 'g':
+                        print('Locker on - Green LED on')
+                        pr.locker(LOCKER,pr.OPEN)
+                        time.sleep(TIME)
+                        pr.locker(LOCKER,pr.CLOSE)
+                if ans == 'r':
+                        print('Locker busy - Red LED on')
+                        pr.locker_nowBusy(LOCKER,pr.ON)
+                        time.sleep(TIME)
+                        pr.locker_nowBusy(LOCKER,pr.OFF)
+                
+        
+        # time.sleep(1)
+        # print('Locker off')
+        # pr.locker(LOCKER,pr.CLOSE)
+        # time.sleep(1)
+        # print('Locker busy')
+        # pr.locker_nowBusy(LOCKER,pr.ON)
+        # time.sleep(1)
+        # print('Locker off')
+        # pr.locker_nowBusy(LOCKER,pr.OFF)
+        # time.sleep(1)
 #        print('Locker busy')
 #        per.lock01_busy(per.ON)
 #        time.sleep(1)
