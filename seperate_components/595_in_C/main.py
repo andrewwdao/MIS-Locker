@@ -17,18 +17,20 @@ pr.init()
 LOCKER = 1
 TIME = 3
 try:
-#    time.sleep(3)
+        lok = input('Which Locker? ')
+        global LOCKER
+        LOCKER = int(lok)
         while True:
-                ans = input('Green (g) or Red (r)?')
+                ans = input('Green (g) or Red (r)? ')
                 if ans == 'g':
                         print('Locker on - Green LED on')
                         pr.locker(LOCKER,pr.OPEN)
-                        input('Stop?')
+                        input('Stop? ')
                         pr.locker(LOCKER,pr.CLOSE)
                 if ans == 'r':
                         print('Locker busy - Red LED on')
                         pr.locker_nowBusy(LOCKER,pr.ON)
-                        input('Stop?')
+                        input('Stop? ')
                         pr.locker_nowBusy(LOCKER,pr.OFF)
                 
         
