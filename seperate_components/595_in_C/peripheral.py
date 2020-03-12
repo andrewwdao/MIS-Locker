@@ -98,75 +98,6 @@ def send():
                   str(REG_M2_L)], shell=True)
 
 
-# def locker(locker_num, state):
-#     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
-#     if locker_num <= 4:
-#         if not state:  # on
-#             REG_M1_F &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_F |= LOCK_BIT[locker_num]  # LOCK0x_BIT
-#     elif locker_num <= 7:
-#         if not state:  # on
-#             REG_M1_M &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_M |= LOCK_BIT[locker_num]  # LOCK0x_BIT
-#     elif locker_num <= 10:
-#         if not state:  # on
-#             REG_M1_L &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_L |= LOCK_BIT[locker_num]  # LOCK0x_BIT
-#     elif locker_num <= 14:
-#         if not state:  # on
-#             REG_M2_F &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_F |= LOCK_BIT[locker_num]  # LOCK1x_BIT
-#     elif locker_num <= 17:
-#         if not state:  # on
-#             REG_M2_M &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_M |= LOCK_BIT[locker_num]  # LOCK1x_BIT
-#     elif locker_num <= 20:
-#         if not state:  # on
-#             REG_M2_L &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_L |= LOCK_BIT[locker_num]  # LOCK1x_BIT
-#     send()
-
-
-# def locker_nowBusy(locker_num, state):
-#     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
-#     if locker_num <= 3:
-#         if not state:  # on
-#             REG_M1_F &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_F |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#     elif locker_num <= 7:
-#         if not state:  # on
-#             REG_M1_M &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_M |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#     elif locker_num <= 10:
-#         if not state:  # on
-#             REG_M1_L &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#         else:  # off
-#             REG_M1_L |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
-#     if locker_num <= 13:
-#         if not state:  # on
-#             REG_M2_F &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_F |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#     elif locker_num <= 17:
-#         if not state:  # on
-#             REG_M2_M &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_M |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#     elif locker_num <= 20:
-#         if not state:  # on
-#             REG_M2_L &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#         else:  # off
-#             REG_M2_L |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
-#     send()
-
 def locker(locker_num, state):
     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
     if locker_num <= 4:
@@ -235,3 +166,74 @@ def locker_nowBusy(locker_num, state):
         else:  # off
             REG_M2_L |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
     send()
+
+
+
+# def locker(locker_num, state):
+#     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
+#     if locker_num <= 4:
+#         if not state:  # on
+#             REG_M1_F &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_F |= LOCK_BIT[locker_num]  # LOCK0x_BIT
+#     elif locker_num <= 7:
+#         if not state:  # on
+#             REG_M1_M &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_M |= LOCK_BIT[locker_num]  # LOCK0x_BIT
+#     elif locker_num <= 10:
+#         if not state:  # on
+#             REG_M1_L &= ~LOCK_BIT[locker_num]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_L |= LOCK_BIT[locker_num]  # LOCK0x_BIT
+#     elif locker_num <= 14:
+#         if not state:  # on
+#             REG_M2_F &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_F |= LOCK_BIT[locker_num]  # LOCK1x_BIT
+#     elif locker_num <= 17:
+#         if not state:  # on
+#             REG_M2_M &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_M |= LOCK_BIT[locker_num]  # LOCK1x_BIT
+#     elif locker_num <= 20:
+#         if not state:  # on
+#             REG_M2_L &= ~LOCK_BIT[locker_num]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_L |= LOCK_BIT[locker_num]  # LOCK1x_BIT
+#     send()
+
+
+# def locker_nowBusy(locker_num, state):
+#     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
+#     if locker_num <= 3:
+#         if not state:  # on
+#             REG_M1_F &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_F |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#     elif locker_num <= 7:
+#         if not state:  # on
+#             REG_M1_M &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_M |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#     elif locker_num <= 10:
+#         if not state:  # on
+#             REG_M1_L &= ~LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#         else:  # off
+#             REG_M1_L |= LOCK_BIT[locker_num + 20]  # LOCK0x_BIT
+#     if locker_num <= 13:
+#         if not state:  # on
+#             REG_M2_F &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_F |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#     elif locker_num <= 17:
+#         if not state:  # on
+#             REG_M2_M &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_M |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#     elif locker_num <= 20:
+#         if not state:  # on
+#             REG_M2_L &= ~LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#         else:  # off
+#             REG_M2_L |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
+#     send()
