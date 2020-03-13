@@ -18,7 +18,7 @@ PROMPT_WAITING_TIME = 7 # time the lock has to wait each time user open a door
 # Index of LockerArray is also the number of the locker.
 # Therefore, lockerArray has to omit index 0!!!
 # 10 lockers
-lockerArray = ["NULL", None, None, None]
+lockerArray = ["NULL", None, None, None, None, None, None, None, None, None]
 # 20 lockers
 # lockerArray = ["NULL", None, None, None, None, None, None, None, None, None, None, None, None, None, None, None,
 #                None, None, None, None, None]
