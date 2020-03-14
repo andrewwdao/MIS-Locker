@@ -10,7 +10,8 @@ WorkingDirectory=/home/MISlocker/system/main_code
 StandardOutput=inherit
 StandardError=inherit
 Restart=yes
-User=root
-
+User=root			# must set user to root to execute all functions and peripherals
+KillSignal=SIGINT  	# SIGINT is translated as a KeyboardInterrupt exception by Python.
+					# default kill signal is SIGTERM which doesn't raise an exception in Python. 
 [Install]
 WantedBy=sysinit.target multi-user.target

@@ -54,6 +54,24 @@ def clear():
 
 
 # ------------------------------ User level interfaces ------------------------------
+def systemClosedPage():  # system closed page
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("   LOCKER CLOSED   ")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("please comback later")
+    LCD.setCursor(8, 3)  # row, column
+    LCD.write("...")
+
+
+def systemErrorPage():  # system error page
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("    LOCKER ERROR    ")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("please contact admin")
+    LCD.setCursor(8, 3)  # row, column
+    LCD.write("...")
+
+
 def waitPage_normal():  # user can use RFID or their fingerprint to access
     LCD.setCursor(1, 0)  # row, column
     LCD.write("   LOCKER READY  ")
@@ -438,60 +456,3 @@ def unlockConfirmPage(locker_num):
     LCD.write("Locker: " + str(locker_num))
     LCD.setCursor(0, 3)  # row, column
     LCD.write("User deleted!")
-
-# def exportSuccessPage():
-#     LCD.setCursor(2, 0)  # row, column
-#     LCD.write("EXPORT DATABASE")
-#     LCD.setCursor(7, 1)  # row, column
-#     LCD.write("Done!")
-#     LCD.setCursor(0, 3)  # row, column
-#     LCD.write("Press any to return")
-#
-#
-# def exportFailPage():
-#     LCD.setCursor(2, 0)  # row, column
-#     LCD.write("EXPORT DATABASE")
-#     LCD.setCursor(6, 1)  # row, column
-#     LCD.write("Failed!")
-#     LCD.setCursor(2, 2)  # row, column
-#     LCD.write("Retry")
-#     LCD.setCursor(2, 3)  # row, column
-#     LCD.write("Cancel")
-#
-#
-# def importPage():
-#     LCD.setCursor(2, 0)  # row, column
-#     LCD.write("IMPORT DATABASE")
-#     LCD.setCursor(2, 2)  # row, column
-#     LCD.write("1. Append database")
-#     LCD.setCursor(2, 3)  # row, column
-#     LCD.write("2. New database")
-#
-#
-# def importSuccessPage():
-#     LCD.setCursor(2, 0)  # row, column
-#     LCD.write("IMPORT DATABASE")
-#     LCD.setCursor(7, 1)  # row, column
-#     LCD.write("Done!")
-#     LCD.setCursor(0, 3)  # row, column
-#     LCD.write("Press any to return")
-#
-#
-# def importFailPage():
-#     LCD.setCursor(2, 0)  # row, column
-#     LCD.write("IMPORT DATABASE")
-#     LCD.setCursor(6, 1)  # row, column
-#     LCD.write("Failed!")
-#     LCD.setCursor(2, 2)  # row, column
-#     LCD.write("Retry")
-#     LCD.setCursor(2, 3)  # row, column
-#     LCD.write("Cancel")
-
-
-# def mainLockerPage():
-#     LCD.setCursor(0, 0)  # row, column
-#     LCD.write("ADMIN MENU:")
-#     LCD.setCursor(2, 1)  # row, column
-#     LCD.write("4. Info Locker")  # check any locker that has information in
-#
-

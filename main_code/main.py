@@ -1058,7 +1058,8 @@ def main():  # Main program block
 if __name__ == '__main__':
     try:
         main()
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, SystemExit): # except (KeyboardInterrupt, SystemExit, Exception):
         lcd.clear()
+        lcd.systemClosedPage()
+        pr.init()    # clear all locks and LEDs before shutdown
         rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
-        pass
