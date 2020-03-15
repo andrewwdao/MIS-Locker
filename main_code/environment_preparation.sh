@@ -25,14 +25,16 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo apt-get install wget git -y
 	
 	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
-	if ! grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ; then
-		echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
-		wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
-		sudo apt-get update && sudo apt-get upgrade -y #update catch again before install the package below
-	fi
+	#if ! grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ; then
+	#	echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
+	#	wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
+	#	sudo apt-get update && sudo apt-get upgrade -y #update catch again before install the package below
+	#fi
 	
-	sudo apt-get install python3-fingerprint -y
-	sudo usermod -a -G dialout $USER
+	#sudo apt-get install python3-fingerprint -y
+	#sudo usermod -a -G dialout $USER
+	
+	sudo pip3 install pillow
 	
 	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
