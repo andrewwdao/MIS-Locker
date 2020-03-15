@@ -15,7 +15,7 @@ Restart=yes
 User=root
 # SIGINT is translated as a KeyboardInterrupt exception by Python.
 # default kill signal is SIGTERM which doesn't raise an exception in Python.
-KillSignal=SIGINT  
+# KillSignal=SIGINT - don't need it any more since we use the signal package in python 
 
  
 [Install]

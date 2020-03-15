@@ -8,6 +8,7 @@ import fingerPrint
 from app import saveInfo_app
 import time
 import buzzer as buz
+import signal
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
@@ -1054,16 +1055,27 @@ def main():  # Main program block
         if sys_command is "BUT_UP" or (datetime.now().second - last_second) > PROMPT_WAITING_TIME*3:
             SYS_MODE = False
 
+# --- Closing handler ----------
+def close_gracefully():
+    lcd.clear()
+    lcd.systemClosedPage()
+    pr.init()    # clear all locks and LEDs before shutdown
+    rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+
+def systemd_handler(signum, frame):
+    close_gracefully()
+
+signal.signal(signal.SIGTERM, systemd_handler)
+
+# -------------------------------
+
 
 if __name__ == '__main__':
     try:
         main()
     except (KeyboardInterrupt, SystemExit):
-        lcd.clear()
-        lcd.systemClosedPage()
-        pr.init()    # clear all locks and LEDs before shutdown
-        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
-    except (OSError, Exception): # I/O error
+        close_gracefully()
+    except (OSError, Exception): # I/O error or exception
         lcd.clear()
         lcd.systemErrorPage()
         pr.init()    # clear all locks and LEDs before shutdown
