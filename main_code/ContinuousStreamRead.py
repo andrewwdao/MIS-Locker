@@ -32,7 +32,9 @@ class StreamReader:
                 if line:
                     queues.put(line)
                 else:
-                    raise UnexpectedEndOfStream
+                    # raise UnexpectedEndOfStream
+                    print('Unexpected End of Stream')
+                    return
 
         self._t = Thread(target = _populateQueue,
                 args = (self._s, self._q))
