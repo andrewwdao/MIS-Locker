@@ -9,14 +9,14 @@ Type=simple
 # This will release the same result: ExecStart = /usr/bin/sudo python3 -u main.py
 ExecStart=sudo python3 -u main.py
 WorkingDirectory=/home/MISlocker/system/main_code
-# StandardOutput=inherit
-# StandardError=inherit
-# Restart=yes
+StandardOutput=inherit
+StandardError=inherit
+Restart=yes
 # must set user to root to execute all functions and peripherals
 User=root
 # SIGINT is translated as a KeyboardInterrupt exception by Python.
 # default kill signal is SIGTERM which doesn't raise an exception in Python.
-# KillSignal=SIGINT - don't need it any more since we use the signal package in python 
+KillSignal=SIGINT
 
  
 [Install]

@@ -1057,15 +1057,16 @@ def main():  # Main program block
 
 # --- Closing handler ----------
 def close_gracefully():
-    lcd.clear()
-    lcd.systemClosedPage()
     pr.init()    # clear all locks and LEDs before shutdown
     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    lcd.clear()
+    lcd.systemClosedPage()
+    
 
-def systemd_handler(signum, frame):
-    close_gracefully()
+# def systemd_handler(signum, frame):
+#     close_gracefully()
 
-signal.signal(signal.SIGTERM, systemd_handler)
+# signal.signal(signal.SIGTERM, systemd_handler)
 
 # -------------------------------
 
