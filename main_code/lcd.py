@@ -55,15 +55,15 @@ def clear():
 
 # ------------------------------ User level interfaces ------------------------------
 def systemClosedPage():  # system closed page
-    LCD2 = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
-    LCD2.backlight()
-    LCD2.clear()
-    LCD2.setCursor(1, 0)  # row, column
-    LCD2.write("   LOCKER CLOSED   ")
-    LCD2.setCursor(0, 2)  # row, column
-    LCD2.write("please comback later")
-    LCD2.setCursor(8, 3)  # row, column
-    LCD2.write("...")
+    LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
+    LCD.backlight()
+    LCD.clear()
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("   LOCKER CLOSED   ")
+    LCD.setCursor(0, 2)  # row, column
+    LCD.write("please comback later")
+    LCD.setCursor(8, 3)  # row, column
+    LCD.write("...")
 
 
 def systemErrorPage():  # system error page
