@@ -8,6 +8,7 @@ import fingerPrint
 from app import saveInfo_app
 import time
 import buzzer as buz
+import subprocess as subpro
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
@@ -1059,8 +1060,7 @@ if __name__ == '__main__':
     try:
         main()
     except (KeyboardInterrupt, SystemExit):
-        lcd.systemClosedPage()
-        pr.init()    # clear all locks and LEDs before shutdown
+        subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
         rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
         
     except (OSError, Exception): # I/O error or exception

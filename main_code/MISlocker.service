@@ -16,7 +16,8 @@ Restart=yes
 User=root
 # SIGINT is translated as a KeyboardInterrupt exception by Python.
 # default kill signal is SIGTERM which doesn't raise an exception in Python.
-KillSignal=SIGINT
+# KillSignal=SIGINT
+ExecStop=sudo python3 -u syshalt.py
 
  
 [Install]
