@@ -1062,10 +1062,10 @@ def close_gracefully():
     pr.init()    # clear all locks and LEDs before shutdown
     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
 
-def systemd_handler(signum, frame):
-    close_gracefully()
+# def systemd_handler(signum, frame):
+#     close_gracefully()
 
-signal.signal(signal.SIGTERM, systemd_handler)
+# signal.signal(signal.SIGTERM, systemd_handler)
 
 # -------------------------------
 
