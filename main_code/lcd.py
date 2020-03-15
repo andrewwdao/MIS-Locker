@@ -61,7 +61,7 @@ def systemClosedPage():  # system closed page
     LCD.setCursor(1, 0)  # row, column
     LCD.write("   LOCKER CLOSED   ")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("please comback later")
+    LCD.write("please return later")
     LCD.setCursor(8, 3)  # row, column
     LCD.write("...")
 
