@@ -9,6 +9,7 @@
 import lcd
 import peripheral as pr
 
+
 lcd.systemClosedPage()
 pr.init()    # clear all locks and LEDs before shutdown
 
