@@ -25,16 +25,10 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo apt-get install wget git -y
 	
 	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
-	#if ! grep -Fxq "deb http://apt.pm-codeworks.de wheezy main" /etc/apt/sources.list ; then
-	#	echo "deb http://apt.pm-codeworks.de wheezy main" | sudo tee -a /etc/apt/sources.list
-	#	wget -O - http://apt.pm-codeworks.de/pm-codeworks.de.gpg | sudo apt-key add -
-	#	sudo apt-get update && sudo apt-get upgrade -y #update catch again before install the package below
-	#fi
-	
-	#sudo apt-get install python3-fingerprint -y
-	#sudo usermod -a -G dialout $USER
-	
-	sudo pip3 install pillow
+	# using modified version - local version with newest packages
+	sudo apt-get install python3-pil -y # sudo pip3 install Pillow  # this one will not install some packages
+	sudo apt-get install libopenjp2-7 # reference: https://github.com/rm-hull/luma.led_matrix/issues/154
+	sudo apt-get install libtiff5 -y
 	
 	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
@@ -66,6 +60,9 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo pip3 install flask-sqlalchemy
 	sudo pip3 install flask-migrate
 	sudo pip3 install flask-bootstrap
+	
+	# update all the kept-back if existed  # # https://askubuntu.com/questions/601/the-following-packages-have-been-kept-back-why-and-how-do-i-solve-it
+	sudo apt-get --with-new-pkgs upgrade -y
 	
 	cd /home/MISlocker/ # return to home folder
 	
