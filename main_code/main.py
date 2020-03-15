@@ -1056,11 +1056,11 @@ def main():  # Main program block
             SYS_MODE = False
 
 # --- Closing handler ----------
-def close_gracefully():
-    pr.init()    # clear all locks and LEDs before shutdown
-    rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
-    lcd.clear()
-    lcd.systemClosedPage()
+# def close_gracefully():
+#     pr.init()    # clear all locks and LEDs before shutdown
+#     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+#     lcd.clear()
+#     lcd.systemClosedPage()
     
 
 # def systemd_handler(signum, frame):
@@ -1075,7 +1075,12 @@ if __name__ == '__main__':
     try:
         main()
     except (KeyboardInterrupt, SystemExit):
-        close_gracefully()
+        # close_gracefully()
+        lcd.clear()
+        lcd.systemClosedPage()
+        pr.init()    # clear all locks and LEDs before shutdown
+        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+        
     except (OSError, Exception): # I/O error or exception
         lcd.clear()
         lcd.systemErrorPage()
