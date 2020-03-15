@@ -55,6 +55,7 @@ def clear():
 
 # ------------------------------ User level interfaces ------------------------------
 def systemClosedPage():  # system closed page
+    global LCD
     LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
     LCD.clear()
     LCD.setCursor(1, 0)  # row, column
@@ -66,6 +67,7 @@ def systemClosedPage():  # system closed page
 
 
 def systemErrorPage():  # system error page
+    global LCD
     LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
     LCD.clear()
     LCD.setCursor(0, 0)  # row, column
