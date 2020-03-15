@@ -1063,3 +1063,8 @@ if __name__ == '__main__':
         lcd.systemClosedPage()
         pr.init()    # clear all locks and LEDs before shutdown
         rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    except OSError: # I/O error
+        lcd.clear()
+        lcd.systemErrorPage()
+        pr.init()    # clear all locks and LEDs before shutdown
+        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
