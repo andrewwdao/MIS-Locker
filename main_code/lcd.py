@@ -55,6 +55,7 @@ def clear():
 
 # ------------------------------ User level interfaces ------------------------------
 def systemClosedPage():  # system closed page
+    LCD.clear()
     LCD.setCursor(1, 0)  # row, column
     LCD.write("   LOCKER CLOSED   ")
     LCD.setCursor(0, 2)  # row, column
