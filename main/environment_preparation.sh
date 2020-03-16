@@ -68,7 +68,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# update all the kept-back if existed  # # https://askubuntu.com/questions/601/the-following-packages-have-been-kept-back-why-and-how-do-i-solve-it
 	sudo apt-get --with-new-pkgs upgrade -y
 	
-	cd /home/MISlocker/ # return to home folder
+	cd /home/$USER/ # return to home folder
 	
 	# download system files from git repository
 	if [ -d "./system" ] ; then  # check if the directory exist or not
