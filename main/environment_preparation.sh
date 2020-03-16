@@ -68,7 +68,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# update all the kept-back if existed  # # https://askubuntu.com/questions/601/the-following-packages-have-been-kept-back-why-and-how-do-i-solve-it
 	sudo apt-get --with-new-pkgs upgrade -y
 	
-	cd /home/$LOGNAME/ # return to home folder -- cannot use $USER since it may return root
+	cd /home/$(who am i | awk '{print $1}')/ # return to home folder -- cannot use $USER or $LOGNAME since they may return root. $SUDO_USER can also be used but not all covered. ref: https://stackoverflow.com/questions/4598001/how-do-you-find-the-original-user-through-multiple-sudo-and-su-commands
 	
 	# download system files from git repository
 	if [ -d "./system" ] ; then  # check if the directory exist or not
