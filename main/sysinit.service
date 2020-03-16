@@ -5,7 +5,7 @@ DefaultDependencies=false
 [Service]
 Type=oneshot
 ExecStart=sudo ./peripheral_init
-WorkingDirectory=/home/MISlocker/system/main_code
+WorkingDirectory=/home/MISlocker/system/main
 Restart=no
 
 [Install]

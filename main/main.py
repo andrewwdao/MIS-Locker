@@ -982,6 +982,7 @@ def main():  # Main program block
     # ---------------------------- Setup ----------------------------------------
     lcd.clear()
     global SYS_MODE
+    print('number of member in database: ', dtb.number_of_member())
     print("System ready!")
     # ---------------------------- Loop -----------------------------------------
     while True:
