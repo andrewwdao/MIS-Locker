@@ -89,7 +89,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo make rfid_main peripheral_init peripheral_main buzzer_main
 	
 	# provide priveledge for environment preparation itself
-	sudo chmod +x environment_preparation.she
+	sudo chmod +x environment_preparation.sh
 	
 	# activate system in start-up
 	sudo cp sysinit.service /etc/systemd/system
