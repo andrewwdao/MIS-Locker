@@ -97,6 +97,12 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	sudo cp MISlocker.service /etc/systemd/system
 	sudo systemctl enable MISlocker.service
 	
+	# check if the file exist outside or not, if yes --> cleanup
+	cd /home/$(who am i | awk '{print $1}')/ # return to home folder -- cannot use $USER or $LOGNAME since they may return root. $SUDO_USER can also be used but not all covered. ref: https://stackoverflow.com/questions/4598001/how-do-you-find-the-original-user-through-multiple-sudo-and-su-commands
+	if [ -f "./environment_preparation.sh" ] ; then
+		sudo rm -rf environment_preparation.sh
+	fi
+	
 	echo 
 	echo 
 	echo Done. Please restart to the changes take effect!
