@@ -17,7 +17,7 @@ User=root
 # SIGINT is translated as a KeyboardInterrupt exception by Python.
 # default kill signal is SIGTERM which doesn't raise an exception in Python.
 # KillSignal=SIGINT
-# Additional commands that are executed after the service is stopped.
+# Additional commands that are executed after the service is stopped. ref: https://www.freedesktop.org/software/systemd/man/systemd.service.html
 ExecStopPost=sudo python3 -u syshalt.py
 
  
