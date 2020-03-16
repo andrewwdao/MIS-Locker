@@ -26,9 +26,13 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	
 	# fingerprint package install  ## https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 	# using modified version - local version with newest packages
-	sudo apt-get install python3-pil -y # sudo pip3 install Pillow  # this one will not install some packages
+	sudo pip3 install pyxdg==0.26
+	sudo pip3 install urllib3==1.25.6
+	sudo pip3 install Pillow # this one will install the latest Pillow
+	#	sudo apt-get install python3-pil -y # this one will not install the latest Pillow
 	sudo apt-get install libopenjp2-7 # reference: https://github.com/rm-hull/luma.led_matrix/issues/154
 	sudo apt-get install libtiff5 -y
+	
 	
 	# Pyserial package install  ## https://pyserial.readthedocs.io/en/latest/shortintro.html#opening-serial-ports
 	sudo apt-get install python3-serial -y
@@ -78,7 +82,7 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	
 	
 	# go to main code section, clean the c binary files and re-create them
-	cd ./main_code #./system/main_code
+	cd ./main #./system/main
 	sudo make clean
 	sudo rm -rf ./obj
 	sudo mkdir ./obj
