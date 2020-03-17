@@ -42,7 +42,7 @@ Tested on Raspberry Pi 3B+.
 [![CTU small](/docs/pictures/CTU-small.png)](https://ctu.edu.vn/)
 [![MIS-CTU small](/docs/pictures/MIS_CTU-small.png)](https://mis.ctu.edu.vn/)
 [![URI small](/docs/pictures/URI-small.png)](https://sites.google.com/asu.edu/uri-coordinator-resources/uri-research-symposium/)
-[![Konel small](/docs/pictures/konel-small.png)](https://konel.jp/)
+[![Konel small](/docs/pictures/Konel-small.png)](https://konel.jp/)
 
 
 _(c) 2019 - 2020 [Minh-An Dao] - Minh-Luan Nguyen_
