@@ -6,10 +6,9 @@
  * 
  *
  --------------------------------------------------------------"""
-import lcd
-import time
 import subprocess as subpro
+import lcd
 
-lcd.begin()# dipslay LCD at startup
-time.sleep(1)
 subpro.Popen(['./peripheral_init'], shell=False) # clear all locks and LEDs before startup
+lcd.begin()# dipslay LCD at startup
+

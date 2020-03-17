@@ -6,8 +6,8 @@
  * 
  *
  --------------------------------------------------------------"""
-import lcd
 import subprocess as subpro
+import lcd
 
-lcd.systemClosedPage()
 subpro.Popen(['./peripheral_init'], shell=False) # clear all locks and LEDs before shutdown
+lcd.systemClosedPage()

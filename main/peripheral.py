@@ -85,7 +85,6 @@ LOCK_BIT = (
 
 def init():
     subpro.Popen([pi_dir], shell=True)
-    # time.sleep(2)  # peripheral start up time
 
 
 def send():
