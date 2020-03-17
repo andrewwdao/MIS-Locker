@@ -1,0 +1,20 @@
+[Unit]
+Description=LCD Message for MISlocker
+DefaultDependencies=false
+Requires=systemd-modules-load.service
+After=systemd-udev-trigger.service
+Before=sysinit.target
+# ConditionPathExists=/sys/class/i2c-adapter
+
+[Service]
+Type=oneshot
+ExecStart=sudo python3 -u lcd_init.py
+WorkingDirectory=/home/MISlocker/system/main
+Restart=no
+# must set user to root to execute all functions and peripherals
+User=root
+
+[Install]
+WantedBy=sysinit.target
+
+
