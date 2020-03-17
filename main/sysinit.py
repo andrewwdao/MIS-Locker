@@ -6,7 +6,7 @@
  * 
  *
  --------------------------------------------------------------"""
-import subprocess as supro
+import subprocess as subpro
 import lcd
 
 subpro.Popen(['./peripheral_init'], shell=False) # set peripherals to low
