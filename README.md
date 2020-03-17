@@ -1,6 +1,6 @@
 # SOURCE CODE FOR MIS-CTU LOCKER
 
-![MIS-CTU logo](/docs/pictures/MIS-CTU.png)
+![MIS-CTU logo](/docs/pictures/MIS_CTU.png)
 
 System code for MIS-CTU Locker system. Designed for [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi) based devices.
 Tested on Raspberry Pi 3B+.
