@@ -1,6 +1,6 @@
 # SOURCE CODE FOR MIS-CTU LOCKER
 
-[![MIS-CTU logo](/docs/pictures/MIS_CTU.png)](https://mis.ctu.edu.vn/) [![CTU logo](/docs/pictures/CTU.png)](https://ctu.edu.vn/)
+[![MIS-CTU logo](/docs/pictures/MIS_CTU.png)](https://mis.ctu.edu.vn/)
 
 System code for MIS-CTU Locker system. Designed for [Raspberry Pi](https://en.wikipedia.org/wiki/Raspberry_Pi) based devices.
 Tested on Raspberry Pi 3B+.
@@ -38,7 +38,8 @@ Tested on Raspberry Pi 3B+.
 ##    
 **Made for Maker Innovation Space, Can Tho University, Can Tho, Vietnam (MIS-CTU).**
 
-_(c) 2019 - 2020 [Minh-An Dao] - Minh-Luan Nguyen. Licensed under the MIT License. All rights reserved._
+_(c) 2019 - 2020 [Minh-An Dao] - Minh-Luan Nguyen_
+_Licensed under the MIT License. All rights reserved._
 
 
 <!-- Links -->
