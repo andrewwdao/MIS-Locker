@@ -1,5 +1,18 @@
+#[Unit]
+#Description=MISlocker peripheral initialization service
+#DefaultDependencies=false
+
+#[Service]
+#Type=oneshot
+#ExecStart=sudo ./peripheral_init
+#WorkingDirectory=/home/MISlocker/system/main
+#Restart=no
+
+#[Install]
+#WantedBy=sysinit.target
+
 [Unit]
-Description=LCD Message for MISlocker
+Description=MISlocker peripheral initialization service
 DefaultDependencies=false
 Requires=systemd-modules-load.service
 After=systemd-modules-load.service
@@ -8,7 +21,7 @@ ConditionPathExists=/sys/class/i2c-adapter
 
 [Service]
 Type=oneshot
-ExecStart=sudo python3 -u lcd_init.py
+ExecStart=sudo python3 -u sysinit.py
 WorkingDirectory=/home/MISlocker/system/main
 Restart=no
 # must set user to root to execute all functions and peripherals
@@ -16,5 +29,4 @@ User=root
 
 [Install]
 WantedBy=sysinit.target
-
 
