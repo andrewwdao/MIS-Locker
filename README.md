@@ -18,7 +18,7 @@ Tested on Raspberry Pi 3B+.
 * **[Hardware Documentation]**: Documents about PCB, electronics components,...
 * **[Undergrad Thesis Report]**: A part of this project is also my undergraduate thesis, you can have a look of it here. (in Vietnamese)
 
-## Credited libraries:
+## Credited libraries
  - [Python3-fingerprint], (c) 2016 Bastian Raschke. Licensed under the German Free Software License
  - [Adafruit CircuitPython ADS1x15], (c) 2017 Carter Nelson for Adafruit Industries. Licensed under the MIT License.
  - [pySerial], (c) 2001 - 2017 Chris Liechti <cliechti@gmx.net>. Licensed under the BSD Liscense.
@@ -38,11 +38,11 @@ Tested on Raspberry Pi 3B+.
 ##    
 **Made for Maker Innovation Space, Can Tho University, Can Tho, Vietnam (MIS-CTU).**
 
-## Sponsors:
-[![CTU small](/docs/pictures/CTU-small.png)](https://ctu.edu.vn/)
-[![MIS-CTU small](/docs/pictures/MIS_CTU-small.png)](https://mis.ctu.edu.vn/)
-[![URI small](/docs/pictures/URI-small.png)](https://sites.google.com/asu.edu/uri-coordinator-resources/uri-research-symposium/)
-[![Konel small](/docs/pictures/Konel-small.png)](https://konel.jp/)
+## Sponsors
+[![CTU small](/docs/pictures/CTU-small.svg)](https://ctu.edu.vn/)
+[![MIS-CTU small](/docs/pictures/MIS_CTU-small.svg)](https://mis.ctu.edu.vn/)
+[![URI small](/docs/pictures/URI-small.svg)](https://sites.google.com/asu.edu/uri-coordinator-resources/uri-research-symposium/)
+[![Konel small](/docs/pictures/Konel-small.svg)](https://konel.jp/)
 
 
 _(c) 2019 - 2020 [Minh-An Dao] - Minh-Luan Nguyen_
