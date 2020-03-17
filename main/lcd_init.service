@@ -2,9 +2,10 @@
 Description=LCD Message for MISlocker
 DefaultDependencies=false
 Requires=systemd-modules-load.service
-After=systemd-udev-trigger.service
+After=systemd-modules-load.service
+# After=systemd-udev-trigger.service
 Before=sysinit.target
-# ConditionPathExists=/sys/class/i2c-adapter
+ConditionPathExists=/sys/class/i2c-adapter
 
 [Service]
 Type=oneshot
