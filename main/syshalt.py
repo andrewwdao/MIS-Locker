@@ -1,14 +1,13 @@
 """*------------------------------------------------------------*-
   Shutdown module for MISlocker in python
     (c) Minh-An Dao 2020
-  version 1.00 - 15/03/2020
+  version 1.10 - 17/03/2020
  --------------------------------------------------------------
  * 
  *
  --------------------------------------------------------------"""
+import subprocess as subpro
 import lcd
-import peripheral as pr
 
+subpro.Popen(['./peripheral_init'], shell=False) # clear all locks and LEDs before shutdown
 lcd.systemClosedPage()
-pr.init()    # clear all locks and LEDs before shutdown
-

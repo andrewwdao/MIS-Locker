@@ -91,9 +91,9 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	# provide priveledge for environment preparation itself
 	sudo chmod +x environment_preparation.sh
 	
-	# activate system in start-up
-	sudo cp sysinit.service /etc/systemd/system
-	sudo systemctl enable sysinit.service
+	# activate system on start-up
+	sudo cp MISinit.service /etc/systemd/system
+	sudo systemctl enable MISinit.service
 	sudo cp MISlocker.service /etc/systemd/system
 	sudo systemctl enable MISlocker.service
 	

@@ -1,16 +1,3 @@
-#[Unit]
-#Description=MISlocker peripheral initialization service
-#DefaultDependencies=false
-
-#[Service]
-#Type=oneshot
-#ExecStart=sudo ./peripheral_init
-#WorkingDirectory=/home/MISlocker/system/main
-#Restart=no
-
-#[Install]
-#WantedBy=sysinit.target
-
 [Unit]
 Description=MISlocker peripheral initialization service
 DefaultDependencies=false

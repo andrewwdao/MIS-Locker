@@ -9,6 +9,6 @@
 import subprocess as subpro
 import lcd
 
-subpro.Popen(['./peripheral_init'], shell=False) # set peripherals to low
+subpro.Popen(['./peripheral_init'], shell=False) # clear all locks and LEDs before startup
 lcd.begin()# dipslay LCD at startup
 
