@@ -84,11 +84,11 @@ LOCK_BIT = (
 )
 
 def init():
-    subpro.Popen([pi_dir], shell=False)
+    subpro.Popen(['./peripheral_init'], shell=False)
 
 
 def send():
-    subpro.Popen([pm_dir,
+    subpro.Popen(['./peripheral_main',
                   str(REG_M1_F),
                   str(REG_M1_M),
                   str(REG_M1_L),
