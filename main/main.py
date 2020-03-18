@@ -1,3 +1,12 @@
+"""------------------------------------------------------------*-
+  Main process for MISlocker
+  Tested on: Raspberry Pi 3 B+
+  (c) Minh-An Dao 2019 - 2020
+  version 1.70 - 18/03/2020
+ --------------------------------------------------------------
+ *
+ *
+ --------------------------------------------------------------"""
 import lcd
 from adc import adc_button, adc_switches
 from rfid import Gwiot_7304D2
@@ -1040,7 +1049,7 @@ if __name__ == '__main__':
         subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
         rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
         
-    # except (OSError, Exception): # I/O error or exception
-    #     lcd.systemErrorPage()
-    #     pr.init()    # clear all locks and LEDs before shutdown
-    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    except (OSError, Exception): # I/O error or exception
+        lcd.systemErrorPage()
+        pr.init()    # clear all locks and LEDs before shutdown
+        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!

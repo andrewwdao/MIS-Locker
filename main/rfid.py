@@ -1,9 +1,9 @@
 """*------------------------------------------------------------*-
   Wiegand Reader - python module file
   Tested with Gwiot 7304D2 RFID Reader(26 bit Wiegand mode) and RASPBERRY PI 3B+
-    (c) Minh-An Dao 2019
+    (c) Minh-An Dao 2019 - 2020
     (c) Spiros Ioannou 2017
-  version 1.10 - 25/10/2019
+  version 1.20 - 18/03/2019
  --------------------------------------------------------------
  * RFID reader using Wiegand 26 protocol.
  * Use both 125Khz and 315Mhz Cards
@@ -81,19 +81,6 @@ class Gwiot_7304D2:
             self.rfid.terminate()
             self.rfid.kill()
             print('RFID terminated!')
-
-# def check():
-#     mes = rfid_mes.readline(0.05)  # 0.05 secs to let the shell output the result
-#     sys.stdout.flush()
-#     if mes is not None:  # turn it into string if it is not a null
-#         mes = mes.strip().decode("utf-8")
-#     if mes is None or mes == 'CHECKSUM_FAILED':
-#         return [False, '']
-#
-#     return [True, mes]
-
-
-
 
 
 ############ DEPRECATED ###############
