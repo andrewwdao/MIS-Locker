@@ -88,13 +88,20 @@ def init():
 
 
 def send():
-    subpro.Popen([pm_dir +
-                  str(REG_M1_F) + " " +
-                  str(REG_M1_M) + " " +
-                  str(REG_M1_L) + " " +
-                  str(REG_M2_F) + " " +
-                  str(REG_M2_M) + " " +
+    subpro.Popen([pm_dir,
+                  str(REG_M1_F),
+                  str(REG_M1_M),
+                  str(REG_M1_L),
+                  str(REG_M2_F),
+                  str(REG_M2_M),
                   str(REG_M2_L)], shell=False)
+    # subpro.Popen([pm_dir +
+    #               str(REG_M1_F) + " " +
+    #               str(REG_M1_M) + " " +
+    #               str(REG_M1_L) + " " +
+    #               str(REG_M2_F) + " " +
+    #               str(REG_M2_M) + " " +
+    #               str(REG_M2_L)], shell=False)
 
 ################# For reverse logic ######################
 
