@@ -22,7 +22,7 @@ saveInfo_app.config.from_object(Config)
 db = SQLAlchemy(saveInfo_app)
 migrate = Migrate(saveInfo_app, db)
 bootstrap = Bootstrap(saveInfo_app)
-app.config.from_envvar('BOOTSTRAP_SERVE_LOCAL', True)
+saveInfo_app.config.from_envvar('BOOTSTRAP_SERVE_LOCAL', True)
 # saveInfo_app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
 
 from app.errors import bp as errors_bp
