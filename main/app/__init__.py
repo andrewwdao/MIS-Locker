@@ -22,8 +22,7 @@ saveInfo_app.config.from_object(Config)
 db = SQLAlchemy(saveInfo_app)
 migrate = Migrate(saveInfo_app, db)
 bootstrap = Bootstrap(saveInfo_app)
-saveInfo_app.config.from_envvar('BOOTSTRAP_SERVE_LOCAL', True)
-# saveInfo_app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', True)
+saveInfo_app.config['BOOTSTRAP_SERVE_LOCAL'] = True  # make bootstrap use local resources instead of using online resources
 
 from app.errors import bp as errors_bp
 saveInfo_app.register_blueprint(errors_bp)
