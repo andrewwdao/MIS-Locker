@@ -28,29 +28,7 @@ NO_ID = 999999
 
 SYS_MODE = False  # default mode is normal (use locker), turn true to turn to system mode (user can change their credentials)
 last_second = 0   # for automatically return to locker mode
-# DOOR = (
-#     "NULL",
-#     "DOOR01",
-#     "DOOR02",
-#     "DOOR03",
-#     "DOOR04",
-#     "DOOR05",
-#     "DOOR06",
-#     "DOOR07",
-#     "DOOR08",
-#     "DOOR09",
-#     "DOOR10",
-#     "DOOR11",
-#     "DOOR12",
-#     "DOOR13",
-#     "DOOR14",
-#     "DOOR15",
-#     "DOOR16",
-#     "DOOR17",
-#     "DOOR18",
-#     "DOOR19",
-#     "DOOR20"
-# )
+
 # --------------------------- Set Up ----------------------------------------
 lcd.begin()
 button = adc_button()
@@ -679,7 +657,6 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
         if user_id in lockerArray:  # if user is renting a locker
             current_locker = lockerArray.index(user_id)
             lcd.clear()
-            # shorten_name = __shortenName(user_name,13)
             lcd.returnPage(__shortenName(user_name,13), current_locker)  # Name, locker_num
             lockerArray[current_locker] = user_id
             __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it
@@ -758,7 +735,6 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
                 return
             else:  # new locker available
                 lcd.clear()
-                # shorten_name = __shortenName(user_name,13)
                 lcd.welcomePage(__shortenName(user_name,13), user_mssv, current_locker)  # Name, mssv, locker_num
                 lockerArray[current_locker] = user_id
                 __openDoorProcedure(current_locker) # this function open the locker and wait the user to close it

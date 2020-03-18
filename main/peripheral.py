@@ -84,7 +84,7 @@ LOCK_BIT = (
 )
 
 def init():
-    subpro.Popen([pi_dir], shell=True)
+    subpro.Popen([pi_dir], shell=False)
 
 
 def send():
@@ -94,8 +94,9 @@ def send():
                   str(REG_M1_L) + " " +
                   str(REG_M2_F) + " " +
                   str(REG_M2_M) + " " +
-                  str(REG_M2_L)], shell=True)
+                  str(REG_M2_L)], shell=False)
 
+################# For reverse logic ######################
 
 def locker(locker_num, state):
     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
@@ -166,7 +167,7 @@ def locker_nowBusy(locker_num, state):
             REG_M2_L |= LOCK_BIT[locker_num + 20]  # LOCK1x_BIT
     send()
 
-
+################# For forward logic ######################
 
 # def locker(locker_num, state):
 #     global REG_M1_F, REG_M1_M, REG_M1_L, REG_M2_F, REG_M2_M, REG_M2_L
