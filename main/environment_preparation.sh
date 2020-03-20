@@ -101,12 +101,84 @@ chmod +x environment_preparation.sh
 chmod +x update_time_proxy_readonly.sh
 chmod +x bluetooth_deactivate.sh
 
-# activate system on start-up
-cp MIStime.service /etc/systemd/system
+# --- activate system on start-up
+# MISinit.service
+echo "[Unit]
+Description=MISlocker peripheral initialization service
+DefaultDependencies=false
+Requires=systemd-modules-load.service
+After=systemd-modules-load.service
+Before=sysinit.target
+ConditionPathExists=/sys/class/i2c-adapter
+
+[Service]
+Type=oneshot
+ExecStart=sudo python3 -u sysinit.py
+WorkingDirectory=/home/$(who am i | awk '{print $1}')/system/main
+Restart=no
+# must set user to root to execute all functions and peripherals
+User=root
+
+[Install]
+WantedBy=sysinit.target
+
+# reference: https://www.raspberrypi.org/forums/viewtopic.php?t=221507
+" >> /etc/systemd/system/MISinit.service
+
+# MIStime.service
+echo "[Unit]
+Description=Time set up workaround service for MISlocker
+Requires=network-online.target
+After=multi-user.target
+DefaultDependencies=true
+
+[Service]
+Type=oneshot
+ExecStart=./update_time_proxy_readonly.sh
+WorkingDirectory=/home/$(who am i | awk '{print $1}')/system/main
+Restart=no
+# must set user to root to execute all functions and peripherals
+User=root
+
+[Install]
+WantedBy=sysinit.target multi-user.target
+" >> /etc/systemd/system/MIStime.service
+
+# MISlocker.service
+echo "[Unit]
+Description=MISlocker main service
+After=multi-user.target
+DefaultDependencies=true
+
+
+[Service]
+Type=simple
+# This will release the same result: ExecStart = /usr/bin/sudo python3 -u main.py
+ExecStart=sudo python3 -u main.py
+WorkingDirectory=/home/$(who am i | awk '{print $1}')/system/main
+StandardOutput=inherit
+StandardError=inherit
+# Restart=yes
+# must set user to root to execute all functions and peripherals
+User=root
+# SIGINT is translated as a KeyboardInterrupt exception by Python.
+# default kill signal is SIGTERM which doesn't raise an exception in Python.
+# KillSignal=SIGINT
+# Additional commands that are executed after the service is stopped. ref: https://www.freedesktop.org/software/systemd/man/systemd.service.html
+ExecStopPost=sudo python3 -u syshalt.py
+
+ 
+[Install]
+WantedBy=sysinit.target multi-user.target
+" >> /etc/systemd/system/MISlocker.service
+
+# old method, wont work for any user
+# cp MISinit.service /etc/systemd/system
+# cp MIStime.service /etc/systemd/system
+# cp MISlocker.service /etc/systemd/system
+
 systemctl enable MIStime.service
-cp MISinit.service /etc/systemd/system
 systemctl enable MISinit.service
-cp MISlocker.service /etc/systemd/system
 systemctl enable MISlocker.service
 
 # check if the file exist outside or not, if yes --> cleanup
