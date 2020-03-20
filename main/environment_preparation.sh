@@ -5,6 +5,11 @@ set -eu -o pipefail # fail on error , debug all lines
 sudo -n true
 test $? -eq 0 || exit 1 "you should have sudo priveledge to run this script"
 
+if [ 'root' != $( whoami ) ] ; then
+  echo "Please run as root!"
+  exit 1;
+fi
+
 echo This program will install the must-have pre-requisites for MISlocker system
 echo Confirm to install? [Y/N]
 
