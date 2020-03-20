@@ -1,0 +1,16 @@
+[Unit]
+Description=Time set up workaround service for MISlocker
+Requires=network-online.target
+After=multi-user.target
+DefaultDependencies=true
+
+[Service]
+Type=oneshot
+ExecStart=./update_time_proxy_readonly.sh
+WorkingDirectory=/home/MISlocker/system/main
+Restart=no
+# must set user to root to execute all functions and peripherals
+User=root
+
+[Install]
+WantedBy=sysinit.target multi-user.target

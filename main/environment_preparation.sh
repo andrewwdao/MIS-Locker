@@ -24,7 +24,7 @@ fi
 echo "Installing..."
 
 # automatically get and set time from the internet (workaround for proxy setting)
-{./update_time_proxy.sh}
+date -s "$(wget -qSO- --max-redirect=0 google.vn 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
 
 apt-get update && apt-get upgrade -y
 
@@ -98,6 +98,8 @@ make rfid_main peripheral_init peripheral_main buzzer_main
 
 # provide priveledge for environment preparation itself
 chmod +x environment_preparation.sh
+chmod +x update_time_proxy_readonly.sh
+chmod +x bluetooth_deactivate.sh
 
 # activate system on start-up
 cp MIStime.service /etc/systemd/system
