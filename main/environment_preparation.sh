@@ -116,7 +116,7 @@ if [ -f "./environment_preparation.sh" ] ; then
 fi
 
 # disable bluetooth
-{./bluetooth_deactivate.sh}
+./bluetooth_deactivate.sh
 
 # make system read-only
 

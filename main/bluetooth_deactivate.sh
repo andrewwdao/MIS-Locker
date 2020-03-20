@@ -8,16 +8,16 @@ if [ 'root' != $( whoami ) ] ; then
 fi
 
 
-echo "This program will deactivate bluetooth on this Raspberry Pi device."
-echo -n "Confirm to install? [Y/N]"
+#echo "This program will deactivate bluetooth on this Raspberry Pi device."
+#echo -n "Confirm to install? [Y/N]"
 
-read input
+#read input
 
-if ! [ $input == "y" ] || [ $input == "Y" ]; then
-	{ echo "Exiting..."; exit 1; }
-fi
+#if ! [ $input == "y" ] || [ $input == "Y" ]; then
+#	{ echo "Exiting..."; exit 1; }
+#fi
 
-echo "Deactivating..."
+echo "Deactivating bluetooth..."
 
 # Bluetooth disable and remove
 echo "dtoverlay=pi3-disable-bt" | tee -a /boot/config.txt # Disable Bluetooth boot
