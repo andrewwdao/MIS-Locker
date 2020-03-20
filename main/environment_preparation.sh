@@ -116,7 +116,7 @@ if [ -f "./environment_preparation.sh" ] ; then
 fi
 
 # disable bluetooth
-./bluetooth_deactivate.sh
+./home/$(who am i | awk '{print $1}')/system/main/bluetooth_deactivate.sh
 
 # make system read-only
 
