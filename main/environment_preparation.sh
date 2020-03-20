@@ -113,4 +113,13 @@ if [ $input == "y" ] || [ $input == "Y" ]; then
 	echo Done. Please restart to the changes take effect!
 fi
 
+# Bluetooth disable and remove
+echo "dtoverlay=pi3-disable-bt" | tee -a /boot/config.txt # Disable Bluetooth boot
+systemctl disable hciuart.service # Disable systemd service that initializes Bluetooth Modems connected by UART
+systemctl disable bluealsa.service
+systemctl disable bluetooth.service
+systemctl disable bluetooth cron 
+apt-get remove -y bluez
+apt-get autoremove -y
+
 # (c) 2020 Minh-An Dao, Can Tho University
