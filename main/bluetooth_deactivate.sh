@@ -22,7 +22,7 @@ echo "Deactivating bluetooth..."
 # Bluetooth disable and remove
 echo "dtoverlay=pi3-disable-bt" | tee -a /boot/config.txt # Disable Bluetooth boot
 systemctl disable hciuart.service # Disable systemd service that initializes Bluetooth Modems connected by UART
-systemctl disable bluealsa.service
+#systemctl disable bluealsa.service
 systemctl disable bluetooth.service
 systemctl disable bluetooth cron 
 apt-get remove -y bluez
