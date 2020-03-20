@@ -123,7 +123,7 @@ User=root
 WantedBy=sysinit.target
 
 # reference: https://www.raspberrypi.org/forums/viewtopic.php?t=221507
-" >> /etc/systemd/system/MISinit.service
+" > /etc/systemd/system/MISinit.service
 
 # MIStime.service
 echo "[Unit]
@@ -134,15 +134,14 @@ DefaultDependencies=true
 
 [Service]
 Type=oneshot
-ExecStart=./update_time_proxy_readonly.sh
-WorkingDirectory=/home/$(who am i | awk '{print $1}')/system/main
+ExecStart=/home/$(who am i | awk '{print $1}')/system/main/update_time_proxy_readonly.sh
 Restart=no
 # must set user to root to execute all functions and peripherals
 User=root
 
 [Install]
 WantedBy=sysinit.target multi-user.target
-" >> /etc/systemd/system/MIStime.service
+" > /etc/systemd/system/MIStime.service
 
 # MISlocker.service
 echo "[Unit]
@@ -170,7 +169,7 @@ ExecStopPost=sudo python3 -u syshalt.py
  
 [Install]
 WantedBy=sysinit.target multi-user.target
-" >> /etc/systemd/system/MISlocker.service
+" > /etc/systemd/system/MISlocker.service
 
 # old method, wont work for any user
 # cp MISinit.service /etc/systemd/system
