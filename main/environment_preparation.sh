@@ -103,6 +103,7 @@ chmod +x bluetooth_deactivate.sh
 chmod +x ./readonly/setup.sh
 
 # --- activate system on start-up
+
 # MISinit.service
 echo "[Unit]
 Description=MISlocker peripheral initialization service
@@ -124,7 +125,7 @@ User=root
 WantedBy=sysinit.target
 
 # reference: https://www.raspberrypi.org/forums/viewtopic.php?t=221507
-" > /etc/systemd/system/MISinit.service
+" > /etc/systemd/system/MISinit.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
 
 # MIStime.service
 echo "[Unit]
@@ -142,7 +143,7 @@ User=root
 
 [Install]
 WantedBy=sysinit.target multi-user.target
-" > /etc/systemd/system/MIStime.service
+" > /etc/systemd/system/MIStime.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
 
 # MISlocker.service
 echo "[Unit]
@@ -168,7 +169,7 @@ ExecStopPost=sudo python3 -u syshalt.py
 
 [Install]
 WantedBy=sysinit.target multi-user.target
-" > /etc/systemd/system/MISlocker.service
+" > /etc/systemd/system/MISlocker.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
 
 # old method, wont work for any user
 # cp MISinit.service /etc/systemd/system

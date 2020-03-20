@@ -123,4 +123,11 @@ echo "* Done! Reboot and hope it will come back up..."
 # ref: https://hallard.me/raspberry-pi-read-only/
 # ref: https://mad-tinkerer.me/raspberry-pi/read-only-root-filesystem-debian-buster/
 
+# append ref
+# ref: https://unix.stackexchange.com/questions/121161/how-to-insert-text-after-a-certain-string-in-a-file
+# ref: https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
+# ref: https://www.golinuxhub.com/2017/06/sed-insert-word-after-match-in-middle.html
+# ref: https://stackoverflow.com/questions/35252285/insert-text-with-sed-on-the-same-line-that-pattern-search
+
+
 # (c) 2020 Minh-An Dao, Can Tho University

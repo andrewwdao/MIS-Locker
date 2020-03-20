@@ -28,4 +28,6 @@ systemctl disable bluetooth cron
 apt-get remove -y bluez
 apt-get autoremove -y
 
+# ref: https://scribles.net/disabling-bluetooth-on-raspberry-pi/
+
 # (c) 2020 Minh-An Dao, Can Tho University
