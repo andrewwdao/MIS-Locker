@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Simple cron script - save the current clock periodically in case of
+# a power failure or other crash
+ 
+if (command -v fake-hwclock >/dev/null 2>&1) ; then
+  ro=$(mount | sed -n -e "s/^\/dev\/.* on \/ .*(\(r[w|o]\).*/\1/p")
+  if [ "$ro" = "ro" ]; then
+    mount -o remount,rw /
+  fi
+  fake-hwclock save
+  if [ "$ro" = "ro" ]; then
+    mount -o remount,ro /
+  fi
+fi

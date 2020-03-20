@@ -100,6 +100,7 @@ make rfid_main peripheral_init peripheral_main buzzer_main
 chmod +x environment_preparation.sh
 chmod +x update_time_proxy_readonly.sh
 chmod +x bluetooth_deactivate.sh
+chmod +x ./readonly/setup.sh
 
 # --- activate system on start-up
 # MISinit.service
@@ -149,7 +150,6 @@ Description=MISlocker main service
 After=multi-user.target
 DefaultDependencies=true
 
-
 [Service]
 Type=simple
 # This will release the same result: ExecStart = /usr/bin/sudo python3 -u main.py
@@ -166,7 +166,6 @@ User=root
 # Additional commands that are executed after the service is stopped. ref: https://www.freedesktop.org/software/systemd/man/systemd.service.html
 ExecStopPost=sudo python3 -u syshalt.py
 
- 
 [Install]
 WantedBy=sysinit.target multi-user.target
 " > /etc/systemd/system/MISlocker.service
