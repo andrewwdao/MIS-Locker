@@ -59,14 +59,16 @@ class Database:
         if user is None:  # if user doesn't exist
             return False
         else:  # if user existed
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             user.name = name
             user.mssv = mssv
-            user.commit()
+            db.session.commit()
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
             return True
 
     def addDumbUser(self): # create a dumb user with the latest timestamp for server to catch
-        newUser = User()
         subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+        newUser = User()
         db.session.add(newUser)
         db.session.commit()
         subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
@@ -74,8 +76,8 @@ class Database:
     def addRFID(self, rfid):
         user = User.query.filter_by(rfid=rfid).first()
         if user is None:  # if user doesn't exist yet
-            newUser = User(rfid=rfid)
             subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+            newUser = User(rfid=rfid)
             db.session.add(newUser)
             db.session.commit()
             subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
@@ -96,8 +98,10 @@ class Database:
         if user is None:  # if user doesn't exist
             return False
         else:  # if user existed
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             user.rfid = rfid
-            user.commit()
+            db.session.commit()
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
             return True
 
     def addFinger(self, member_id, fingerNum):
@@ -115,8 +119,10 @@ class Database:
         if user is None:  # if user doesn't exist
             return False
         else:  # if user existed
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             user.fing = fingerNum
-            user.commit()
+            db.session.commit()
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
             return True
 
     def delMember(self, member_id):

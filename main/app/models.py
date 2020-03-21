@@ -21,10 +21,5 @@ class User(db.Model):
   fing = db.Column(db.Integer, index=True, unique=True)
   timestamp = db.Column(db.DateTime, index=True, default=datetime.now(timezone.utc))
 
-  def commit(self):
-    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
-    db.session.commit()
-    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
-
   def __repr__(self):
     return '<User {} - {}>'.format(self.id, self.mssv)

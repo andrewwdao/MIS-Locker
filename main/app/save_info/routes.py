@@ -29,10 +29,12 @@ def index():
     if form.validate_on_submit():
         user = User.query.filter_by(mssv=form.mssv.data).first()
         if user is None:
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
-            newUser.commit()
+            db.session.commit()
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
         return redirect(url_for('gotInfo'))
     templateData = {
         'server_title': 'MIS Locker',
