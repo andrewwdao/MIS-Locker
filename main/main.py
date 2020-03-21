@@ -1045,11 +1045,11 @@ def main():  # Main program block
 if __name__ == '__main__':
     try:
         main()
-    except (KeyboardInterrupt, SystemExit):
-        subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
-        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    # except (KeyboardInterrupt, SystemExit):
+    #     subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
+    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
         
-    except (OSError, Exception): # I/O error or exception
-        lcd.systemErrorPage()
-        pr.init()    # clear all locks and LEDs before shutdown
-        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    # except (OSError, Exception): # I/O error or exception
+    #     lcd.systemErrorPage()
+    #     pr.init()    # clear all locks and LEDs before shutdown
+    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
