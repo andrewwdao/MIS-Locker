@@ -32,11 +32,11 @@ saveInfo_app.register_blueprint(errors_bp)
 from app.save_info import bp as save_info_bp
 saveInfo_app.register_blueprint(save_info_bp)
 
-if not saveInfo_app.debug:
-    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
-    if not os.path.exists('logs'):
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/error.log', maxBytes=10240,
+if not saveInfo_app.debug: 
+    # subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
+    if not os.path.exists('/tmp/MIS_logs'):
+        os.mkdir('/tmp/MIS_logs')
+    file_handler = RotatingFileHandler('/tmp/MIS_logs/error.log', maxBytes=10240,
                                        backupCount=10)
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
@@ -47,5 +47,5 @@ if not saveInfo_app.debug:
     saveInfo_app.logger.info('System startup')
 
     time.sleep(0.3) # wait for stable down
-    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+    # subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
 from app import models
