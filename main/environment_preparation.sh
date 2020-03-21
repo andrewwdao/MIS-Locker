@@ -128,22 +128,22 @@ WantedBy=sysinit.target
 " > /etc/systemd/system/MISinit.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
 
 # MIStime.service
-echo "[Unit]
-Description=Time set up workaround service for MISlocker
-Requires=network-online.target
-After=multi-user.target
-DefaultDependencies=true
-
-[Service]
-Type=oneshot
-ExecStart=/home/$(who am i | awk '{print $1}')/system/main/update_time_proxy_readonly.sh
-Restart=no
-# must set user to root to execute all functions and peripherals
-User=root
-
-[Install]
-WantedBy=sysinit.target multi-user.target
-" > /etc/systemd/system/MIStime.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
+#echo "[Unit]
+#Description=Time set up workaround service for MISlocker
+#Requires=network-online.target
+#After=multi-user.target
+#DefaultDependencies=true
+#
+#[Service]
+#Type=oneshot
+#ExecStart=/home/$(who am i | awk '{print $1}')/system/main/update_time_proxy_readonly.sh
+#Restart=no
+## must set user to root to execute all functions and peripherals
+#User=root
+#
+#[Install]
+#WantedBy=sysinit.target multi-user.target
+#" > /etc/systemd/system/MIStime.service # append multiple lines to a file : https://unix.stackexchange.com/questions/77277/how-to-append-multiple-lines-to-a-file
 
 # MISlocker.service
 echo "[Unit]
@@ -176,8 +176,8 @@ WantedBy=sysinit.target multi-user.target
 # cp MIStime.service /etc/systemd/system
 # cp MISlocker.service /etc/systemd/system
 
-systemctl enable MIStime.service
 systemctl enable MISinit.service
+# systemctl enable MIStime.service
 systemctl enable MISlocker.service
 
 # check if the file exist outside or not, if yes --> cleanup
