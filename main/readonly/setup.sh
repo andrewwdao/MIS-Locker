@@ -14,11 +14,17 @@ echo "Designed specifically for MISlocker."
 echo "Ported from Ways project at: https://gitlab.com/larsfp/rpi-readonly"
 echo -n "Confirm to install? [Y/N]"
 
-read input
+# workaround for automatically calling from main shell script
+if ! [ "$1" == "yes" ] ; then
 
-if ! [ $input == "y" ] || [ $input == "Y" ] || [ "$1" == "yes" ] ; then
-	{ echo "Exiting..."; exit 1; }
+	read input
+
+	if ! [ $input == "y" ] || [ $input == "Y" ] || [ "$1" == "yes" ] ; then
+		{ echo "Exiting..."; exit 1; }
+	fi
+
 fi
+
 
 echo "Installing..."
 
