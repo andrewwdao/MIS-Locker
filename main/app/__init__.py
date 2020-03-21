@@ -33,7 +33,6 @@ from app.save_info import bp as save_info_bp
 saveInfo_app.register_blueprint(save_info_bp)
 
 if not saveInfo_app.debug:  # move it to tmp folder for read-only system
-    # subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
     if not os.path.exists('/tmp/MIS_logs'): 
         os.mkdir('/tmp/MIS_logs') # move it to tmp folder for read-only system
     file_handler = RotatingFileHandler('/tmp/MIS_logs/error.log', maxBytes=10240,
@@ -46,6 +45,5 @@ if not saveInfo_app.debug:  # move it to tmp folder for read-only system
     saveInfo_app.logger.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
     saveInfo_app.logger.info('System startup')
 
-    time.sleep(0.3) # wait for stable down
-    # subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+
 from app import models
