@@ -34,7 +34,7 @@ saveInfo_app.register_blueprint(save_info_bp)
 if not saveInfo_app.debug:
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
     # subpro.Popen(['sudo','mount','-o','remount,rw','/boot'], shell=False)
-    
+    print("Hello")
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/error.log', maxBytes=10240,
@@ -48,4 +48,5 @@ if not saveInfo_app.debug:
     saveInfo_app.logger.info('System startup')
 
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+    print("Hello 2")
 from app import models
