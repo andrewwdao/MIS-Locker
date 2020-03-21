@@ -32,7 +32,7 @@ from app.save_info import bp as save_info_bp
 saveInfo_app.register_blueprint(save_info_bp)
 
 if not saveInfo_app.debug:
-    subpro.Popen(['sudo','mount','-o','remount,rw','/'], shell=False)
+    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
     # subpro.Popen(['sudo','mount','-o','remount,rw','/boot'], shell=False)
     
     if not os.path.exists('logs'):
@@ -47,5 +47,5 @@ if not saveInfo_app.debug:
     saveInfo_app.logger.setLevel(logging.ERROR) # DEBUG, INFO, WARNING, ERROR and CRITICAL
     saveInfo_app.logger.info('System startup')
 
-    subpro.Popen(['sudo','mount','-o','remount,ro','/'], shell=False)
+    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
 from app import models
