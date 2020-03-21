@@ -7,7 +7,7 @@ if [ 'root' != $( whoami ) ] ; then
   exit 1;
 fi
 
-echo ""
+echo
 echo "This script will turn this operating system into a read-only one."
 echo "Back up should be made where needed before proceed."
 echo "Designed specifically for MISlocker."
@@ -25,7 +25,7 @@ if ! [ "$1" == "yes" ] ; then
 
 fi
 
-
+echo
 echo "Installing..."
 
 # automatically get and set time from the internet (workaround for proxy setting at MIS-CTU)
@@ -121,7 +121,7 @@ systemctl disable systemd-tmpfiles-clean.timer systemd-tmpfiles-clean apt-daily.
 # dphys-swapfile is already removed. systemctl disable dphys-swapfile && rm /var/swap
 systemctl mask systemd-update-utmp systemd-update-utmp-runlevel systemd-rfkill systemd-rfkill.socket
 
-echo ""
+echo
 echo "* Done! Reboot and hope it will come back up..."
 
 # ref: https://gitlab.com/larsfp/rpi-readonly
