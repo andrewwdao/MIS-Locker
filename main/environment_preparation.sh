@@ -190,7 +190,8 @@ fi
 /home/$(who am i | awk '{print $1}')/system/main/bluetooth_deactivate.sh
 
 # make system read-only
-/home/$(who am i | awk '{print $1}')/system/main/readonly/setup.sh yes
+cd /home/$(who am i | awk '{print $1}')/system/main/readonly
+./setup.sh yes
 
 echo 
 echo 
