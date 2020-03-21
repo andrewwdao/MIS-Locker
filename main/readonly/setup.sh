@@ -16,7 +16,7 @@ echo -n "Confirm to install? [Y/N]"
 
 read input
 
-if ! [ $input == "y" ] || [ $input == "Y" ]; then
+if ! [ $input == "y" ] || [ $input == "Y" ] || [$1 == "yes"]; then
 	{ echo "Exiting..."; exit 1; }
 fi
 
