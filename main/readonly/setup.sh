@@ -19,7 +19,7 @@ if ! [ "$1" == "yes" ] ; then
 
 	read input
 
-	if ! [ $input == "y" ] || [ $input == "Y" ] || [ "$1" == "yes" ] ; then
+	if ! [ $input == "y" ] || [ $input == "Y" ] ; then
 		{ echo "Exiting..."; exit 1; }
 	fi
 
