@@ -1,9 +1,9 @@
 """------------------------------------------------------------*-
   Database for Raspberry Pi
   Tested on: Raspberry Pi 3 B+
-  (c) Minh-An Dao 2019
+  (c) Minh-An Dao 2019-2020
   (c) Nhat-Khoa Phan 2019
-  version 1.00 - 10/10/2019
+  version 2.00 - 21/03/2020
  --------------------------------------------------------------
  *
  *
@@ -11,7 +11,7 @@
  --------------------------------------------------------------"""
 from app import db
 from app.models import User
-
+import subprocess as subpro
 
 # ---------------------------- Private Parameters:
 # -----Private variable:
@@ -61,21 +61,24 @@ class Database:
         else:  # if user existed
             user.name = name
             user.mssv = mssv
-            db.session.commit()
+            user.commit()
             return True
 
     def addDumbUser(self): # create a dumb user with the latest timestamp for server to catch
         newUser = User()
+        subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
         db.session.add(newUser)
         db.session.commit()
+        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 
     def addRFID(self, rfid):
         user = User.query.filter_by(rfid=rfid).first()
         if user is None:  # if user doesn't exist yet
             newUser = User(rfid=rfid)
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             db.session.add(newUser)
             db.session.commit()
-            # newUser = User.query.order_by(User.id.desc()).first()  # get the last user out (user we just added)
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
             newUser = User.query.filter_by(rfid=rfid).first() # get id from the database
             return [True, newUser.id]
         else:  # if user already existed
@@ -94,7 +97,7 @@ class Database:
             return False
         else:  # if user existed
             user.rfid = rfid
-            db.session.commit()
+            user.commit()
             return True
 
     def addFinger(self, member_id, fingerNum):
@@ -113,7 +116,7 @@ class Database:
             return False
         else:  # if user existed
             user.fing = fingerNum
-            db.session.commit()
+            user.commit()
             return True
 
     def delMember(self, member_id):
@@ -121,13 +124,17 @@ class Database:
         if user is None:  # if user doesn't exist
             return False
         else:  # if user existed
+            subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
             db.session.delete(user)
             db.session.commit()
+            subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
             return True
 
     def delAllMember(self):
         users = User.query.all()
+        subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
         for u in users:
             db.session.delete(u)
         db.session.commit()
+        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 

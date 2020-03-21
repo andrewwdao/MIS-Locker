@@ -32,7 +32,7 @@ def index():
             newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
-            db.session.commit()
+            newUser.commit()
         return redirect(url_for('gotInfo'))
     templateData = {
         'server_title': 'MIS Locker',

@@ -32,10 +32,10 @@ saveInfo_app.register_blueprint(errors_bp)
 from app.save_info import bp as save_info_bp
 saveInfo_app.register_blueprint(save_info_bp)
 
-if not saveInfo_app.debug: 
+if not saveInfo_app.debug:  # move it to tmp folder for read-only system
     # subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False)
-    if not os.path.exists('/tmp/MIS_logs'):
-        os.mkdir('/tmp/MIS_logs')
+    if not os.path.exists('/tmp/MIS_logs'): 
+        os.mkdir('/tmp/MIS_logs') # move it to tmp folder for read-only system
     file_handler = RotatingFileHandler('/tmp/MIS_logs/error.log', maxBytes=10240,
                                        backupCount=10)
     file_handler.setFormatter(logging.Formatter(
