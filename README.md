@@ -12,8 +12,9 @@ Tested on Raspberry Pi 3B+.
 
 
 ## Documentation
-
-* **[Software Installation]**: How to flash Rasbian, prepare working environment and start the system.
+* **[User guide]**: Show user on how to use the locker.
+* **[Admin guide]**: Guidance for admin.
+* **[Software Installation]**: How to flash Rasbian and install the system.
 * **[Software Configuration]**: How to further configurate the software, or further develop it.
 * **[Hardware Documentation]**: Documents about PCB, electronics components,...
 * **[Undergrad Thesis Report]**: A part of this project is also my undergraduate thesis, you can have a look of it here. (in Vietnamese)
@@ -31,6 +32,7 @@ Tested on Raspberry Pi 3B+.
  - [SQLAlchemy], (c) 2005 - 2020 SQLAlchemy authors and contributors. Licensed under the MIT License.
  - [Flask-Migrate], (c) 2013 Miguel Grinberg. Licensed under the MIT License.
  - [Flask-Bootstrap], (c) 2013 - 2019 Marc Brinkmann. Licensed under the BSD 3-Clause Liscense.
+ - [Readonly], (c) 2017-2019 Ways. Licensed under the GNU License.
  
  _And the contribution of the huge open-source community world wide._
 
@@ -50,6 +52,8 @@ _Licensed under the MIT License. All rights reserved._
 
 
 <!-- Links -->
+[User guide]: /docs/User_guide.md
+[Admin guide]: /docs/Admin_guide.md
 [Software Installation]: /docs/Installation.md
 [Software Configuration]: /docs/Configuration.md
 [Hardware Documentation]: /docs/Hardware-Documentation.md
@@ -67,7 +71,7 @@ _Licensed under the MIT License. All rights reserved._
 [SQLAlchemy]: https://github.com/sqlalchemy/sqlalchemy
 [Flask-Migrate]: https://github.com/miguelgrinberg/Flask-Migrate
 [Flask-Bootstrap]: https://github.com/mbr/flask-bootstrap
-
+[Readonly]: https://gitlab.com/larsfp/rpi-readonly
 
 [Minh-An Dao]: https://bit.ly/DMA-HomePage
 
