@@ -21,7 +21,7 @@ import subprocess as subpro
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
-ADMIN_KEY = '0x93B8D6'
+ADMIN_KEY = '0x47106C'
 PROMPT_WAITING_TIME = 7 # time the lock has to wait each time user open a door 
 # INFO:
 # lockerArray stores the rfid ID or fingerprint ID stand with locker that has been rented (maximum 20 locker)
@@ -1049,13 +1049,21 @@ def main():  # Main program block
 
 
 if __name__ == '__main__':
-    # try:
+    try:
         main()
-    # except (KeyboardInterrupt, SystemExit):
-    #     subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
-    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    except (KeyboardInterrupt, SystemExit):
+        # turn on ro
+        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+        subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
         
-    # except (OSError, Exception): # I/O error or exception
-    #     lcd.systemErrorPage()
-    #     pr.init()    # clear all locks and LEDs before shutdown
-    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+        subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
+        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+        
+    except (OSError, Exception): # I/O error or exception
+        # turn on ro
+        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+        subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
+        
+        lcd.systemErrorPage()
+        pr.init()    # clear all locks and LEDs before shutdown
+        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
