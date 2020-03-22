@@ -19,12 +19,15 @@ DEBOUNCE = 0.05  # second
 # -----Address and Screen parameter:
 ADS_ADDRESS = 0x48
 BUTTON = ADS.P3
-SWITCH_M1 = ADS.P1
-SWITCH_M2 = ADS.P2
+SWITCH_M1 = ADS.P2
+SWITCH_M2 = ADS.P1
 
 # This adc value may have to be changed if changing power supply
-NO_PRESS_MIN = ALL_CLOSED_MIN = 17000
-NO_PRESS_MAX = ALL_CLOSED_MAX = 23000
+NO_PRESS_MIN = 17000
+NO_PRESS_MAX = 23000
+
+ALL_CLOSED_MIN = 17000
+ALL_CLOSED_MAX = 26000
 
 # This adc value may have to be changed if changing power supply
 CANCEL_MIN = 6000
@@ -152,6 +155,12 @@ class adc_switches(adc_read):
         return "ERROR"
 
 
+    def readRawM1(self):
+        return self.switchesM1.value
+
+    def readRawM2(self):
+        return self.switchesM2.value
+
 # class adc_switches(adc_read):
 #     def __init__(self):
 #         super().__init__()
@@ -216,8 +225,3 @@ class adc_switches(adc_read):
 #         # if still nothing return, then must be some error
 #         return "ERROR"
 
-#     def readRawM1(self):
-#         return self.switchesM1.value
-
-#     def readRawM2(self):
-#         return self.switchesM2.value
