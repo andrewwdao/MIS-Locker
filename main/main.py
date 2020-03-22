@@ -48,6 +48,13 @@ pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
 
+import subprocess as subpro
+
+def __wakeup_server():
+    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+    saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+
 
 def __shortenName(name, limit):
     name_length = len(name)
@@ -164,7 +171,7 @@ def __ChangeName(user_id):
 
     lcd.clear()
     lcd.changeNameMSSV()
-    saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+    __wakeup_server()  # run collecting app
 
     # get info from server and then delete the incomplete user
     data = dtb.getLastMemberInfo()
@@ -632,7 +639,7 @@ def __addNewIDCase():
         # Add personal information
         lcd.clear()
         lcd.addNewInfo()
-        saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+        __wakeup_server()  # run collecting app
 
         data = dtb.getLastMemberInfo()
         user_valid = data[0]

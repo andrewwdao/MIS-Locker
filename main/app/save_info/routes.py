@@ -12,14 +12,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import saveInfo_app, db
 from app.save_info.forms import InfoForm
 from app.models import User
-import subprocess as subpro
 
-def __readwrite():
-    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
-    
-def __readonly():
-    db.session.close() # need to this everytime you alter the db
-    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 
 def shutdownServer():
     # Start shutting down server
@@ -34,15 +27,13 @@ def shutdownServer():
 def index():
     form = InfoForm()
     if form.validate_on_submit():
-        __readwrite()
         user = User.query.filter_by(mssv=form.mssv.data).first()
         if user is None:
             newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
-            print('Hello')
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
             db.session.commit()
-        __readonly()
+        db.session.close() # need to this everytime you alter the db
         return redirect(url_for('gotInfo'))
     templateData = {
         'server_title': 'MIS Locker',
@@ -55,9 +46,7 @@ def index():
 
 @saveInfo_app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
-    __readwrite()
     user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
-    __readonly()
     templateData = {
         'server_title': 'MIS Locker',
         'main_title': 'MIS Locker System',
@@ -66,6 +55,7 @@ def gotInfo():
         'user_id': user.mssv
     }
     # Start shutting down server
+    db.session.close() # need to this everytime you alter the db
     shutdownServer()
     return render_template('save_info/gotInfo.html', **templateData)
 
