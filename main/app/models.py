@@ -23,3 +23,7 @@ class User(db.Model):
 
   def __repr__(self):
     return '<User {} - {}>'.format(self.id, self.mssv)
+
+  # db.session.commit()
+
+  # db.session.close()

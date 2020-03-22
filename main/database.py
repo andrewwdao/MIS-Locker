@@ -23,12 +23,12 @@ class Database:
         subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     
     def __readonly(self):
-        time.sleep(3)
         subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
     
     def number_of_member(self):
         self.__readwrite()
         counter = User.query.count()
+        counter.session.close()
         self.__readonly()
         return counter
 
