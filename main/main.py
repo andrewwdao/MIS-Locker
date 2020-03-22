@@ -113,9 +113,9 @@ def __openDoorProcedure(locker):
             time.sleep(0.2)
 
         # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
-        if button.read() is "BUT_OK":
-            pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
-            return
+        # if button.read() is "BUT_OK":
+        #     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
+        #     return
     # --- closed
     # depend on cases the red led will be open again or not
     return
@@ -977,7 +977,6 @@ def main():  # Main program block
     print("System ready!")
     # ---------------------------- Loop -----------------------------------------
     while True:
-        print(switches.read())
         if SYS_MODE:  # system mode for user --> change personal info, rfid, fingerprint
             lcd.waitPage_system()
         else:         # normal mode for user --> use locker 

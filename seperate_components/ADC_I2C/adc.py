@@ -27,7 +27,7 @@ NO_PRESS_MIN = 17000
 NO_PRESS_MAX = 23000
 
 # when open, adc value will remain around 0
-ALL_CLOSED_MIN = 500
+ALL_CLOSED_MIN = 300
 ALL_CLOSED_MAX = 30000
 
 # This adc value may have to be changed if changing power supply
@@ -161,6 +161,9 @@ class adc_switches(adc_read):
 
     def readRawM2(self):
         return self.switchesM2.value
+
+
+# ---------- Deprecated 
 
 # class adc_switches(adc_read):
 #     def __init__(self):
