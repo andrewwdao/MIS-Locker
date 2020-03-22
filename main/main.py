@@ -2,7 +2,7 @@
   Main process for MISlocker
   Tested on: Raspberry Pi 3 B+
   (c) Minh-An Dao 2019 - 2020
-  version 1.70 - 18/03/2020
+  version 1.80 - 22/03/2020
  --------------------------------------------------------------
  *
  *
@@ -48,7 +48,6 @@ pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
 
-import subprocess as subpro
 
 def __wakeup_server():
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
