@@ -11,7 +11,7 @@
 from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
-from datetime import datetime, timezone
+from datetime import datetime
 from adc import adc_button  # for the cancel button
 
 # ---------------------------- Private Parameters:
@@ -34,7 +34,7 @@ def begin():  # Tries to initialize the sensor
         # pulled up to avoid false detection.
         # So we'll be setting up falling edge detection
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(TOUCH_PIN, GPIO.IN) # pull_up_down=GPIO.PUD_UP
+        GPIO.setup(TOUCH_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         Finger = PyFingerprint(FINGER_PORT, FINGER_BAUDRATE, FINGER_ADDRESS, FINGER_PASSWORD)
         if not Finger.verifyPassword():
             raise ValueError('Password for the Fingerprint module is wrong!')
@@ -50,11 +50,11 @@ def begin():  # Tries to initialize the sensor
 def __scan():  # Search for the incoming finger in database, DO NOT do this all the time since it will reduce the lifetime of the sensor --> the reason for the existance of the ISR
     try:
         global positionNumber
-        last_millis = datetime.now(timezone.utc).second
+        last_millis = datetime.now().second
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
             # only wait for WAIT_TIME seconds
-            if (datetime.now(timezone.utc).second - last_millis) > WAIT_TIME:
+            if (datetime.now().second - last_millis) > WAIT_TIME:
                 return "NO DATA"
             # pass
 
@@ -73,7 +73,7 @@ def __scan():  # Search for the incoming finger in database, DO NOT do this all 
         else:
             print('Template found at #' + str(positionNumber))
             print('Accuracy: ' + str(accuracyScore))
-            print("MATCHED. Position Number: "+ positionNumber)
+            print("MATCHED. Position Number: "+ str(positionNumber))
             return "MATCHED"
     except Exception as e:
         print('Operation failed!')
@@ -85,7 +85,6 @@ def __scan():  # Search for the incoming finger in database, DO NOT do this all 
 def __touchISR(channel):
     global START_CHECKING
     START_CHECKING = True
-    print("Hello")
 
 def user_position():
     return positionNumber
@@ -103,7 +102,12 @@ def check():
     if START_CHECKING:
         START_CHECKING = False
         return __scan()
-    return ["NO DATA", 0]
+    return "NO DATA"
+
+
+def flush():
+    global START_CHECKING
+    START_CHECKING = False
 
 
 def first_enroll():
