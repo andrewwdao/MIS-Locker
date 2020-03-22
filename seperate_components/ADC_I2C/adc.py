@@ -19,8 +19,8 @@ DEBOUNCE = 0.05  # second
 # -----Address and Screen parameter:
 ADS_ADDRESS = 0x48
 BUTTON = ADS.P3
-SWITCH_M1 = ADS.P1
-SWITCH_M2 = ADS.P2
+SWITCH_M1 = ADS.P2
+SWITCH_M2 = ADS.P1
 
 # This adc value may have to be changed if changing power supply
 NO_PRESS_MIN = ALL_CLOSED_MIN = 17000
