@@ -143,14 +143,14 @@ class adc_switches(adc_read):
                (ALL_CLOSED_MIN < current_valM2 < ALL_CLOSED_MAX):  # all doors closed
                 return "ALL_CLOSED"
             # first check module02
-            elif (0 < current_valM1 < ALL_CLOSED_MIN) and \
-                 (0 < current_valM2 < ALL_CLOSED_MIN):  # some doors are open
+            elif (current_valM1 < ALL_CLOSED_MIN) and \
+                 (current_valM2 < ALL_CLOSED_MIN):  # some doors are open
                 return "OPEN"
         else:  # if only module 01 is activated
             if ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX:  # all doors closed
                 return "ALL_CLOSED"
             # now check Module01
-            elif 0 < current_valM1 < ALL_CLOSED_MIN: # some doors are open
+            elif current_valM1 < ALL_CLOSED_MIN: # some doors are open
                 return "OPEN"
         # if still nothing return, then must be some error
         return "ERROR"
