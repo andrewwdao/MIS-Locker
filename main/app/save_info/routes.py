@@ -38,6 +38,7 @@ def index():
         user = User.query.filter_by(mssv=form.mssv.data).first()
         if user is None:
             newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+            print('Hello')
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
             db.session.commit()

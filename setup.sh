@@ -13,6 +13,7 @@ echo "This script will turn this operating system into a read-only one and turn 
 echo "Then, it will install the must-have pre-requisites and prepare the environment for MISlocker system."
 echo "Back up should be made where needed before proceed."
 echo "Recommended to install on a fresh Raspbian Buster."
+echo
 echo -n "Confirm to install? [Y/N]"
 
 read input
