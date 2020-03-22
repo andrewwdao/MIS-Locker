@@ -27,8 +27,8 @@ NO_PRESS_MIN = 17000
 NO_PRESS_MAX = 23000
 
 # when open, adc value will remain around 0
-ALL_CLOSED_MIN = 1000
-ALL_CLOSED_MAX = 27000
+ALL_CLOSED_MIN = 500
+ALL_CLOSED_MAX = 30000
 
 # This adc value may have to be changed if changing power supply
 CANCEL_MIN = 6000
