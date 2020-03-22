@@ -12,7 +12,7 @@
 from app import db
 from app.models import User
 import subprocess as subpro
-
+import time
 # ---------------------------- Private Parameters:
 # -----Private variable:
 
@@ -23,6 +23,7 @@ class Database:
         subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     
     def __readonly(self):
+        time.sleep(3)
         subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
     
     def number_of_member(self):
@@ -30,7 +31,7 @@ class Database:
         counter = User.query.count()
         self.__readonly()
         return counter
-        
+
     def getMemberInfoByID(self, member_id):
         self.__readwrite()
         user = User.query.filter_by(id=member_id).first()
