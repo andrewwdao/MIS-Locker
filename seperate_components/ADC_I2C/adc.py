@@ -26,8 +26,9 @@ SWITCH_M2 = ADS.P1
 NO_PRESS_MIN = 17000
 NO_PRESS_MAX = 23000
 
-ALL_CLOSED_MIN = 17000
-ALL_CLOSED_MAX = 26000
+# when open, adc value will remain around 0
+ALL_CLOSED_MIN = 1000
+ALL_CLOSED_MAX = 27000
 
 # This adc value may have to be changed if changing power supply
 CANCEL_MIN = 6000
