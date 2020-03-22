@@ -977,6 +977,7 @@ def main():  # Main program block
     print("System ready!")
     # ---------------------------- Loop -----------------------------------------
     while True:
+        print(switches.readRawM1())
         if SYS_MODE:  # system mode for user --> change personal info, rfid, fingerprint
             lcd.waitPage_system()
         else:         # normal mode for user --> use locker 
