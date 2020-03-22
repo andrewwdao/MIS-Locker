@@ -28,7 +28,7 @@ class Database:
     def number_of_member(self):
         self.__readwrite()
         counter = User.query.count()
-        counter.session.close()
+        User.session.close()
         self.__readonly()
         return counter
 
