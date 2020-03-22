@@ -23,12 +23,12 @@ class Database:
         subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     
     def __readonly(self):
+        db.session.close() # need to this everytime you alter the db
         subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
     
     def number_of_member(self):
         self.__readwrite()
         counter = User.query.count()
-        db.session.close() # need to this everytime you alter the db
         self.__readonly()
         return counter
 
@@ -98,6 +98,7 @@ class Database:
         db.session.add(newUser)
         db.session.commit()
         self.__readonly()
+        return
 
     def addRFID(self, rfid):
         self.__readwrite()

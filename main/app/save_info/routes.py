@@ -14,6 +14,13 @@ from app.save_info.forms import InfoForm
 from app.models import User
 import subprocess as subpro
 
+def __readwrite():
+    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+    
+def __readonly():
+    db.session.close() # need to this everytime you alter the db
+    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+
 def shutdownServer():
     # Start shutting down server
     func = request.environ.get('werkzeug.server.shutdown')
@@ -27,14 +34,14 @@ def shutdownServer():
 def index():
     form = InfoForm()
     if form.validate_on_submit():
-        subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+        __readwrite()
         user = User.query.filter_by(mssv=form.mssv.data).first()
         if user is None:
             newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
             db.session.commit()
-        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+        __readonly()
         return redirect(url_for('gotInfo'))
     templateData = {
         'server_title': 'MIS Locker',
@@ -47,9 +54,9 @@ def index():
 
 @saveInfo_app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
-    subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+    __readwrite()
     user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
-    subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+    __readonly()
     templateData = {
         'server_title': 'MIS Locker',
         'main_title': 'MIS Locker System',
