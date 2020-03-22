@@ -11,7 +11,6 @@
 from hashlib import md5
 from app import db
 from datetime import datetime, timezone
-import subprocess as subpro
 
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
