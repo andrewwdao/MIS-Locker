@@ -96,10 +96,10 @@ rm -rf ./obj
 mkdir ./obj
 make rfid_main peripheral_init peripheral_main buzzer_main
 
-# provide priveledge for environment preparation itself
-chmod +x environment_preparation.sh
-chmod +x update_time_proxy_readonly.sh
-chmod +x bluetooth_deactivate.sh
+# provide priveledge for setup itself
+chmod +x ../setup.sh
+chmod +x time_updater_proxy_readonly.sh
+chmod +x bluetooth_disable.sh
 chmod +x ./readonly/setup.sh
 
 # --- activate system on start-up
@@ -136,7 +136,7 @@ WantedBy=sysinit.target
 #
 #[Service]
 #Type=oneshot
-#ExecStart=/home/$(who am i | awk '{print $1}')/system/main/update_time_proxy_readonly.sh
+#ExecStart=/home/$(who am i | awk '{print $1}')/system/main/time_updater_proxy_readonly.sh
 #Restart=no
 ## must set user to root to execute all functions and peripherals
 #User=root
@@ -182,12 +182,12 @@ systemctl enable MISlocker.service
 
 # check if the file exist outside or not, if yes --> cleanup
 cd /home/$(who am i | awk '{print $1}')/ # return to home folder -- cannot use $USER or $LOGNAME since they may return root. $SUDO_USER can also be used but not all covered. ref: https://stackoverflow.com/questions/4598001/how-do-you-find-the-original-user-through-multiple-sudo-and-su-commands
-if [ -f "./environment_preparation.sh" ] ; then
-	rm -rf environment_preparation.sh
+if [ -f "./setup.sh" ] ; then
+	rm -rf setup.sh
 fi
 
 # disable bluetooth
-/home/$(who am i | awk '{print $1}')/system/main/bluetooth_deactivate.sh
+/home/$(who am i | awk '{print $1}')/system/main/bluetooth_disable.sh
 
 # make system read-only
 cd /home/$(who am i | awk '{print $1}')/system/main/readonly

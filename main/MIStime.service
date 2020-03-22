@@ -6,7 +6,7 @@ DefaultDependencies=true
 
 [Service]
 Type=oneshot
-ExecStart=/home/MISlocker/system/main/update_time_proxy_readonly.sh
+ExecStart=/home/MISlocker/system/main/time_updater_proxy_readonly.sh
 Restart=no
 # must set user to root to execute all functions and peripherals
 User=root
