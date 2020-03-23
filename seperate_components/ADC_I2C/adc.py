@@ -27,8 +27,8 @@ NO_PRESS_MIN = 17000
 NO_PRESS_MAX = 23000
 
 # when open, adc value will remain around 0
-DOOR_OPEN_MIN = -100
-DOOR_OPEN_MAX = 100
+ALL_CLOSED_MIN = 300
+ALL_CLOSED_MAX = 30000
 
 # This adc value may have to be changed if changing power supply
 CANCEL_MIN = 6000
@@ -126,41 +126,41 @@ class adc_button(adc_read):
         return self.button.value
 
 
-# class adc_switches(adc_read):
-#     def __init__(self):
-#         super().__init__()
-#         if ACTIVATE_MODULE02:  # Module02 also activated
-#             self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
-#             self.switchesM2 = AnalogIn(self.ads, SWITCH_M2)
-#         else:  # only Module01 is activated
-#             self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
+class adc_switches(adc_read):
+    def __init__(self):
+        super().__init__()
+        if ACTIVATE_MODULE02:  # Module02 also activated
+            self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
+            self.switchesM2 = AnalogIn(self.ads, SWITCH_M2)
+        else:  # only Module01 is activated
+            self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
 
-#     def read(self):
-#         current_valM1 = self.switchesM1.value
-#         if ACTIVATE_MODULE02:
-#             current_valM2 = self.switchesM2.value
-#             if (ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX) and \
-#                (ALL_CLOSED_MIN < current_valM2 < ALL_CLOSED_MAX):  # all doors closed
-#                 return "ALL_CLOSED"
-#             # first check module02
-#             elif (current_valM1 < ALL_CLOSED_MIN) and \
-#                  (current_valM2 < ALL_CLOSED_MIN):  # some doors are open
-#                 return "OPEN"
-#         else:  # if only module 01 is activated
-#             if ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX:  # all doors closed
-#                 return "ALL_CLOSED"
-#             # now check Module01
-#             elif current_valM1 < ALL_CLOSED_MIN: # some doors are open
-#                 return "OPEN"
-#         # if still nothing return, then must be some error
-#         return "ERROR"
+    def read(self):
+        current_valM1 = self.switchesM1.value
+        if ACTIVATE_MODULE02:
+            current_valM2 = self.switchesM2.value
+            if (ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX) and \
+               (ALL_CLOSED_MIN < current_valM2 < ALL_CLOSED_MAX):  # all doors closed
+                return "ALL_CLOSED"
+            # first check module02
+            elif (current_valM1 < ALL_CLOSED_MIN) and \
+                 (current_valM2 < ALL_CLOSED_MIN):  # some doors are open
+                return "OPEN"
+        else:  # if only module 01 is activated
+            if ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX:  # all doors closed
+                return "ALL_CLOSED"
+            # now check Module01
+            elif current_valM1 < ALL_CLOSED_MIN: # some doors are open
+                return "OPEN"
+        # if still nothing return, then must be some error
+        return "ERROR"
 
 
-#     def readRawM1(self):
-#         return self.switchesM1.value
+    def readRawM1(self):
+        return self.switchesM1.value
 
-#     def readRawM2(self):
-#         return self.switchesM2.value
+    def readRawM2(self):
+        return self.switchesM2.value
 
 
 # ---------- Deprecated 
