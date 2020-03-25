@@ -30,6 +30,20 @@ def begin():
     LCD.write("....")
 
 
+def waitPage_normal():  # user can use RFID or their fingerprint to access
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("   LOCKER READY  ")
+    LCD.setCursor(5, 2)  # row, column
+    LCD.write("waiting...")
+
+
+def waitPage_system():  # user can use RFID or their fingerprint to access
+    LCD.setCursor(1, 0)  # row, column
+    LCD.write("SYSTEM INFO READY")
+    LCD.setCursor(5, 2)  # row, column
+    LCD.write("waiting...")
+
+
 def pointerPos(options, pointer):
     if options == 3:
         for pos in range(1, options+1):  # go from 1 to (options+1)
@@ -53,7 +67,7 @@ def clear():
     LCD.clear()
 
 
-# ------------------------------ User level interfaces ------------------------------
+# ------------------------------ System close - error ------------------------------
 def systemClosedPage():  # system closed page
     LCD = LCD_I2C(LCD_ADDRESS, LCD_WIDTH, LCD_HEIGHT)
     LCD.backlight()
@@ -78,20 +92,7 @@ def systemErrorPage():  # system error page
     LCD.write("...")
 
 
-def waitPage_normal():  # user can use RFID or their fingerprint to access
-    LCD.setCursor(1, 0)  # row, column
-    LCD.write("   LOCKER READY  ")
-    LCD.setCursor(5, 2)  # row, column
-    LCD.write("waiting...")
-
-
-def waitPage_system():  # user can use RFID or their fingerprint to access
-    LCD.setCursor(1, 0)  # row, column
-    LCD.write("SYSTEM INFO READY")
-    LCD.setCursor(5, 2)  # row, column
-    LCD.write("waiting...")
-
-
+# ------------------------------ User level interfaces ------------------------------
 def welcomePage(name, mssv, locker_num):
     LCD.setCursor(3, 0)  # row, column
     LCD.write("WELCOME TO MIS!")
@@ -175,9 +176,7 @@ def unknownIDPage():
     LCD.write("Add New ID")
     LCD.setCursor(2, 2)  # row, column
     LCD.write("One-time User")
-    # LCD.setCursor(2, 3)  # row, column
-    # LCD.write("Add Existed ID")
-
+    
 
 def cancelNewUserPage():
     LCD.setCursor(4, 0)  # row, column
