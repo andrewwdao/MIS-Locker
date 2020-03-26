@@ -10,8 +10,8 @@ fi
 echo
 echo "CAUTION: must be placed with the C files and Makefile"
 echo
-echo
 echo "Renewing binary files ... "
+echo
 
 # go to main code section, clean the c binary files and re-create them
 make clean   # cd /home/$(who am i | awk '{print $1}')/system/main
@@ -26,7 +26,6 @@ chmod +x bluetooth_disable.sh
 chmod +x ./readonly/setup.sh
 
 echo 
-echo 
-echo "Done. Exiting..."
+echo "Done."
 
 # (c) 2020 Minh-An Dao, Can Tho University
