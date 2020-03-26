@@ -95,6 +95,7 @@ git pull origin master
 # go to main code section, clean the c binary files and re-create them
 # and provide priveledge for setup itself
 cd ./main #./system/main
+chmod +x binary_renewer.sh
 ./binary_renewer.sh
 
 # --- activate system on start-up
