@@ -13,9 +13,8 @@ Tested on Raspberry Pi 3B+.
 
 ## Documentation
 * **[User guide]**: Show user on how to use the locker.
-* **[Admin guide]**: Guidance for admin.
+* **[Admin guide]**: Guidance for admin, how to further configurate the software, or further develop it.
 * **[Software Installation]**: How to flash Rasbian and install the system.
-* **[Software Configuration]**: How to further configurate the software, or further develop it.
 * **[Hardware Documentation]**: Documents about PCB, electronics components,...
 * **[Undergrad Thesis Report]**: A part of this project is also my undergraduate thesis, you can have a look of it here. (in Vietnamese)
 
