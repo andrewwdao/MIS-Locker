@@ -54,3 +54,18 @@ If you see the new database frame is not good and want to return to the previous
 flask db downgrade
 ```
 
+## Testing peripheral
+In order to test the LEDs and/or the electric locks, go in:
+```bash
+./system/se seperate_components/595_in_C
+```
+If you haven’t renewed the binaries, do it by typing:
+```bash
+sudo make clean
+sudo make peripheral_init peripheral_main
+```
+Then execute the main file:
+```bash
+sudo python3 main.py
+```
+By indicating which locker you want to test, you can test the LED and the lock corresponding to that locker. Remember that Green LED is on the same line with the electronics lock.
