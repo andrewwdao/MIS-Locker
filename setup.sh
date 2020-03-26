@@ -93,17 +93,9 @@ git remote add origin https://github.com/minhan74/MIS-Locker.git
 git pull origin master
 
 # go to main code section, clean the c binary files and re-create them
+# and provide priveledge for setup itself
 cd ./main #./system/main
-make clean
-rm -rf ./obj
-mkdir ./obj
-make rfid_main peripheral_init peripheral_main buzzer_main
-
-# provide priveledge for setup itself
-chmod +x ../setup.sh
-chmod +x time_updater_proxy_readonly.sh
-chmod +x bluetooth_disable.sh
-chmod +x ./readonly/setup.sh
+./binary_renewer.sh
 
 # --- activate system on start-up
 
@@ -198,6 +190,6 @@ cd /home/$(who am i | awk '{print $1}')/system/main/readonly
 
 echo 
 echo 
-echo "Done. Please restart to the changes take effect!"
+echo "Done. Please restart for the changes take effect!"
 
 # (c) 2020 Minh-An Dao, Can Tho University
