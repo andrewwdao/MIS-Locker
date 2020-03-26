@@ -1,13 +1,15 @@
+
 # ADMIN GUIDE
 
 ## Admin Menu
--	There are 02 admin key: the RFID card and the RFID tag.
-    Usually, MIS-CTU technician will have access to the RFID tag (blue tag attached to the key of MIS-CTU). Use this tag to enter the Admin menu as followed:
+There are 02 admin key: the RFID card and the RFID tag.
+    
+Usually, MIS-CTU technician will have access to the RFID tag (blue tag attached to the key of MIS-CTU). Use this tag to enter the Admin menu as followed:
     ![Admin menu](pictures/lcd08.jpg)
 
--   **Info Locker:** This allows admin to check locker information, and open any of them.
--	**Modify Database:** This allows admin to see the system current IP and current username. With it, admin can login to the system using SSH. When logged to the system, admin can modify database or update – upgrade the system.
--	**Delete Database:** This allows admin to delete database completely without having to login to the system using SSH. **Caution:** This is irreversible!
+*   **Info Locker:** This allows admin to check locker information, and open any of them.
+*	**Modify Database:** This allows admin to see the system current IP and current username. With it, admin can login to the system using SSH. When logged to the system, admin can modify database or update – upgrade the system.
+*	**Delete Database:** This allows admin to delete database completely without having to login to the system using SSH. **Caution:** This is irreversible!
 
 ## Modify System
 You can try and play with the code of the system, and hopefully upgrade it!
