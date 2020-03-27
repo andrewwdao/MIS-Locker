@@ -1,9 +1,9 @@
 import button
-import switch
+import switches
 import time
 
 button.init()
-switch.init()
+switches.init()
 
 
 while True:
@@ -23,8 +23,5 @@ while True:
     if(button_state=="BUT_DOWN"):
         print("Hello world DOWN")
     
-    if(switch_state=="M1_OPEN"):
+    if(switch_state=="OPEN"):
         print("Hello world M1 OPEN")
-    
-    if(button_state=="M2_OPEN"):
-        print("Hello world M2 OPEN")
