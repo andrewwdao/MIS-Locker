@@ -12,7 +12,7 @@ import time
 
 # ---------------------------- Private Parameters:
 # ACTIVATE_MODULE02 = False
-DEBOUNCE = 0.05  # second
+DEBOUNCE = 10  # xxx second
 # -----Address and Screen parameter:
 UP_BUTTON = 5
 DOWN_BUTTON = 13 
@@ -46,7 +46,7 @@ def init():
     GPIO.setmode(GPIO.BCM)
 
     GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=1)
+    GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
 
     GPIO.setup(DOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(DOWN_BUTTON, GPIO.FALLING, callback=__downISR, bouncetime=DEBOUNCE)
