@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
-DEBOUNCE = 100  # xxx second
+DEBOUNCE = 300  # xxx second
 # -----Pinout
 UP_BUTTON = 5
 DOWN_BUTTON = 13 
