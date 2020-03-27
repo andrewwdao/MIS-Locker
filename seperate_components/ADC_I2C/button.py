@@ -42,10 +42,6 @@ def __cancelISR(channel):
 
 
 def init():
-    # prevent double init
-    GPIO.setwarnings(False)
-    GPIO.cleanup()
-    GPIO.setwarnings(True)
 
     GPIO.setmode(GPIO.BCM)
     

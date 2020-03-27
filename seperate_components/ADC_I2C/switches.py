@@ -45,13 +45,8 @@ def __m2closeISR(channel):
     GPIO.add_event_detect(M2_SWITCH, GPIO.FALLING, callback=__m2openISR, bouncetime=DEBOUNCE)
     
 def init():
-    # prevent double init
-    GPIO.setwarnings(False)
-    GPIO.cleanup()
-    GPIO.setwarnings(True)
-
+    
     GPIO.setmode(GPIO.BCM)
-
 
     GPIO.setup(M1_SWITCH, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(M1_SWITCH, GPIO.FALLING, callback=__m1openISR, bouncetime=DEBOUNCE)
