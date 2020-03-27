@@ -1050,20 +1050,20 @@ def main():  # Main program block
 if __name__ == '__main__':
     try:
         main()
-    except (KeyboardInterrupt, SystemExit):
-        # turn on ro
-        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
-        subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
+    # except (KeyboardInterrupt, SystemExit):
+    #     # turn on ro
+    #     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+    #     subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
         
-        subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
-        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+    #     subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
+    #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
 
-    except (OSError, Exception): # I/O error or exception
-        # turn on ro
-        subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
-        subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
+    # except (OSError, Exception): # I/O error or exception
+    #     # turn on ro
+    #     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
+        # subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
         
-        lcd.systemErrorPage()
-        pr.init()    # clear all locks and LEDs before shutdown
-        rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
+        # lcd.systemErrorPage()
+        # pr.init()    # clear all locks and LEDs before shutdown
+        # rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
     
