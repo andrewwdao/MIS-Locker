@@ -38,7 +38,7 @@ NO_ID = 999999
 
 SYS_MODE = False  # default mode is normal (use locker), turn true to turn to system mode (user can change their credentials)
 last_second = 0   # for automatically return to locker mode
-
+last_millis = 0   # for warning for unclosed door
 # --------------------------- Set Up ----------------------------------------
 lcd.begin()
 button.init()
@@ -84,6 +84,7 @@ def __dumpDebug(iid, name, mssv, rrfid, fing):
 
 
 def __openDoorProcedure(locker):
+    global last_millis
     pr.locker_nowBusy(locker, pr.OFF)  # CLOSE RED LED stand with this LOCKER
     pr.locker(locker, pr.OPEN)  # Open locker stand with this user id
 
@@ -91,34 +92,19 @@ def __openDoorProcedure(locker):
     while switches.read() is "ALL_CLOSED":  # if the door is not open
         # then wait
         # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME:
+        # or if human push ok button
+        if ((datetime.now().second - last_millis) > PROMPT_WAITING_TIME) | (button.read() is "BUT_OK"):
             break
-        # if human push ok button
-        if button.read() is "BUT_OK":
-            pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
-            return
+
     # now the door is open!
     time.sleep(0.5)  # wait for 0.5 second before proceeding for stablization
     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
 
     # --- infinity loop to wait for the locker to be closed before proceeding to other process
     last_millis = datetime.now().second
-    while switches.read() is "OPEN":  # only get out if the door is close
-        
-        # wait and print something to debug!
-        # print(switches.read())
-        
-        # wait for few seconds, if no signal then automatically use 'No' command
-        if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*3:
-            buz.beep(1)
-            time.sleep(0.2)
-
-        # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
-        # if button.read() is "BUT_OK":
-        #     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
-        #     return
     # --- closed
     # depend on cases the red led will be open again or not
+    button.clean()
     return
 
 
@@ -1048,6 +1034,18 @@ def main():  # Main program block
             last_second = datetime.now().second
         if sys_command is "BUT_UP" or (datetime.now().second - last_second) > PROMPT_WAITING_TIME*3:
             SYS_MODE = False
+        
+        # ================== Detect if the door is open for too long ==================
+        if switches.read() is "OPEN":  # only get out if the door is close
+            # wait for few seconds, if no signal then automatically use 'No' command
+            if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*5:
+                buz.beep(1)
+                time.sleep(0.2)
+
+            # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
+            # if button.read() is "BUT_OK":
+            #     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
+            #     return
 
 
 if __name__ == '__main__':

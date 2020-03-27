@@ -42,7 +42,7 @@ def waitPage_system():  # user can use RFID or their fingerprint to access
     LCD.write("SYSTEM INFO READY")
     LCD.setCursor(5, 2)  # row, column
     LCD.write("waiting...")
-
+    
 
 def pointerPos(options, pointer):
     if options == 3:

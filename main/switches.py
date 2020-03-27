@@ -70,4 +70,3 @@ def read():
 #     else:
 #         return "ALL_CLOSED"
 
-

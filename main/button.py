@@ -76,4 +76,13 @@ def read():
         DOWN_STATE = False
         return "BUT_DOWN"
 
-
+def clean():
+    global UP_STATE
+    global DOWN_STATE
+    global OK_STATE
+    global CANCEL_STATE
+    UP_STATE = False
+    DOWN_STATE = False
+    OK_STATE = False
+    CANCEL_STATE = False
+    
