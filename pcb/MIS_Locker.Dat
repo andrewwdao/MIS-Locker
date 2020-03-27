@@ -1,0 +1,109 @@
+﻿Field=#~Integer~#~50|Field=Comment~String~Comment~100|Field=Description~String~Description~100|Field=Designator~String~Designator~100|Field=Footprint~String~Footprint~100|Field=LibRef~String~LibRef~100|Field=Quantity~Integer~Quantity~100|ReportField=Currency~<none>|ReportField=ProductionQuantity~1|ReportField=ProjectFileName~MIS_Locker.PrjPCB|ReportField=ProjectFullPath~E:\Google_Drive\3.Projects\0.LUAN_VAN\PCB\v3.0\MIS_Locker.PrjPCB|ReportField=Title~Bill of Materials For PCB Document [MIS_Locker.PcbDoc]|ReportField=ReportTime~5:34:52 PM|ReportField=ReportDate~10/29/2019|ReportField=ReportDateTime~10/29/2019 5:34:52 PM|ReportField=OutputName~Bill of Materials|ReportField=OutputType~BOM_PartType|ReportField=GeneratorName~BOM|ReportField=GeneratorDescription~Bill of Materials|ReportField=VariantName~None|ReportField=TotalQuantity~356|ReportField=TotalActualPrice~0|ReportField=TotalTargetPrice~0|ReportField=VersionControl_RevNumber~|ReportField=VersionControl_ProjFolderRevNumber~|ReportField=DataSourceFileName~MIS_Locker.PcbDoc|ReportField=DataSourceFullPath~E:\Google_Drive\3.Projects\0.LUAN_VAN\PCB\v3.0\MIS_Locker.PcbDoc|ReportField=PCBConfigurationName~Sources|ReportField=Item~|ReportField=ItemRevision~|ReportField=ItemAndRevision~|ReportField=ItemRevisionBase~|ReportField=ItemRevisionLevel1~|ReportField=ItemRevisionLevel2~|ReportField=ItemRevisionLevel1AndBase~|ReportField=ItemRevisionLevel2AndLevel1~
+1|D01||*1|5#Terminalx1|5#Terminalx1|1
+2|D06||*2|5#Terminalx1|5#Terminalx1|1
+3|GND||*3, *4, *7, *8, *11, *12, *15, *16, *19, *20, *82, *84, *86, *88, *90, *92, *94, *96, *98, *100|5#Terminalx1|5#Terminalx1|20
+4|D02||*5|5#Terminalx1|5#Terminalx1|1
+5|D07||*6|5#Terminalx1|5#Terminalx1|1
+6|D03||*9|5#Terminalx1|5#Terminalx1|1
+7|D08||*10|5#Terminalx1|5#Terminalx1|1
+8|D04||*13|5#Terminalx1|5#Terminalx1|1
+9|D09||*14|5#Terminalx1|5#Terminalx1|1
+10|D05||*17|5#Terminalx1|5#Terminalx1|1
+11|D10||*18|5#Terminalx1|5#Terminalx1|1
+12|12V||*21, *22, *23, *24, *25, *26, *33, *34, *35, *36, *37, *38, *45, *46, *47, *48, *49, *50, *57, *58, *59, *60, *61, *62, *69, *70, *71, *72, *73, *74, *101, *102, *103, *107, *108, *109, *113, *114, *115, *119, *120, *121, *125, *126, *127, *131, *132, *133, *137, *138, *139, *143, *144, *145, *149, *150, *151, *155, *156, *157|5#Terminalx1|5#Terminalx1|60
+13|S01||*27|5#Terminalx1|5#Terminalx1|1
+14|S06||*28|5#Terminalx1|5#Terminalx1|1
+15|G01||*29|5#Terminalx1|5#Terminalx1|1
+16|G06||*30|5#Terminalx1|5#Terminalx1|1
+17|R01||*31|5#Terminalx1|5#Terminalx1|1
+18|R06||*32|5#Terminalx1|5#Terminalx1|1
+19|S02||*39|5#Terminalx1|5#Terminalx1|1
+20|S07||*40|5#Terminalx1|5#Terminalx1|1
+21|G02||*41|5#Terminalx1|5#Terminalx1|1
+22|G07||*42|5#Terminalx1|5#Terminalx1|1
+23|R02||*43|5#Terminalx1|5#Terminalx1|1
+24|R07||*44|5#Terminalx1|5#Terminalx1|1
+25|S03||*51|5#Terminalx1|5#Terminalx1|1
+26|S08||*52|5#Terminalx1|5#Terminalx1|1
+27|G03||*53|5#Terminalx1|5#Terminalx1|1
+28|G08||*54|5#Terminalx1|5#Terminalx1|1
+29|R03||*55|5#Terminalx1|5#Terminalx1|1
+30|R08||*56|5#Terminalx1|5#Terminalx1|1
+31|S04||*63|5#Terminalx1|5#Terminalx1|1
+32|S09||*64|5#Terminalx1|5#Terminalx1|1
+33|G04||*65|5#Terminalx1|5#Terminalx1|1
+34|G09||*66|5#Terminalx1|5#Terminalx1|1
+35|R04||*67|5#Terminalx1|5#Terminalx1|1
+36|R09||*68|5#Terminalx1|5#Terminalx1|1
+37|S05||*75|5#Terminalx1|5#Terminalx1|1
+38|S10||*76|5#Terminalx1|5#Terminalx1|1
+39|G05||*77|5#Terminalx1|5#Terminalx1|1
+40|G10||*78|5#Terminalx1|5#Terminalx1|1
+41|R05||*79|5#Terminalx1|5#Terminalx1|1
+42|R10||*80|5#Terminalx1|5#Terminalx1|1
+43|D11||*81|5#Terminalx1|5#Terminalx1|1
+44|D12||*83|5#Terminalx1|5#Terminalx1|1
+45|D13||*85|5#Terminalx1|5#Terminalx1|1
+46|D14||*87|5#Terminalx1|5#Terminalx1|1
+47|D15||*89|5#Terminalx1|5#Terminalx1|1
+48|D16||*91|5#Terminalx1|5#Terminalx1|1
+49|D17||*93|5#Terminalx1|5#Terminalx1|1
+50|D18||*95|5#Terminalx1|5#Terminalx1|1
+51|D19||*97|5#Terminalx1|5#Terminalx1|1
+52|D20||*99|5#Terminalx1|5#Terminalx1|1
+53|S11||*104|5#Terminalx1|5#Terminalx1|1
+54|G11||*105|5#Terminalx1|5#Terminalx1|1
+55|R11||*106|5#Terminalx1|5#Terminalx1|1
+56|S12||*110|5#Terminalx1|5#Terminalx1|1
+57|G12||*111|5#Terminalx1|5#Terminalx1|1
+58|R12||*112|5#Terminalx1|5#Terminalx1|1
+59|S13||*116|5#Terminalx1|5#Terminalx1|1
+60|G13||*117|5#Terminalx1|5#Terminalx1|1
+61|R13||*118|5#Terminalx1|5#Terminalx1|1
+62|S14||*122|5#Terminalx1|5#Terminalx1|1
+63|G14||*123|5#Terminalx1|5#Terminalx1|1
+64|R14||*124|5#Terminalx1|5#Terminalx1|1
+65|S15||*128|5#Terminalx1|5#Terminalx1|1
+66|G15||*129|5#Terminalx1|5#Terminalx1|1
+67|R15||*130|5#Terminalx1|5#Terminalx1|1
+68|S16||*134|5#Terminalx1|5#Terminalx1|1
+69|G16||*135|5#Terminalx1|5#Terminalx1|1
+70|R16||*136|5#Terminalx1|5#Terminalx1|1
+71|S17||*140|5#Terminalx1|5#Terminalx1|1
+72|G17||*141|5#Terminalx1|5#Terminalx1|1
+73|R17||*142|5#Terminalx1|5#Terminalx1|1
+74|S18||*146|5#Terminalx1|5#Terminalx1|1
+75|G18||*147|5#Terminalx1|5#Terminalx1|1
+76|R18||*148|5#Terminalx1|5#Terminalx1|1
+77|S19||*152|5#Terminalx1|5#Terminalx1|1
+78|G19||*153|5#Terminalx1|5#Terminalx1|1
+79|R19||*154|5#Terminalx1|5#Terminalx1|1
+80|S20||*158|5#Terminalx1|5#Terminalx1|1
+81|G20||*159|5#Terminalx1|5#Terminalx1|1
+82|R20||*160|5#Terminalx1|5#Terminalx1|1
+83|5#HC74595||1, 2, 3, 4, 5, 6|5#HC74595|5#HC74595|6
+84|UBEC||5V_peripheral, 5V_Rasp|UBEC|UBEC|2
+85|ADS1015||ADS1|6_ADS1015|6_Adafruit_ADS1015_16Bit_I2C_ADC|1
+86|Module01_Emergency_Bits||Bit1|6#Bit_Switch_10|6#Bit_Switch_10|1
+87|Module02_Emergency_Bits||Bit2|6#Bit_Switch_10|6#Bit_Switch_10|1
+88|103|Cap np  1pF - 472pF|C1, C4, C7, C10, C13|CN1|CN1|5
+89|105|Cap np  1pF - 472pF|C2, C5, C8, C11, C14|CN1|CN1|5
+90|10uF|Polarized Capacitor (Surface Mount)|C3, C6, C9, C12, C15|CP2/5|Cap Pol3_1|5
+91|Bidirection converter||Converter_1|5V_3V3_Converter|5V-3.3V-converter|1
+92|5#IRF540N||FET1, FET2, FET3, FET4, FET5, FET6, FET7, FET8, FET9, FET10, FET11, FET12, FET13, FET14, FET15, FET16, FET17, FET18, FET19, FET20, FET21, FET22, FET23, FET24, FET25, FET26, FET27, FET28, FET29, FET30, FET31, FET32, FET33, FET34, FET35, FET36, FET37, FET38, FET39, FET40|5#IRF540N|5#IRF540N|40
+93|IDC 10X2|IDC 10x2|Interface Connector|IDC20|IDC 10X2|1
+94|5#DC Jack 2.54mm||J1|5#DC Jack 2.54mm|5#DC Jack 2.54mm|1
+95|5#Dip8_PC817x2||PC1, PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9, PC10, PC11, PC12, PC13, PC14, PC15, PC16, PC17, PC18, PC19, PC20|5#Dip8_PC817x2|5#Dip8_PC817x2|20
+96|3M|Resistor|R1, R10, R11, R13, R17, R65|AXIAL-0.4|Res2|6
+97|1M|Resistor|R2, R12, R16|AXIAL-0.4|Res2|3
+98|750K|Resistor|R3, R58|AXIAL-0.4|Res2|2
+99|680K|Resistor|R4, R15, R59|AXIAL-0.4|Res2|3
+100|470K|Resistor|R5, R60|AXIAL-0.4|Res2|2
+101|330K|Resistor|R6, R14, R61|AXIAL-0.4|Res2|3
+102|220K|Resistor|R7, R62|AXIAL-0.4|Res2|2
+103|180K|Resistor|R8, R63|AXIAL-0.4|Res2|2
+104|120K|Resistor|R9, R64|AXIAL-0.4|Res2|2
+105|1K|Resistor|R18, R20, R22, R24, R26, R28, R30, R32, R34, R36, R38, R40, R42, R44, R46, R48, R50, R52, R54, R56, R68, R71, R74, R77, R78, R79, R80, R81, R84, R87, R90, R93, R94, R95, R96, R97, R100, R103, R104, R105|AXIAL-0.4|Res2|40
+106|1K2|Resistor|R19, R21, R23, R25, R27, R29, R31, R33, R35, R37, R39, R41, R43, R45, R47, R49, R51, R53, R55, R57, R66, R67, R69, R70, R72, R73, R75, R76, R82, R83, R85, R86, R88, R89, R91, R92, R98, R99, R101, R102|AXIAL-0.4|Res2|40
+107|RPI GPIO Connector|GPIO Header for Raspberry Pi A+/B+/Pi 2/Pi 3 - 2x20|RPI_3B+_1|RPI-holes|rpi connector_2holes|1
+108|6#RTC_DS3231_4Pin||RTC1|6#RTC_DS3231_4Pin|6#RTC_DS3231_4Pin|1
