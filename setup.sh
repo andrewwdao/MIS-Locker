@@ -154,7 +154,7 @@ ExecStart=sudo python3 -u main.py
 WorkingDirectory=/home/$(who am i | awk '{print $1}')/system/main
 StandardOutput=inherit
 StandardError=inherit
-# Restart=yes
+Restart=yes
 # must set user to root to execute all functions and peripherals
 User=root
 # SIGINT is translated as a KeyboardInterrupt exception by Python.
