@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
-DEBOUNCE = 500  # xxx second
+DEBOUNCE = 300  # xxx second
 # -----Pinout
 UP_BUTTON = 5
 DOWN_BUTTON = 13 
@@ -76,4 +76,13 @@ def read():
         DOWN_STATE = False
         return "BUT_DOWN"
 
-
+def clean():
+    global UP_STATE
+    global DOWN_STATE
+    global OK_STATE
+    global CANCEL_STATE
+    UP_STATE = False
+    DOWN_STATE = False
+    OK_STATE = False
+    CANCEL_STATE = False
+    
