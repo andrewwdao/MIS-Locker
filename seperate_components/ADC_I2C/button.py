@@ -42,43 +42,42 @@ def __cancelISR(channel):
     CANCEL_STATE = True
 
 
-class Button:
-    def __init__(self):
-        GPIO.setmode(GPIO.BCM)
+def init():
+    GPIO.setmode(GPIO.BCM)
 
-        GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
+    GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
 
-        GPIO.setup(DOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(DOWN_BUTTON, GPIO.FALLING, callback=__downISR, bouncetime=DEBOUNCE)
+    GPIO.setup(DOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(DOWN_BUTTON, GPIO.FALLING, callback=__downISR, bouncetime=DEBOUNCE)
 
-        GPIO.setup(OK_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(OK_BUTTON, GPIO.FALLING, callback=__okISR, bouncetime=DEBOUNCE)
+    GPIO.setup(OK_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(OK_BUTTON, GPIO.FALLING, callback=__okISR, bouncetime=DEBOUNCE)
 
-        GPIO.setup(CANCEL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
+    GPIO.setup(CANCEL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
 
 
         
 
-    def read(self):
-        global UP_STATE
-        global DOWN_STATE
-        global OK_STATE
-        global CANCEL_STATE
-        if OK_STATE:
-            OK_STATE = False
-            return "BUT_OK"
-        if CANCEL_STATE:
-            CANCEL_STATE = False
-            return "BUT_CANCEL"
-        if UP_STATE:
-            UP_STATE = False
-            return "BUT_UP"
-        if DOWN_STATE:
-            DOWN_STATE = False
-            return "BUT_DOWN"
-        return "NO_CHANGE"
+def read():
+    global UP_STATE
+    global DOWN_STATE
+    global OK_STATE
+    global CANCEL_STATE
+    if OK_STATE:
+        OK_STATE = False
+        return "BUT_OK"
+    if CANCEL_STATE:
+        CANCEL_STATE = False
+        return "BUT_CANCEL"
+    if UP_STATE:
+        UP_STATE = False
+        return "BUT_UP"
+    if DOWN_STATE:
+        DOWN_STATE = False
+        return "BUT_DOWN"
+    return "NO_CHANGE"
 
 
     # def read(self):
