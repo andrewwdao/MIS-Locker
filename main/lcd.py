@@ -44,12 +44,12 @@ def waitPage_system():  # user can use RFID or their fingerprint to access
     LCD.write("waiting...")
 
 
-def waitforDoorClose()
+def waitforDoorClose(): # wait for user to close the door
     LCD.setCursor(4, 0)  # row, column
     LCD.write("Please close")
     LCD.setCursor(5, 2)  # row, column
     LCD.write("the door...")
-    
+
 
 def pointerPos(options, pointer):
     if options == 3:
