@@ -46,7 +46,9 @@ def __m2closeISR(channel):
     
 def init():
     # prevent double init
+    GPIO.setwarnings(False)
     GPIO.cleanup()
+    GPIO.setwarnings(True)
 
     GPIO.setmode(GPIO.BCM)
 
