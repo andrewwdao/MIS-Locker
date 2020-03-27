@@ -40,7 +40,7 @@ SYS_MODE = False  # default mode is normal (use locker), turn true to turn to sy
 last_second = 0   # for automatically return to locker mode
 
 # --------------------------- Set Up ----------------------------------------
-# lcd.begin()
+lcd.begin()
 button.init()
 switches.init()
 rfid = Gwiot_7304D2()

@@ -25,7 +25,7 @@ WAIT_TIME = 5  # waiting time between first and second scan of enroll func
 DEBOUNCE = 10
 START_CHECKING = False
 Finger = None
-button.init()
+# button.init()
 positionNumber = int()
 # ------------------------------ Basic functions ------------------------------
 def begin():  # Tries to initialize the sensor
