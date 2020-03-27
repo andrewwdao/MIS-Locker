@@ -822,7 +822,6 @@ def changeDataCase(user_id, user_name):
             rfid.flush()  # flush out old buffer before get out
             fingerPrint.flush() # clear everthing before get out
             return  # return to waiting state
-        
 
 
 def adminCase():
