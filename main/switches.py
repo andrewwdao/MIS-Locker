@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
-DEBOUNCE = 1000  # xxx second
+DEBOUNCE = 500  # xxx second
 # -----Pinout
 M1_SWITCH = 20
 M2_SWITCH = 21 
