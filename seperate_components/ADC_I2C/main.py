@@ -7,6 +7,7 @@ button.init()
 while True:
     # print(switches.readRawM1())
     #print(switches.read())
-    print(button.read())
+    if(button.read()=="BUT_OK"):
+        print("Hello world")
     #print(button.read())
     # time.sleep(1)

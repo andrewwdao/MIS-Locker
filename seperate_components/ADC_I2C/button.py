@@ -77,7 +77,7 @@ def read():
     if DOWN_STATE:
         DOWN_STATE = False
         return "BUT_DOWN"
-    # return "NO_CHANGE"
+    return "NO_CHANGE"
 
 
     # def read(self):
