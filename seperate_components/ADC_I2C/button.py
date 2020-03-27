@@ -12,7 +12,7 @@ import time
 
 # ---------------------------- Private Parameters:
 # ACTIVATE_MODULE02 = False
-DEBOUNCE = 10  # xxx second
+DEBOUNCE = 50  # xxx second
 # -----Address and Screen parameter:
 UP_BUTTON = 5
 DOWN_BUTTON = 13 
