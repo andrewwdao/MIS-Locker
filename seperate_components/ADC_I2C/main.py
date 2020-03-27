@@ -1,13 +1,16 @@
 import button
+import switch
 import time
 
 button.init()
+switch.init()
 
-# switches = adc_switches()
+
 while True:
-    # print(switches.readRawM1())
-    #print(switches.read())
+    
     button_state = button.read()
+    switch_state = switch.read()
+
     if(button_state=="BUT_OK"):
         print("Hello world OK")
 
@@ -19,5 +22,9 @@ while True:
     
     if(button_state=="BUT_DOWN"):
         print("Hello world DOWN")
-    #print(button.read())
-    # time.sleep(1)
+    
+    if(switch_state=="M1_OPEN"):
+        print("Hello world M1 OPEN")
+    
+    if(button_state=="M2_OPEN"):
+        print("Hello world M2 OPEN")

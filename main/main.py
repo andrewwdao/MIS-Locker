@@ -8,7 +8,8 @@
  *
  --------------------------------------------------------------"""
 import lcd
-from adc import adc_button, adc_switches
+import button
+import switches
 from rfid import Gwiot_7304D2
 from database import Database
 import peripheral as pr
@@ -40,8 +41,8 @@ last_second = 0   # for automatically return to locker mode
 
 # --------------------------- Set Up ----------------------------------------
 lcd.begin()
-button = adc_button()
-switches = adc_switches()
+button.init()
+switches.init()
 rfid = Gwiot_7304D2()
 dtb = Database()
 pr.init()
@@ -105,7 +106,7 @@ def __openDoorProcedure(locker):
     while switches.read() is "OPEN":  # only get out if the door is close
         
         # wait and print something to debug!
-        print(switches.read())
+        # print(switches.read())
         
         # wait for few seconds, if no signal then automatically use 'No' command
         if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*3:
@@ -130,10 +131,11 @@ def __getNextAvailableLocker():
 
 
 def __waitForConfirmation():
-    time.sleep(0.4)  # prevent debounce
-    while button.read() is not "BUT_OK":
-        # wait for someone to push any button
-        pass
+    # time.sleep(0.4)  # prevent debounce
+    while True: # wait for someone to push OK button
+        if button.read() == "BUT_OK": 
+            break
+        
 
 
 def __showAdminInfo(current_locker):
@@ -163,10 +165,10 @@ def __ChangeName(user_id):
     lcd.confirmChangeInfo()
 
     # wait for confirm or cancel
-    time.sleep(0.4)  # prevent debounce
-    while button.read() is not "BUT_OK":
-        if button.read() is "BUT_CANCEL":
-            return
+    while True:
+        button_state = button.read()
+        if button_state == "BUT_OK" | button_state == "BUT_CANCEL": 
+            break
 
     lcd.clear()
     lcd.changeNameMSSV()
@@ -241,7 +243,7 @@ def __addRFID():
                         lcd.pointerPos(2, choosing_pointer)
 
         # At anytime, if cancel was pressed, cancel the whole process
-        if button.readSysMode() is "BUT_CANCEL":
+        if button.read() is "BUT_CANCEL":
             return [False, NO_ID]
 
 
@@ -301,7 +303,7 @@ def __ChangeRFID(user_id):
                         lcd.pointerPos(2, choosing_pointer)
 
         # At anytime, if cancel was pressed, cancel the whole process
-        if button.readSysMode() is "BUT_CANCEL":
+        if button.read() is "BUT_CANCEL":
             return False
 
 
@@ -1039,7 +1041,7 @@ def main():  # Main program block
             buz.beep(2)  # sound notification of declining to proceed
         
         # ================== Mode changing ==================
-        sys_command = button.readSysMode()
+        sys_command = button.read()
         if sys_command is "BUT_DOWN":
             SYS_MODE = True
             global last_second
