@@ -42,13 +42,10 @@ def __cancelISR(channel):
 
 
 def init():
-    GPIO.setmode(GPIO.BCM)
-
     # prevent double init
-    GPIO.remove_event_detect(UP_BUTTON)
-    GPIO.remove_event_detect(DOWN_BUTTON)
-    GPIO.remove_event_detect(OK_BUTTON)
-    GPIO.remove_event_detect(CANCEL_BUTTON)
+    GPIO.cleanup()
+
+    GPIO.setmode(GPIO.BCM)
     
     GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
