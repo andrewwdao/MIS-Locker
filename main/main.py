@@ -23,6 +23,7 @@ import subprocess as subpro
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
 ADMIN_KEY = '0x47106C'
+TECHNICIAN_KEY = '0x531D1B'
 PROMPT_WAITING_TIME = 7 # time the lock has to wait each time user open a door 
 # INFO:
 # lockerArray stores the rfid ID or fingerprint ID stand with locker that has been rented (maximum 20 locker)
@@ -999,7 +1000,7 @@ def main():  # Main program block
             else:  # this ID is not existed in the user database
                 if current_tag in lockerArray:  # return case for temporary user
                     __oneTimeUser_returnCase(current_tag)
-                elif current_tag == ADMIN_KEY:
+                elif current_tag == ADMIN_KEY | current_tag == TECHNICIAN_KEY:
                     adminCase()
                 else:
                     buz.beep(1)  # sound notification
