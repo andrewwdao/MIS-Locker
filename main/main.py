@@ -1048,8 +1048,8 @@ def main():  # Main program block
 
 
 if __name__ == '__main__':
-    try:
-        main()
+    # try:
+    main()
     # except (KeyboardInterrupt, SystemExit):
     #     # turn on ro
     #     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
