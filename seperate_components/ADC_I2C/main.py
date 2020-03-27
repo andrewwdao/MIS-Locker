@@ -1,10 +1,11 @@
-from adc import adc_button,adc_switches
+from button import Button
 import time
-button = adc_button()
-switches = adc_switches()
+
+button = Button()
+# switches = adc_switches()
 while True:
     # print(switches.readRawM1())
     #print(switches.read())
-    print(button.readRaw())
+    print(button.read())
     #print(button.read())
-    time.sleep(1)
+    # time.sleep(1)
