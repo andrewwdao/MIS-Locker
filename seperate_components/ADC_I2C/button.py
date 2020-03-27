@@ -7,158 +7,127 @@
  *
  *
  --------------------------------------------------------------"""
-import ads1115.ads1115 as ADS
-from ads1115.analog_in import AnalogIn
+import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
-ACTIVATE_MODULE02 = False
+# ACTIVATE_MODULE02 = False
 DEBOUNCE = 0.05  # second
 # -----Address and Screen parameter:
-ADS_ADDRESS = 0x48
-BUTTON = ADS.P3
-SWITCH_M1 = ADS.P2
-SWITCH_M2 = ADS.P1
-
-# This adc value may have to be changed if changing power supply
-NO_PRESS_MIN = 17000
-NO_PRESS_MAX = 23000
-
-# when open, adc value will remain around 0
-ALL_CLOSED_MIN = 300
-ALL_CLOSED_MAX = 30000
-
-# This adc value may have to be changed if changing power supply
-CANCEL_MIN = 6000
-CANCEL_MAX = 7000
-UP_MIN = 9000
-UP_MAX = 10000
-DOWN_MIN = 13000
-DOWN_MAX = 14500
-OK_MIN = -1000
-OK_MAX = 1000
-
-# This adc value may have to be changed if changing power supply
-# DOOR01_MIN = 0
-# DOOR01_MAX = 500
-# DOOR02_MIN = 0
-# DOOR02_MAX = 500
-# DOOR03_MIN = 0
-# DOOR03_MAX = 500
-# DOOR04_MIN = 0
-# DOOR04_MAX = 500
-# DOOR05_MIN = 0
-# DOOR05_MAX = 500
-# DOOR06_MIN = 0
-# DOOR06_MAX = 500
-# DOOR07_MIN = 0
-# DOOR07_MAX = 500
-# DOOR08_MIN = 0
-# DOOR08_MAX = 500
-# DOOR09_MIN = 0
-# DOOR09_MAX = 500
-# DOOR10_MIN = 0
-# DOOR10_MAX = 500
-
-# DOOR11_MIN = 0
-# DOOR11_MAX = 500
-# DOOR12_MIN = 0
-# DOOR12_MAX = 500
-# DOOR13_MIN = 0
-# DOOR13_MAX = 500
-# DOOR14_MIN = 0
-# DOOR14_MAX = 500
-# DOOR15_MIN = 0
-# DOOR15_MAX = 500
-# DOOR16_MIN = 0
-# DOOR16_MAX = 500
-# DOOR17_MIN = 0
-# DOOR17_MAX = 500
-# DOOR18_MIN = 0
-# DOOR18_MAX = 500
-# DOOR19_MIN = 0
-# DOOR19_MAX = 500
-# DOOR20_MIN = 0
-# DOOR20_MAX = 500
+UP_BUTTON = 5
+DOWN_BUTTON = 13 
+OK_BUTTON = 12
+CANCEL_BUTTON = 25
+# ----- Button state
+UP_STATE = False
+DOWN_STATE = False
+OK_STATE = False
+CANCEL_STATE = False
 
 
+def __upISR(channel):
+    global UP_STATE
+    UP_STATE = True
 
-class adc_read:
-    def __init__(self, address=ADS_ADDRESS):
-        # Create the ADC object using the I2C bus
-        self.ads = ADS.ADS1115(address)
+def __downISR(channel):
+    global DOWN_STATE
+    DOWN_STATE = True
 
-class adc_button(adc_read):
+def __okISR(channel):
+    global OK_STATE
+    OK_STATE = True
+
+def __cancelISR(channel):
+    global CANCEL_STATE
+    CANCEL_STATE = True
+
+
+class Button:
     def __init__(self):
-        super().__init__()
-        self.button = AnalogIn(self.ads, BUTTON)
-        self.status = ""
+        GPIO.setmode(GPIO.BCM)
 
-    def __read(self):
-        current_val = self.button.value
-        if NO_PRESS_MIN < current_val < NO_PRESS_MAX:  # no press at all
-            return "BUT_NO_PRESS"
-        if CANCEL_MIN < current_val < CANCEL_MAX:  # cancel button
-            return "BUT_CANCEL"
-        if UP_MIN < current_val < UP_MAX:  # up button
-            return "BUT_UP"
-        if DOWN_MIN < current_val < DOWN_MAX:  # down button
-            return "BUT_DOWN"
-        if OK_MIN < current_val < OK_MAX:  # ok button
+        GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
+
+        GPIO.setup(DOWN_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(DOWN_BUTTON, GPIO.FALLING, callback=__downISR, bouncetime=DEBOUNCE)
+
+        GPIO.setup(OK_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(OK_BUTTON, GPIO.FALLING, callback=__okISR, bouncetime=DEBOUNCE)
+
+        GPIO.setup(CANCEL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
+
+
+        
+
+    def read(self):
+        global UP_STATE
+        global DOWN_STATE
+        global OK_STATE
+        global CANCEL_STATE
+        if OK_STATE:
+            OK_STATE = False
             return "BUT_OK"
-        return "ERROR"
-
-    def read(self):
-        last_status = self.status
-        self.status = self.__read()
-        time.sleep(DEBOUNCE)  # debounce for DEBOUNCE time
-        if self.status != last_status or self.status == "BUT_NO_PRESS":
-            return self.status
-        else:
-            return "NO_CHANGE"
-
-    def readSysMode(self):  # for reading system mode only
-        return self.__read()
-
-    def readRaw(self):
-        return self.button.value
+        if CANCEL_STATE:
+            CANCEL_STATE = False
+            return "BUT_CANCEL"
+        if UP_STATE:
+            UP_STATE = False
+            return "BUT_UP"
+        if DOWN_STATE:
+            DOWN_STATE = False
+            return "BUT_DOWN"
+        return "NO_CHANGE"
 
 
-class adc_switches(adc_read):
-    def __init__(self):
-        super().__init__()
-        if ACTIVATE_MODULE02:  # Module02 also activated
-            self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
-            self.switchesM2 = AnalogIn(self.ads, SWITCH_M2)
-        else:  # only Module01 is activated
-            self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
-
-    def read(self):
-        current_valM1 = self.switchesM1.value
-        if ACTIVATE_MODULE02:
-            current_valM2 = self.switchesM2.value
-            if (ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX) and \
-               (ALL_CLOSED_MIN < current_valM2 < ALL_CLOSED_MAX):  # all doors closed
-                return "ALL_CLOSED"
-            # first check module02
-            elif (current_valM1 < ALL_CLOSED_MIN) and \
-                 (current_valM2 < ALL_CLOSED_MIN):  # some doors are open
-                return "OPEN"
-        else:  # if only module 01 is activated
-            if ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX:  # all doors closed
-                return "ALL_CLOSED"
-            # now check Module01
-            elif current_valM1 < ALL_CLOSED_MIN: # some doors are open
-                return "OPEN"
-        # if still nothing return, then must be some error
-        return "ERROR"
+    # def read(self):
+    #     last_status = self.status
+    #     self.status = self.__read()
+    #     time.sleep(DEBOUNCE)  # debounce for DEBOUNCE time
+    #     if self.status != last_status or self.status == "BUT_NO_PRESS":
+    #         return self.status
+    #     else:
+    #         return "NO_CHANGE"
 
 
-    def readRawM1(self):
-        return self.switchesM1.value
 
-    def readRawM2(self):
-        return self.switchesM2.value
+
+# class adc_switches(adc_read):
+#     def __init__(self):
+#         super().__init__()
+#         if ACTIVATE_MODULE02:  # Module02 also activated
+#             self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
+#             self.switchesM2 = AnalogIn(self.ads, SWITCH_M2)
+#         else:  # only Module01 is activated
+#             self.switchesM1 = AnalogIn(self.ads, SWITCH_M1)
+
+#     def read(self):
+#         current_valM1 = self.switchesM1.value
+#         if ACTIVATE_MODULE02:
+#             current_valM2 = self.switchesM2.value
+#             if (ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX) and \
+#                (ALL_CLOSED_MIN < current_valM2 < ALL_CLOSED_MAX):  # all doors closed
+#                 return "ALL_CLOSED"
+#             # first check module02
+#             elif (current_valM1 < ALL_CLOSED_MIN) and \
+#                  (current_valM2 < ALL_CLOSED_MIN):  # some doors are open
+#                 return "OPEN"
+#         else:  # if only module 01 is activated
+#             if ALL_CLOSED_MIN < current_valM1 < ALL_CLOSED_MAX:  # all doors closed
+#                 return "ALL_CLOSED"
+#             # now check Module01
+#             elif current_valM1 < ALL_CLOSED_MIN: # some doors are open
+#                 return "OPEN"
+#         # if still nothing return, then must be some error
+#         return "ERROR"
+
+
+#     def readRawM1(self):
+#         return self.switchesM1.value
+
+#     def readRawM2(self):
+#         return self.switchesM2.value
 
 
 # ---------- Deprecated 
