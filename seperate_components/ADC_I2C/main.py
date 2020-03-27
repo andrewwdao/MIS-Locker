@@ -9,7 +9,7 @@ switches.init()
 while True:
     
     button_state = button.read()
-    switch_state = switch.read()
+    switch_state = switches.read()
 
     if(button_state=="BUT_OK"):
         print("Hello world OK")
