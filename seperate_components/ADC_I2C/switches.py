@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 
 # ---------------------------- Private Parameters:
-DEBOUNCE = 1000  # xxx second
+DEBOUNCE = 500  # xxx second
 # -----Pinout
 M1_SWITCH = 20
 M2_SWITCH = 21 
@@ -46,6 +46,10 @@ def __m2closeISR(channel):
     
 def init():
     GPIO.setmode(GPIO.BCM)
+
+    #prevent double init
+    GPIO.remove_event_detect(M1_SWITCH)
+    GPIO.remove_event_detect(M2_SWITCH)
 
     GPIO.setup(M1_SWITCH, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(M1_SWITCH, GPIO.FALLING, callback=__m1openISR, bouncetime=DEBOUNCE)

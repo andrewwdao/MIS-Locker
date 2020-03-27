@@ -12,7 +12,7 @@ from pyfingerprint.pyfingerprint import PyFingerprint
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
 from datetime import datetime
-from adc import adc_button  # for the cancel button
+import button  # for the cancel button
 
 # ---------------------------- Private Parameters:
 # -----Starting parameter:
@@ -25,7 +25,7 @@ WAIT_TIME = 5  # waiting time between first and second scan of enroll func
 DEBOUNCE = 10
 START_CHECKING = False
 Finger = None
-button_cancel = adc_button()
+button.init()
 positionNumber = int()
 # ------------------------------ Basic functions ------------------------------
 def begin():  # Tries to initialize the sensor
@@ -114,7 +114,7 @@ def first_enroll():
     try:
         print('Waiting for finger...')
         while not Finger.readImage():  # Wait for incoming finger is read
-            if button_cancel.read() is "BUT_CANCEL":
+            if button.read() is "BUT_CANCEL":
                 return ["CANCEL", 0]
             # pass
 
@@ -142,7 +142,7 @@ def second_enroll():
         print('Second time. Waiting for finger...')
 
         while not Finger.readImage():  # Wait that finger is read again
-            if button_cancel.read() is "BUT_CANCEL":
+            if button.read() is "BUT_CANCEL":
                 return ["CANCEL", 0]
             # pass
 
