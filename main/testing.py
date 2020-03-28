@@ -6,6 +6,8 @@ server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
 
 def start():
     server.serve_forever()
+    server.stop()
+    server.close()
 
 def shutdown(num, info):
     print(f'Shutting down website server...\n'
