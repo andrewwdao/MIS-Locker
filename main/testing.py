@@ -71,5 +71,5 @@ if __name__ == "__main__":
     print(server.pid)
 
     # server.stop()
-    os.kill(int(server.pid),signal.SIGINT)
+    # os.kill(int(server.pid),signal.SIGINT)
     # WebServer().stop()
