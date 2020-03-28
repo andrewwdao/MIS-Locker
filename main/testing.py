@@ -23,7 +23,7 @@ def shutdown():
     print(f'Shutting down website server...\n')
     server.stop()
     server.close()
-    exit(signal.SIGINT)
+    exit(signal.SIGTERM)
 
 class WebServer(threading.Thread):
     def __init__(self):
@@ -32,7 +32,7 @@ class WebServer(threading.Thread):
     def run(self):
         global server
         server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGINT, shutdown)
+        gevent.signal(signal.SIGTERM, shutdown)
         server.serve_forever()
 
 
@@ -40,3 +40,4 @@ class WebServer(threading.Thread):
 if __name__ == "__main__":
     server = None
     WebServer().start()
+    signal.raise_signal(signal.SIGTERM)
