@@ -1,6 +1,6 @@
-from gevent.pywsgi import WSGIServer
+# from gevent.pywsgi import WSGIServer
 from app import saveInfo_app
-import signal
+import gevent
 import threading
 
 # server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
@@ -19,25 +19,25 @@ import threading
 # def stop():
 #     signal.signal(signal.SIGINT, shutdown)
 
+def shutdown(num, info):
+    print(f'Shutting down website server...\n'
+          f'{num} {info}')
+    server.stop()
+    server.close()
+    exit(signal.SIGINT)
+
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
 
     def run(self):
         global server
-        server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
+        server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
+        gevent.signal(signal.SIGINT, shutdown)
         server.serve_forever()
 
-
-def shutdown(num, info):
-    print(f'Shutting down website server...\n'
-          f'{num} {info}')
-    server.stop()
-    server.close()
 
 
 if __name__ == "__main__":
     server = None
     WebServer().start()
-
-    signal.signal(signal.SIGINT, shutdown)
