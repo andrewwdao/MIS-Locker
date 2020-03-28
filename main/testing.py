@@ -19,9 +19,8 @@ import signal
 # def stop():
 #     signal.signal(signal.SIGINT, shutdown)
 
-def shutdown(num, info):
-    print(f'Shutting down website server...\n'
-          f'{num} {info}')
+def shutdown():
+    print(f'Shutting down website server...\n')
     server.stop()
     server.close()
     exit(signal.SIGINT)
