@@ -24,6 +24,10 @@ import os
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
+        self._stop_event = threading.Event()
+
+    def stop(self):
+        self._stop_event.set()
 
     def run(self):
         global server
@@ -46,6 +50,6 @@ if __name__ == "__main__":
     
     server.start()
     
-    server._stop()
+    server.stop()
     # os.kill(int(server.get_ident()),signal.SIGINT)
     # WebServer().stop()
