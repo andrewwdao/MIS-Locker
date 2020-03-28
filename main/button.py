@@ -9,6 +9,7 @@
  --------------------------------------------------------------"""
 import RPi.GPIO as GPIO  # default as BCM mode!
 import time
+import app.save_info.routes as server_handler
 
 # ---------------------------- Private Parameters:
 DEBOUNCE = 300  # xxx second
@@ -39,6 +40,13 @@ def __okISR(channel):
 def __cancelISR(channel):
     global CANCEL_STATE
     CANCEL_STATE = True
+
+
+def __cancelServerISR(channel):
+    server_handler.clear_user()
+    server_handler.shutdownServer()
+    GPIO.remove_event_detect(CANCEL_BUTTON)
+    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
 
 
 def init():
@@ -85,4 +93,9 @@ def clean():
     DOWN_STATE = False
     OK_STATE = False
     CANCEL_STATE = False
-    
+
+
+def invokeCancelServer():
+    GPIO.remove_event_detect(CANCEL_BUTTON)
+    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
+ 

@@ -51,6 +51,8 @@ fingerPrint.activate()
 
 
 def __wakeup_server():
+    # embedded a return way before open the server
+    button.invokeCancelServer() # automatically return to normal cancel button
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro

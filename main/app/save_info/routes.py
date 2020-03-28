@@ -22,6 +22,14 @@ def shutdownServer():
     func()
 
 
+def clear_user():
+    # delete this current id since its information is not logged
+    user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+    db.session.delete(user)
+    db.session.commit()
+    db.session.close() # need to this everytime you alter the db
+
+
 @saveInfo_app.route('/', methods=['GET', 'POST'])
 @saveInfo_app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -67,8 +75,8 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    # Start shutting down server
-    shutdownServer()
+    clear_user() # delete this current id since its information is not logged
+    shutdownServer() # Start shutting down server
     return render_template('shutdown.html', **templateData)
 
 
