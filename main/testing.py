@@ -1,13 +1,17 @@
 from gevent.pywsgi import WSGIServer
-from gevent.event import Event
 from app import saveInfo_app
+import signal
 
-stopper = Event()
+server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
 
 def start():
-    http_server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-    http_server.start()
-    stopper.wait()
+    server.serve_forever()
+
+def shutdown(num, info):
+    print(f'Shutting down website server...\n'
+          f'{num} {info}')
+    server.stop()
+    server.close()
 
 def stop():
-    stopper.set()
+    signal.signal(signal.SIGINT, shutdown)
