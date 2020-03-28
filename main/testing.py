@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # WebServer().start()
     server = WebServer()
     
-    server.run()
+    server.start()
     
-    os.kill(int(server.ident),signal.SIGTERM)
+    os.kill(int(server.ident),signal.SIGINT)
     # WebServer().stop()
