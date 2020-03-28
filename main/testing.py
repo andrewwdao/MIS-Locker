@@ -40,4 +40,5 @@ class WebServer(threading.Thread):
 if __name__ == "__main__":
     server = None
     WebServer().start()
-    signal.pthread_kill(WebServer().ident,signal.SIGTERM)
+    # signal.pthread_kill(WebServer().ident,signal.SIGTERM)
+    WebServer().stop()
