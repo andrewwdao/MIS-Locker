@@ -75,8 +75,9 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    clear_user() # delete this current id since its information is not logged
-    shutdownServer() # Start shutting down server
+    clear_user()
+    # Start shutting down server
+    shutdownServer()
     return render_template('shutdown.html', **templateData)
 
 
