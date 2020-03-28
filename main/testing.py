@@ -2,7 +2,7 @@
 from app import saveInfo_app
 import gevent
 import threading
-
+import signal
 # server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
 
 # def start():
