@@ -25,7 +25,7 @@ class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
     
-    def pid():
+    def pid(self):
         return os.getpid()
 
     def run(self):
