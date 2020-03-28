@@ -3,6 +3,8 @@ from app import saveInfo_app
 import gevent
 import threading
 import signal
+import os
+
 # server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
 
 # def start():
@@ -26,22 +28,23 @@ class WebServer(threading.Thread):
     def run(self):
         global server
         self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGTERM, self.shutdown)
+        gevent.signal(signal.SIGINT, self.shutdown)
         self.server.serve_forever()
 
     def shutdown(self):
         print(f'Shutting down website server...\n')
         self.server.stop()
-        self.server.close()
-        exit(signal.SIGTERM)
+        # self.server.close()
+        exit(signal.SIGINT)
 
 
 
 if __name__ == "__main__":
     # server = None
     # WebServer().start()
-    # signal.pthread_kill(int(threading.get_ident),signal.SIGTERM)
     server = WebServer()
+    
     server.run()
-    server.shutdown()
+    
+    os.kill(int(server.ident),signal.SIGTERM)
     # WebServer().stop()
