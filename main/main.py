@@ -92,7 +92,7 @@ def __openDoorProcedure(locker):
         # then wait
         # wait for few seconds, if no signal then automatically use 'No' command
         # or if human push ok button
-        if ((datetime.now().second - last_millis) > PROMPT_WAITING_TIME) | (button.read() is "BUT_OK"):
+        if ((datetime.now().second - last_millis) > PROMPT_WAITING_TIME) or (button.read() is "BUT_OK"):
             break
 
     # now the door is open!
@@ -165,7 +165,7 @@ def __ChangeName(user_id):
     # wait for confirm or cancel
     while True:
         button_state = button.read()
-        if button_state == "BUT_OK" | button_state == "BUT_CANCEL": 
+        if button_state == "BUT_OK" or button_state == "BUT_CANCEL": 
             break
 
     lcd.clear()
@@ -1000,7 +1000,7 @@ def main():  # Main program block
             else:  # this ID is not existed in the user database
                 if current_tag in lockerArray:  # return case for temporary user
                     __oneTimeUser_returnCase(current_tag)
-                elif current_tag == ADMIN_KEY | current_tag == TECHNICIAN_KEY:
+                elif current_tag == ADMIN_KEY or current_tag == TECHNICIAN_KEY:
                     adminCase()
                 else:
                     buz.beep(1)  # sound notification
