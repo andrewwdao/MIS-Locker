@@ -12,14 +12,19 @@ from flask import render_template, flash, redirect, url_for, request
 from app import saveInfo_app, db
 from app.save_info.forms import InfoForm
 from app.models import User
+import os
+import signal
+
+# def shutdownServer():
+#     # Start shutting down server
+#     func = request.environ.get('werkzeug.server.shutdown')
+#     if func is None:
+#         raise RuntimeError('Not running with the Werkzeug Server')
+#     func()
 
 
 def shutdownServer():
-    # Start shutting down server
-    func = request.environ.get('werkzeug.server.shutdown')
-    if func is None:
-        raise RuntimeError('Not running with the Werkzeug Server')
-    func()
+    os.kill(int(os.getpid()),signal.SIGINT)
 
 
 def clear_user():
