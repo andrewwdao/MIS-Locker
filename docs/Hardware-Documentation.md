@@ -1,12 +1,15 @@
 # HARDWARE DOCUMENTATION
 
-## SOURCE FILES AND EXPLAINATION
+## SOURCE FILES AND EXPLANATION
 
 Altium files of this project can be found on [pcb folder on github]
 
 Detailed explanation can be found on my [undergraduate thesis report] (in Vietnamese only).
 
 This file will only cover things that haven’t been mentioned on the thesis report.
+
+## OPTO
+After a long time using (6 months – 2 years), the electric locks may start to be warmed when working. If that happens, change the OPTO will solve the problem since the IR LEDs inside the OPTO are aging and cause the FET to not working properly.
 
 ## MOSFET
 This project is using the Power MOSFET IRF540N as the main switch for the 12V LEDs and 12V solenoid locks.

@@ -681,7 +681,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
             __dumpDebug(user_id, user_name, user_mssv, user_rfid, user_fing)
 
             # --- ask user if they want to continue using the locker
-            choosing_pointer = 2  # equivalent to No
+            choosing_pointer = 1  # equivalent to Yes
             lcd.clear()
             lcd.questionPage()
             lcd.pointerPos(2, choosing_pointer)  # option, pointer
