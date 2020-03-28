@@ -19,26 +19,29 @@ import signal
 # def stop():
 #     signal.signal(signal.SIGINT, shutdown)
 
-def shutdown():
-    print(f'Shutting down website server...\n')
-    server.stop()
-    server.close()
-    exit(signal.SIGTERM)
-
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
 
     def run(self):
         global server
-        server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGTERM, shutdown)
-        server.serve_forever()
+        self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
+        gevent.signal(signal.SIGTERM, self.shutdown)
+        self.server.serve_forever()
+
+    def shutdown(self):
+        print(f'Shutting down website server...\n')
+        self.server.stop()
+        self.server.close()
+        exit(signal.SIGTERM)
 
 
 
 if __name__ == "__main__":
-    server = None
-    WebServer().start()
-    signal.pthread_kill(int(threading.get_ident),signal.SIGTERM)
+    # server = None
+    # WebServer().start()
+    # signal.pthread_kill(int(threading.get_ident),signal.SIGTERM)
+    server = WebServer()
+    server.run()
+    server.shutdown()
     # WebServer().stop()
