@@ -101,7 +101,7 @@ def __openDoorProcedure(locker):
 
     last_millis = datetime.now().second
     # --- ask user to close the door
-    lcd.clear()
+    # lcd.clear()
     lcd.waitforDoorClose()
     # --- Detect if the door is open for too long
     while switches.read() is "OPEN":  # only get out if the door is close
