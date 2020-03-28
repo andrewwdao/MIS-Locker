@@ -75,7 +75,7 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    clear_user()
+    # clear_user()
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)
