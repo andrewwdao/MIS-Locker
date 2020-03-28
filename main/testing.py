@@ -25,8 +25,8 @@ class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
     
-    def ident():
-        return self._ident
+    def pid():
+        return os.getpid()
 
     def run(self):
         global server
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     
     server.start()
     
-    print(server.ident)
+    print(server.pid())
 
     # server.stop()
     # os.kill(int(server.get_ident()),signal.SIGINT)
