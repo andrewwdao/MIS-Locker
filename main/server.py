@@ -14,7 +14,7 @@ class WebServer(threading.Thread):
 
     def run(self):
         self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGINT, self.shutdown) # SIGINT will wait for last request to be served before shutdown, SIGTERM will kill it immediately
+        gevent.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
 
     # ======================== for development only =====================

@@ -58,7 +58,7 @@ server = None
 def __cancelServerISR(channel):
     global server
     global button
-    os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
+    os.kill(int(server.pid),signal.SIGTERM) #  find out the pid of the server and kill it
     # incomplete member delete is handle
     button.reset()
     button.init()
@@ -198,7 +198,7 @@ def __ChangeName(user_id):
     
     # Create dumb user in the database
     dtb.addDumbUser()
-    
+
     lcd.clear()
     lcd.changeNameMSSV()
 
