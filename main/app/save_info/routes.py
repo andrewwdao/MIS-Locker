@@ -84,9 +84,8 @@ def shutdown():
     }
     # clear_user()
     # Start shutting down server
-    render_template('shutdown.html', **templateData)
-    # shutdownServer()
-    return shutdownServer()
+    shutdownServer()
+    return render_template('shutdown.html', **templateData)
 
 
 @saveInfo_app.route('/about')
