@@ -27,7 +27,6 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.killed = True # kill the thread also
-        exit()
         # exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
