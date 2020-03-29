@@ -10,11 +10,10 @@ class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
         self.pid = os.getpid()
-    
+        gevent.signal(signal.SIGTERM, self.shutdown)
 
     def run(self):
         self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
 
     # ======================== for development only =====================
