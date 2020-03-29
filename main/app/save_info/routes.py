@@ -14,6 +14,7 @@ from app.save_info.forms import InfoForm
 from app.models import User
 import os
 import signal
+from database import Database
 
 # shutdown production server
 def shutdownServer():
@@ -27,14 +28,6 @@ def shutdownServer():
 #     if func is None:
 #         raise RuntimeError('Not running with the Werkzeug Server')
 #     func()
-
-
-def clear_user():
-    # delete this current id since its information is not logged
-    user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
-    db.session.delete(user)
-    db.session.commit()
-    db.session.close() # need to this everytime you alter the db
 
 
 @saveInfo_app.route('/', methods=['GET', 'POST'])
@@ -82,7 +75,7 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    # clear_user()
+    Database.delLatestMem()
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)

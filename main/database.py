@@ -173,6 +173,19 @@ class Database:
             self.__readonly()
             return True
 
+    def delLatestMem(self):
+        self.__readwrite()
+        user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+        if user is None:  # if user doesn't exist
+            self.__readonly()
+            return False
+        else:  # if user existed
+            db.session.delete(user)
+            db.session.commit()
+            db.session.close() # need to this everytime you alter the db
+            self.__readonly()
+            return True
+
     def delAllMember(self):
         self.__readwrite()
         users = User.query.all()
