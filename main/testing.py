@@ -21,7 +21,7 @@ import os
 # def stop():
 #     signal.signal(signal.SIGINT, shutdown)
 
-class Server(threading.Thread):
+class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
         self.pid = os.getpid()

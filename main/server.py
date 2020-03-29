@@ -6,7 +6,7 @@ import signal
 import os
 
 
-class Server(threading.Thread):
+class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
         self.pid = os.getpid()
@@ -26,4 +26,3 @@ class Server(threading.Thread):
         exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
-    
