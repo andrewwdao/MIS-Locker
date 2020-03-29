@@ -19,6 +19,9 @@ import time
 import buzzer as buz
 import subprocess as subpro
 from server import WebServer
+import RPi.GPIO as GPIO  # default as BCM mode!
+import signal
+import os
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
@@ -61,8 +64,9 @@ def __wakeup_server():
     global server
     server = WebServer()
     # embedded a return way before open the server
-    GPIO.remove_event_detect(CANCEL_BUTTON)
-    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
+    GPIO.setmode(GPIO.BCM)
+    GPIO.remove_event_detect(button.CANCEL_BUTTON)
+    GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE)
     # start server
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     server.start()

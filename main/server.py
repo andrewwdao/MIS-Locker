@@ -13,7 +13,6 @@ class WebServer(threading.Thread):
     
 
     def run(self):
-        global server
         self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
         gevent.signal(signal.SIGINT, self.shutdown)
         self.server.serve_forever()
