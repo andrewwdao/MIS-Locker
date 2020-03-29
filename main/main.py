@@ -51,7 +51,7 @@ dtb = Database()
 pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
-server = WebServer()
+server = None
 
 
 # ==== ISR for cancel button when in server mode =========
@@ -70,7 +70,7 @@ def __wakeup_server():
     # embedded a return way before open the server
     GPIO.setmode(GPIO.BCM)
     GPIO.remove_event_detect(button.CANCEL_BUTTON)
-    GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE)
+    GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE*2)
     # start server
     print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
