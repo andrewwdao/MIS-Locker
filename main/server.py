@@ -26,7 +26,7 @@ class WebServer(threading.Thread):
         print(f'Shutting down server...\n')
         self.server.stop()
         self.server.close()
-        self.killed = True # kill the thread also
+        raise SystemExit
         # exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
