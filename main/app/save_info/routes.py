@@ -15,16 +15,18 @@ from app.models import User
 import os
 import signal
 
+# shutdown production server
+def shutdownServer():
+    os.kill(int(os.getpid()),signal.SIGINT) # find out the current task it's running on, then kill it
+
+
+# -------------- deprecated - only used for testing -----------
 # def shutdownServer():
 #     # Start shutting down server
 #     func = request.environ.get('werkzeug.server.shutdown')
 #     if func is None:
 #         raise RuntimeError('Not running with the Werkzeug Server')
 #     func()
-
-
-def shutdownServer():
-    os.kill(int(os.getpid()),signal.SIGINT)
 
 
 def clear_user():
@@ -80,7 +82,7 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    clear_user()
+    # clear_user()
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)

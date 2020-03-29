@@ -5,21 +5,6 @@ import threading
 import signal
 import os
 
-# server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-
-# def start():
-#     server.serve_forever()
-#     server.stop()
-#     server.close()
-
-# def shutdown(num, info):
-#     print(f'Shutting down website server...\n'
-#           f'{num} {info}')
-#     server.stop()
-#     server.close()
-
-# def stop():
-#     signal.signal(signal.SIGINT, shutdown)
 
 class Server(threading.Thread):
     def __init__(self):
@@ -40,16 +25,5 @@ class Server(threading.Thread):
         # self.server.close()
         exit(signal.SIGINT)
 
-
-if __name__ == "__main__":
-    # server = None
-    # WebServer().start()
-    server = WebServer()
+    # def start(self): --> existed already from parent 
     
-    server.start()
-    
-    print(server.pid)
-
-    # server.stop()
-    # os.kill(int(server.pid),signal.SIGINT)
-    # WebServer().stop()

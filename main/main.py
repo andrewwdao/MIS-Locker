@@ -15,10 +15,10 @@ from database import Database
 import peripheral as pr
 from datetime import datetime
 import fingerPrint
-from app import saveInfo_app
 import time
 import buzzer as buz
 import subprocess as subpro
+from server import WebServer
 
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
@@ -48,14 +48,33 @@ dtb = Database()
 pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
+server = WebServer()
 
+def __cancelServerISR(channel):
+    global server
+    global button
+    os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
+    button.reset()
+    button.init()
 
 def __wakeup_server():
+    global server
+    server = WebServer()
     # embedded a return way before open the server
-    button.invokeCancelServer() # automatically return to normal cancel button
+    GPIO.remove_event_detect(CANCEL_BUTTON)
+    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
+    # start server
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
-    saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+    server.start()
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+
+
+# def __wakeup_server():
+#     # embedded a return way before open the server
+#     button.invokeCancelServer() # automatically return to normal cancel button
+#     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+#     saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
+#     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 
 
 def __shortenName(name, limit):

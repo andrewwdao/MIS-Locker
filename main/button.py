@@ -42,17 +42,17 @@ def __cancelISR(channel):
     CANCEL_STATE = True
 
 
-def __cancelServerISR(channel):
-    server_handler.clear_user()
-    server_handler.shutdownServer()
-    GPIO.remove_event_detect(CANCEL_BUTTON)
-    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
+# def __cancelServerISR(channel):
+#     server_handler.clear_user()
+#     server_handler.shutdownServer()
+#     GPIO.remove_event_detect(CANCEL_BUTTON)
+#     GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
 
 
 def init():
 
     GPIO.setmode(GPIO.BCM)
-    
+    clean()
     GPIO.setup(UP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(UP_BUTTON, GPIO.FALLING, callback=__upISR, bouncetime=DEBOUNCE)
 
@@ -64,7 +64,14 @@ def init():
 
     GPIO.setup(CANCEL_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
- 
+    
+
+def reset():
+    GPIO.remove_event_detect(UP_BUTTON)
+    GPIO.remove_event_detect(DOWN_BUTTON)
+    GPIO.remove_event_detect(OK_BUTTON)
+    GPIO.remove_event_detect(CANCEL_BUTTON)
+
 
 def read():
     global UP_STATE
@@ -95,7 +102,7 @@ def clean():
     CANCEL_STATE = False
 
 
-def invokeCancelServer():
-    GPIO.remove_event_detect(CANCEL_BUTTON)
-    GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
+# def invokeCancelServer():
+#     GPIO.remove_event_detect(CANCEL_BUTTON)
+#     GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
  
