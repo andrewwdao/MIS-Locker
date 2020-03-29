@@ -56,7 +56,7 @@ server = WebServer()
 def __cancelServerISR(channel):
     global server
     global button
-    os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
+    os.kill(int(server.pid),signal.SIGTERM) #  find out the pid of the server and kill it
     button.reset()
     button.init()
 

@@ -14,14 +14,14 @@ class WebServer(threading.Thread):
 
     def run(self):
         self.server = gevent.pywsgi.WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        gevent.signal(signal.SIGINT, self.shutdown)
+        gevent.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
 
 
     def shutdown(self):
         print(f'Shutting down website server...\n')
         self.server.stop()
-        # self.server.close()
-        exit(signal.SIGINT)
+        self.server.close()
+        # exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
