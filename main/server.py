@@ -26,6 +26,7 @@ class WebServer(threading.Thread):
         print(f'Shutting down server...\n')
         self.server.stop()
         self.server.close()
+        self.killed = True # kill the thread also
         exit()
         # exit(signal.SIGINT)
 

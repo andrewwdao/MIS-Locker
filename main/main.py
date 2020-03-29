@@ -76,7 +76,6 @@ def __wakeup_server():
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     server.start()
     server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
-    server.kill() # kill the thread
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 
 
