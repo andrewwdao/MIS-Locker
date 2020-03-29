@@ -415,7 +415,7 @@ def warningDeletePage():
 
 
 def DBdeleteDonePage():
-    LCD.setCursor(1, 2)  # row, column
+    LCD.setCursor(2, 2)  # row, column
     LCD.write("DATABASE DELETED!")
 
 

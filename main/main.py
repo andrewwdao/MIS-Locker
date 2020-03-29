@@ -143,7 +143,9 @@ def __openDoorProcedure(locker):
         if rfid.hasID():
             current_tag = rfid.tagID()
             if current_tag == ADMIN_KEY or current_tag == TECHNICIAN_KEY:
-                adminCase()
+                switches.clean()
+                pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
+
 
         # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
         # if button.read() is "BUT_OK":

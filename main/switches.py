@@ -61,6 +61,11 @@ def read():
     else:
         return "ALL_CLOSED"
 
+def clean():
+    global M1_STATE
+    global M2_STATE
+    M1_STATE = False
+    M2_STATE = False
 
 # ======================== for 20 lockers =====================
 # def read():
