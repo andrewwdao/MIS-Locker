@@ -1,4 +1,5 @@
 from gevent.pywsgi import WSGIServer
+import gevent
 from app import saveInfo_app
 import threading
 import signal
@@ -12,7 +13,7 @@ class WebServer(threading.Thread):
         
     def run(self):
         self.server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        signal.signal(signal.SIGTERM, self.shutdown)
+        self.gevent_signal = gevent.hub.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
 
     # ======================== for development only =====================
@@ -24,6 +25,7 @@ class WebServer(threading.Thread):
         print(f'Shutting down server...\n')
         self.server.stop()
         self.server.close()
+        self.gevent_signal.cancel()
         raise SystemExit
         # exit(signal.SIGINT)
 
