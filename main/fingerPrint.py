@@ -39,7 +39,7 @@ def begin():  # Tries to initialize the sensor
         if not Finger.verifyPassword():
             raise ValueError('Password for the Fingerprint module is wrong!')
         # Gets some sensor information
-        print('Currently used templates: ' + str(Finger.getTemplateCount()) + '/' + str(Finger.getStorageCapacity()))
+        print('Fingerprint used templates: ' + str(Finger.getTemplateCount()) + '/' + str(Finger.getStorageCapacity()))
         return True
     except Exception as e:
         print('The fingerprint sensor could not be initialized!')

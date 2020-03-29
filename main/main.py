@@ -78,6 +78,9 @@ def __wakeup_server():
     server.start()
     server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
+    # in case user don't press cancel button, reset back button
+    button.reset()
+    button.init()
 
 
 def __shortenName(name, limit):
