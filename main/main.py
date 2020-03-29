@@ -686,10 +686,10 @@ def __addNewIDCase():
     lcd.clear()
     lcd.cancelNewUserPage()
     time.sleep(1.5)
-    choosing_pointer = 2  # because we are at the Add new ID
-    lcd.clear()
-    lcd.unknownIDPage()
-    lcd.pointerPos(3, choosing_pointer)
+    # choosing_pointer = 2  # because we are at the Add new ID
+    # lcd.clear()
+    # lcd.unknownIDPage()
+    # lcd.pointerPos(3, choosing_pointer)
     rfid.flush()  # flush out old buffer before get out
     fingerPrint.flush() # clear everthing before get out
     return  # return to No Info menu
