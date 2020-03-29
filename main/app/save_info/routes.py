@@ -75,7 +75,7 @@ def shutdown():
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
     }
-    Database.delLatestMem()
+    # incomplete member delete is handled on main
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)

@@ -69,8 +69,16 @@ class Database:
             self.__readonly()
             return [False, None, None, None, None, None]
         else:  # if user existed
-            self.__readonly()
-            return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
+            # if username or mssv is not filled --> delete incomplete user
+            if (user[2] is None) or (user[3] is None):
+                db.session.delete(user)
+                db.session.commit()
+                db.session.close() # need to this everytime you alter the db
+                self.__readonly()
+                return [False, None, None, None, None, None]
+            else: # user name and mssv is good
+                self.__readonly()
+                return [True, user.id, user.name, user.mssv, user.rfid, user.fing]
 
     def getAllUserInfo(self):
         self.__readwrite()
@@ -170,19 +178,6 @@ class Database:
         else:  # if user existed
             db.session.delete(user)
             db.session.commit()
-            self.__readonly()
-            return True
-
-    def delLatestMem(self):
-        self.__readwrite()
-        user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
-        if user is None:  # if user doesn't exist
-            self.__readonly()
-            return False
-        else:  # if user existed
-            db.session.delete(user)
-            db.session.commit()
-            db.session.close() # need to this everytime you alter the db
             self.__readonly()
             return True
 

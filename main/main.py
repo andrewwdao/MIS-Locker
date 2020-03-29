@@ -53,12 +53,13 @@ fingerPrint.begin()
 fingerPrint.activate()
 server = WebServer()
 
+
 # ==== ISR for cancel button when in server mode =========
 def __cancelServerISR(channel):
     global server
     global button
-    dtb.delLatestMem()
     os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
+    # incomplete member delete is handle
     button.reset()
     button.init()
 
@@ -177,9 +178,6 @@ def __showAdminInfo(current_locker):
 
 
 def __ChangeName(user_id):
-    # Create dumb user in the database
-    dtb.addDumbUser()
-
     # Add personal information
     lcd.clear()
     lcd.confirmChangeInfo()
@@ -187,22 +185,33 @@ def __ChangeName(user_id):
     # wait for confirm or cancel
     while True:
         button_state = button.read()
-        if button_state == "BUT_OK" or button_state == "BUT_CANCEL": 
-            break
+        if button_state == "BUT_OK": 
+            break # continue to our program
+        if button_state == "BUT_CANCEL":
+            return # do not do anything
+    
+    # Create dumb user in the database
+    dtb.addDumbUser()
 
     lcd.clear()
     lcd.changeNameMSSV()
     __wakeup_server()  # run collecting app
 
     # get info from server and then delete the incomplete user
-    data = dtb.getLastMemberInfo()
-    temp_user_id  = data[1]
-    new_user_name = data[2]
-    new_user_mssv = data[3]
-    dtb.delMember(temp_user_id)
+    data = dtb.getLastMemberInfo() # incomplete user deleter already integrated - wake up server MUST go through this filter
+    
+    # below code are imune with incomplete user deleter, since it will have name and mssv
+    user_valid = data[0]
+    if user_valid:
+        temp_user_id  = data[1]
+        new_user_name = data[2]
+        new_user_mssv = data[3]
+        dtb.delMember(temp_user_id)
 
-    # make change to the database
-    dtb.changeInfo(user_id, new_user_name, new_user_mssv)
+        # make change to the database
+        dtb.changeInfo(user_id, new_user_name, new_user_mssv)
+
+    # incomplete user due to cancelation of user is already delete above
 
     return
 
@@ -662,29 +671,28 @@ def __addNewIDCase():
         lcd.addNewInfo()
         __wakeup_server()  # run collecting app
 
-        data = dtb.getLastMemberInfo()
+        data = dtb.getLastMemberInfo() # incomplete user deleter already integrated - wake up server MUST go through this filter
         user_valid = data[0]
-        user_id = data[1]
-        user_name = data[2]
-        user_mssv = data[3]
+
         if user_valid:
-            if (user_name and user_mssv) is not None:
-                [got_data, userID, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(user_id)
-                userCase(got_data, userID, user_name, user_mssv, user_rfid, user_fing)
-        rfid.flush()  # flush out old buffer before get out
-        fingerPrint.flush() # clear everthing before get out
-        return # return to No Info menu
-    else:  # no rfid is available
-        lcd.clear()
-        lcd.cancelNewUserPage()
-        time.sleep(1.5)
-        choosing_pointer = 2  # because we are at the Add new ID
-        lcd.clear()
-        lcd.unknownIDPage()
-        lcd.pointerPos(3, choosing_pointer)
-        rfid.flush()  # flush out old buffer before get out
-        fingerPrint.flush() # clear everthing before get out
-        return  # return to No Info menu
+            user_id = data[1]
+            [got_data, userID, user_name, user_mssv, user_rfid, user_fing] = dtb.getMemberInfoByID(user_id)
+            userCase(got_data, userID, user_name, user_mssv, user_rfid, user_fing)
+            rfid.flush()  # flush out old buffer before get out
+            fingerPrint.flush() # clear everthing before get out
+            return # return to No Info menu
+
+     # no rfid is available or user is invalid
+    lcd.clear()
+    lcd.cancelNewUserPage()
+    time.sleep(1.5)
+    choosing_pointer = 2  # because we are at the Add new ID
+    lcd.clear()
+    lcd.unknownIDPage()
+    lcd.pointerPos(3, choosing_pointer)
+    rfid.flush()  # flush out old buffer before get out
+    fingerPrint.flush() # clear everthing before get out
+    return  # return to No Info menu
 
 
 def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
