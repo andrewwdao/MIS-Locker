@@ -76,7 +76,7 @@ pip3 install flask-wtf
 pip3 install flask-sqlalchemy
 pip3 install flask-migrate
 pip3 install flask-bootstrap
-# Gevent networking platform to deploy production server
+# Gevent networking platform to deploy production server - https://pypi.org/project/gevent/#downloads
 pip3 install gevent
 
 # update all the kept-back if existed  # # https://askubuntu.com/questions/601/the-following-packages-have-been-kept-back-why-and-how-do-i-solve-it
