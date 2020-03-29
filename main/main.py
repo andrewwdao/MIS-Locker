@@ -140,6 +140,7 @@ def __openDoorProcedure(locker):
             buz.beep(1)
             time.sleep(0.2)
 
+        # ------------- admin priviledge -------------------- 
         if rfid.hasID():
             current_tag = rfid.tagID()
             if current_tag == ADMIN_KEY or current_tag == TECHNICIAN_KEY:
@@ -147,7 +148,8 @@ def __openDoorProcedure(locker):
                 pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
                 button.clean()
                 return
-
+        # ---------------------------------------------------
+        
         # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
         # if button.read() is "BUT_OK":
         #     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
