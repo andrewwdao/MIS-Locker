@@ -25,7 +25,8 @@ class WebServer(threading.Thread):
     def shutdown(self): # SIGINT or SIGTERM doesn't really matter since what shutdown server stays here
         print(f'Shutting down server...\n')
         self.server.stop()
-        # self.server.close()
+        self.server.close()
+        exit
         # exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
