@@ -15,11 +15,14 @@ from app.models import User
 import os
 import signal
 from database import Database
+import subprocess as subpro
 
 # shutdown production server
-# @template_function
 def shutdownServer():
-    return os.kill(int(os.getpid()),signal.SIGINT) # find out the current task it's running on, then kill it
+    print('Start shutting down server...')
+    subpro.Popen(['sudo','python3','shutdown-server.py',str(os.getpid())], shell=False)
+    
+    # return os.kill(int(os.getpid()),signal.SIGINT) # find out the current task it's running on, then kill it
 
 
 # -------------- deprecated - only used for testing -----------
@@ -63,10 +66,9 @@ def gotInfo():
         'user_name': user.name,
         'user_id': user.mssv
     }
-    # Start shutting down server
     db.session.close() # need to this everytime you alter the db
-    # render_template('save_info/gotInfo.html', **templateData)
-    # shutdownServer()
+    # Start shutting down server
+    shutdownServer()
     return render_template('save_info/gotInfo.html', **templateData)
 
 
@@ -78,9 +80,8 @@ def shutdown():
         'main_func': 'Service closing...',
     }
     # incomplete member delete is handled on main
-    # render_template('shutdown.html', **templateData)
-    # # Start shutting down server
-    # shutdownServer()
+    # Start shutting down server
+    shutdownServer()
     return render_template('shutdown.html', **templateData)
 
 
