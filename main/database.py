@@ -70,7 +70,7 @@ class Database:
             return [False, None, None, None, None, None]
         else:  # if user existed
             # if username or mssv is not filled --> delete incomplete user
-            if (user[2] is None) or (user[3] is None):
+            if (user.name is None) or (user.mssv is None):
                 db.session.delete(user)
                 db.session.commit()
                 db.session.close() # need to this everytime you alter the db
