@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(64), index=True, unique=True)
+  name = db.Column(db.String(64), index=True, unique=False) # must set unique to False since many people have the same name
   mssv = db.Column(db.String(8), index=True, unique=True)
   rfid = db.Column(db.String(10), index=True, unique=True)
   fing = db.Column(db.Integer, index=True, unique=True)

@@ -189,11 +189,19 @@ def __ChangeName(user_id):
         if button_state == "BUT_CANCEL":
             return # do not do anything
     
+
+    # log old user name and mssv before replace with temporary one for not getting same mssv
+    old_data = dtb.getMemberInfoByID(user_id)
+    old_user_name = old_data[2]
+    old_user_mssv = old_data[3]
+    dtb.changeInfo(user_id, 'user name', 'B0000000') # dumb data for temporary
+    
     # Create dumb user in the database
     dtb.addDumbUser()
-
+    
     lcd.clear()
     lcd.changeNameMSSV()
+
     __wakeup_server()  # run collecting app
 
     # get info from server and then delete the incomplete user
@@ -206,9 +214,12 @@ def __ChangeName(user_id):
         new_user_name = data[2]
         new_user_mssv = data[3]
         dtb.delMember(temp_user_id)
-
-        # make change to the database
-        dtb.changeInfo(user_id, new_user_name, new_user_mssv)
+    else: # if user cancel in the middle of the logging, then return the old information
+        new_user_name = old_user_name
+        new_user_mssv = old_user_mssv
+    
+    # make change to the database
+    dtb.changeInfo(user_id, new_user_name, new_user_mssv)
 
     # incomplete user due to cancelation of user is already delete above
 
