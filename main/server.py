@@ -13,7 +13,7 @@ class WebServer(threading.Thread):
         
     def run(self):
         self.server = WSGIServer(('0.0.0.0', 7497), saveInfo_app)
-        self.gevent_signal = gevent.hub.signal(signal.SIGTERM, self.shutdown)
+        self.gevent_signal = gevent.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
 
     # ======================== for development only =====================
