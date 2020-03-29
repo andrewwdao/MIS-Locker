@@ -143,7 +143,7 @@ def __openDoorProcedure(locker):
         if rfid.hasID():
             current_tag = rfid.tagID()
             if current_tag == ADMIN_KEY or current_tag == TECHNICIAN_KEY:
-                switches.clean()
+                # switches.clean()
                 pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
 
 
