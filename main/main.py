@@ -57,6 +57,7 @@ server = WebServer()
 def __cancelServerISR(channel):
     global server
     global button
+    dtb.delLatestMem()
     os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
     button.reset()
     button.init()
