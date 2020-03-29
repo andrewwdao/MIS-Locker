@@ -126,6 +126,10 @@ def __openDoorProcedure(locker):
     time.sleep(0.5)  # wait for 0.5 second before proceeding for stablization
     pr.locker(locker, pr.CLOSE)  # close locker stand with this user id
 
+    # clean rfid and finger buffer, if existed
+    rfid.flush()  # flush out old buffer before get out
+    fingerPrint.flush() # clear everthing before starting
+    # save the last millis
     last_millis = datetime.now().second
     # --- ask user to close the door
     lcd.waitforDoorClose()
@@ -135,6 +139,11 @@ def __openDoorProcedure(locker):
         if (datetime.now().second - last_millis) > PROMPT_WAITING_TIME*5:
             buz.beep(1)
             time.sleep(0.2)
+
+        if rfid.hasID():
+            current_tag = rfid.tagID()
+            if current_tag == ADMIN_KEY or current_tag == TECHNICIAN_KEY:
+                adminCase()
 
         # if human push ok button, THIS IS FOR DEBUG ONLY!!! SHOULD DELETE WHEN IMPLEMENT TO REAL USECASE
         # if button.read() is "BUT_OK":
