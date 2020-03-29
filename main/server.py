@@ -1,6 +1,6 @@
+import gevent
 from gevent.pywsgi import WSGIServer
 from app import saveInfo_app
-import gevent
 import threading
 import signal
 import os
@@ -21,7 +21,7 @@ class WebServer(threading.Thread):
     def shutdown(self):
         print(f'Shutting down website server...\n')
         self.server.stop()
-        self.server.close()
+        # self.server.close()
         # exit(signal.SIGINT)
 
     # def start(self): --> existed already from parent 
