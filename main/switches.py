@@ -57,9 +57,9 @@ def init():
 
 def read():
     if (GPIO.input(M1_SWITCH) == True) | (GPIO.input(M2_SWITCH) == True):
-        return "OPEN"
-    else:
         return "ALL_CLOSED"
+    else:
+        return "OPEN"
 
 
 # def read():
