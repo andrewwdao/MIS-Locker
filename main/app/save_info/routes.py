@@ -76,7 +76,6 @@ def shutdown():
         'server_title': 'MIS Locker',
         'main_title': 'MIS Locker System',
         'main_func': 'Service closing...',
-        'shutdown': shutdownServer()
     }
     # incomplete member delete is handled on main
     # render_template('shutdown.html', **templateData)
