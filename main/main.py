@@ -53,12 +53,14 @@ fingerPrint.begin()
 fingerPrint.activate()
 server = WebServer()
 
+# ==== ISR for cancel button when in server mode =========
 def __cancelServerISR(channel):
     global server
     global button
-    os.kill(int(server.pid),signal.SIGTERM) #  find out the pid of the server and kill it
+    os.kill(int(server.pid),signal.SIGINT) #  find out the pid of the server and kill it
     button.reset()
     button.init()
+
 
 def __wakeup_server():
     global server
@@ -68,18 +70,11 @@ def __wakeup_server():
     GPIO.remove_event_detect(button.CANCEL_BUTTON)
     GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE)
     # start server
+    print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     server.start()
     server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
-
-
-# def __wakeup_server():
-#     # embedded a return way before open the server
-#     button.invokeCancelServer() # automatically return to normal cancel button
-#     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
-#     saveInfo_app.run(host='0.0.0.0', port=7497, debug=False)  # run collecting app
-#     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
 
 
 def __shortenName(name, limit):

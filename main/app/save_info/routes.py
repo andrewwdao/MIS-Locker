@@ -17,7 +17,7 @@ import signal
 
 # shutdown production server
 def shutdownServer():
-    os.kill(int(os.getpid()),signal.SIGTERM) # find out the current task it's running on, then kill it
+    os.kill(int(os.getpid()),signal.SIGINT) # find out the current task it's running on, then kill it
 
 
 # -------------- deprecated - only used for testing -----------
