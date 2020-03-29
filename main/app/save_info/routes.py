@@ -64,6 +64,7 @@ def gotInfo():
     }
     # Start shutting down server
     db.session.close() # need to this everytime you alter the db
+    render_template('save_info/gotInfo.html', **templateData)
     shutdownServer()
     return render_template('save_info/gotInfo.html', **templateData)
 
@@ -76,6 +77,7 @@ def shutdown():
         'main_func': 'Service closing...',
     }
     # incomplete member delete is handled on main
+    render_template('shutdown.html', **templateData)
     # Start shutting down server
     shutdownServer()
     return render_template('shutdown.html', **templateData)
