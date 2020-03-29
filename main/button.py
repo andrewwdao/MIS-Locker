@@ -42,13 +42,6 @@ def __cancelISR(channel):
     CANCEL_STATE = True
 
 
-# def __cancelServerISR(channel):
-#     server_handler.clear_user()
-#     server_handler.shutdownServer()
-#     GPIO.remove_event_detect(CANCEL_BUTTON)
-#     GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelISR, bouncetime=DEBOUNCE)
-
-
 def init():
 
     GPIO.setmode(GPIO.BCM)
@@ -101,8 +94,3 @@ def clean():
     OK_STATE = False
     CANCEL_STATE = False
 
-
-# def invokeCancelServer():
-#     GPIO.remove_event_detect(CANCEL_BUTTON)
-#     GPIO.add_event_detect(CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=DEBOUNCE)
- 

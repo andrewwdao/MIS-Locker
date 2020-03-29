@@ -2,7 +2,7 @@
   Main process for MISlocker
   Tested on: Raspberry Pi 3 B+
   (c) Minh-An Dao 2019 - 2020
-  version 1.80 - 22/03/2020
+  version 2.00 - 28/03/2020
  --------------------------------------------------------------
  *
  *
@@ -124,7 +124,6 @@ def __openDoorProcedure(locker):
 
     last_millis = datetime.now().second
     # --- ask user to close the door
-    # lcd.clear()
     lcd.waitforDoorClose()
     # --- Detect if the door is open for too long
     while switches.read() is "OPEN":  # only get out if the door is close
@@ -1081,7 +1080,7 @@ if __name__ == '__main__':
     #     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False)
     #     subpro.call(['sudo','mount','-o','remount,ro','/boot'], shell=False)
         
-    #     subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure
+    #     subpro.Popen(['python3','syshalt.py'], shell=False) # closing procedure, included close off peripherals
     #     rfid.stop()  # REMEMBER TO DO THIS SINCE THE READING IN C DON'T EXIT BY ITSELF!
 
     # except (OSError, Exception): # I/O error or exception

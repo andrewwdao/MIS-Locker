@@ -62,6 +62,7 @@ def read():
         return "ALL_CLOSED"
 
 
+# ======================== for 20 lockers =====================
 # def read():
 #     if M1_STATE:
 #         return "M1_OPEN"
@@ -69,4 +70,4 @@ def read():
 #         return "M2_OPEN"
 #     else:
 #         return "ALL_CLOSED"
-
+# =============================================================
