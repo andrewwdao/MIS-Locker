@@ -69,13 +69,15 @@ pip3 install RPi.GPIO
 # WiringPi  ## http://wiringpi.com/
 apt-get install wiringpi -y
 
-#Flask - WTForm - SQLAlchemy - Migrate - Bootstrap  ## https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+# Flask - WTForm - SQLAlchemy - Migrate - Bootstrap  ## https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
 pip3 install flask
 pip3 install python-dotenv
 pip3 install flask-wtf
 pip3 install flask-sqlalchemy
 pip3 install flask-migrate
 pip3 install flask-bootstrap
+# Gevent networking platform to deploy production server
+pip3 install gevent
 
 # update all the kept-back if existed  # # https://askubuntu.com/questions/601/the-following-packages-have-been-kept-back-why-and-how-do-i-solve-it
 apt-get --with-new-pkgs upgrade -y
