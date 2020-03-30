@@ -359,15 +359,14 @@ def changeRFIDFailPage():
 # ================================================ INFOMATION ======================================
 
 def addNewInfo():
-    LCD.setCursor(0, 0)  # row, column
-    LCD.write("ADD NEW INFO:Connect")
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("ADD NEW INFO")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("to MIS-CTU wifi & ")
+    LCD.write("Connect to MIS-CTU")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("open browser to")
+    LCD.write("wifi and access web")
     LCD.setCursor(0, 3)  # row, column
-    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
-    LCD.write(my_ip) # get current ip address
+    LCD.write("at http://MISlocker") # get current ip address
 
 
 def confirmChangeInfo():
