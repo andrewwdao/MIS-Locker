@@ -421,7 +421,7 @@ def modifyDatabaseInfoPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("Connect to SSH with:")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("MISlocker@")
+    LCD.write("mis@")
     LCD.setCursor(0, 2)  # row, column
     LCD.write(subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     LCD.setCursor(0, 3)  # row, column
