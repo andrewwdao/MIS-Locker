@@ -29,3 +29,5 @@ class WebServer(threading.Thread):
         
 
     # def start(self): --> existed already from parent 
+
+# ref: https://stackoverflow.com/questions/18277048/gevent-pywsgi-graceful-shutdown

@@ -31,8 +31,9 @@ Tested on Raspberry Pi 3B+.
  - [SQLAlchemy], (c) 2005 - 2020 SQLAlchemy authors and contributors. Licensed under the MIT License.
  - [Flask-Migrate], (c) 2013 Miguel Grinberg. Licensed under the MIT License.
  - [Flask-Bootstrap], (c) 2013 - 2019 Marc Brinkmann. Licensed under the BSD 3-Clause Liscense.
- - [Readonly], (c) 2017-2019 Ways. Licensed under the GNU License.
- 
+ - [Readonly], (c) 2017 - 2019 Ways. Licensed under the GNU License.
+ - [Gevent], (c) 2015 - 2020 Denis Bilenko, Jason Madden. Licensed under the MIT License.
+
  _And the contribution of the huge open-source community world wide._
 
 
@@ -71,6 +72,7 @@ _Licensed under the MIT License. All rights reserved._
 [Flask-Migrate]: https://github.com/miguelgrinberg/Flask-Migrate
 [Flask-Bootstrap]: https://github.com/mbr/flask-bootstrap
 [Readonly]: https://gitlab.com/larsfp/rpi-readonly
+[Gevent]: https://pypi.org/project/gevent/
 
 [Minh-An Dao]: https://bit.ly/DMA-HomePage
 
