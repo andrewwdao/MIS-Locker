@@ -222,7 +222,7 @@ def addFingerSuccessPage():
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint added!")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
+    LCD.write("Please press OK")
 
 
 def addFingerExistedPage():
@@ -276,7 +276,7 @@ def changeFingerSuccessPage():
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint added!")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
+    LCD.write("Please press OK")
 
 
 def changeFingerExistedPage():
