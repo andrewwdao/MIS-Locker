@@ -359,14 +359,14 @@ def changeRFIDFailPage():
 # ================================================ INFOMATION ======================================
 
 def addNewInfo():
-    LCD.setCursor(4, 0)  # row, column
-    LCD.write("ADD NEW INFO")
+    LCD.setCursor(0, 0)  # row, column
+    LCD.write("ADD INFO: Log in to")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("Connect to MIS-CTU")
+    LCD.write("MIS-CTU wifi to scan")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("wifi and access web")
+    LCD.write("QR or access web at ")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("at http://MISlocker")
+    LCD.write("http://MISlocker")
 
 
 def confirmChangeInfo():
@@ -380,14 +380,13 @@ def confirmChangeInfo():
 
 def changeNameMSSV():
     LCD.setCursor(0, 0)  # row, column
-    LCD.write("CHANGE INFO:Connect")
+    LCD.write("connect to MIS-CTU")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("to MIS-CTU wifi & ")
+    LCD.write("wifi to scan QR or")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("open browser to")
+    LCD.write("access web at")
     LCD.setCursor(0, 3)  # row, column
-    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
-    LCD.write(my_ip) # get current ip address
+    LCD.write("http://MISlocker")
 
 
 # ------------------------------ Admin level interfaces ------------------------------

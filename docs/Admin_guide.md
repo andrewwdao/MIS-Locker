@@ -1,6 +1,8 @@
 
 # ADMIN GUIDE
 
+## This current design only allows 01 door to be opened at a time!
+
 ## Admin Menu
 There are 02 admin key: the RFID card and the RFID tag.
     
