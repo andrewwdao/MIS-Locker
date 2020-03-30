@@ -366,7 +366,7 @@ def addNewInfo():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("wifi and access web")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("at http://MISlocker") # get current ip address
+    LCD.write("at http://MISlocker")
 
 
 def confirmChangeInfo():
