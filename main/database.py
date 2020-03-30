@@ -13,6 +13,8 @@ from app import db
 from app.models import User
 import subprocess as subpro
 import time
+import fingerPrint
+
 # ---------------------------- Private Parameters:
 # -----Private variable:
 
@@ -71,6 +73,8 @@ class Database:
         else:  # if user existed
             # if username or mssv is not filled --> delete incomplete user
             if (user.name is None) or (user.mssv is None):
+                if user.fing is not None:
+                    fingerPrint.delete(user.fing) # delete fingerprint database if existed
                 db.session.delete(user)
                 db.session.commit()
                 db.session.close() # need to this everytime you alter the db
