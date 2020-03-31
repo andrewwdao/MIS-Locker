@@ -57,7 +57,7 @@ _Licensed under the MIT License. All rights reserved._
 [Software Installation]: /docs/Installation.md
 [Software Configuration]: /docs/Configuration.md
 [Hardware Documentation]: /docs/Hardware-Documentation.md
-[Undergrad Thesis Report]: https://bit.ly/DMA_undergrad
+[Undergrad Thesis Report]: https://bit.ly/DMA-undergrad
 
 [Python3-fingerprint]: https://github.com/bastianraschke/pyfingerprint
 [Adafruit CircuitPython ADS1x15]: https://github.com/adafruit/Adafruit_CircuitPython_ADS1x15
