@@ -44,6 +44,11 @@ def waitPage_system():  # user can use RFID or their fingerprint to access
     LCD.write("waiting...")
 
 
+def waitforDoorClose(): # wait for user to close the door
+    LCD.setCursor(0, 3)  # row, column
+    LCD.write("Please shut the door")
+
+
 def pointerPos(options, pointer):
     if options == 3:
         for pos in range(1, options+1):  # go from 1 to (options+1)
@@ -217,7 +222,7 @@ def addFingerSuccessPage():
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint added!")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
+    LCD.write("Please press OK")
 
 
 def addFingerExistedPage():
@@ -271,7 +276,7 @@ def changeFingerSuccessPage():
     LCD.setCursor(1, 1)  # row, column
     LCD.write("Fingerprint added!")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("Press any to return")
+    LCD.write("Please press OK")
 
 
 def changeFingerExistedPage():
@@ -355,14 +360,13 @@ def changeRFIDFailPage():
 
 def addNewInfo():
     LCD.setCursor(0, 0)  # row, column
-    LCD.write("ADD NEW INFO:Connect")
+    LCD.write("ADD INFO: Log in to")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("to MIS-CTU wifi & ")
+    LCD.write("MIS-CTU wifi to scan")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("open browser to")
+    LCD.write("QR or access web at ")
     LCD.setCursor(0, 3)  # row, column
-    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
-    LCD.write(my_ip) # get current ip address
+    LCD.write("http://MISlocker")
 
 
 def confirmChangeInfo():
@@ -376,14 +380,13 @@ def confirmChangeInfo():
 
 def changeNameMSSV():
     LCD.setCursor(0, 0)  # row, column
-    LCD.write("CHANGE INFO:Connect")
+    LCD.write("connect to MIS-CTU")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("to MIS-CTU wifi & ")
+    LCD.write("wifi to scan QR or")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("open browser to")
+    LCD.write("access web at")
     LCD.setCursor(0, 3)  # row, column
-    my_ip = subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2]+":7497"
-    LCD.write(my_ip) # get current ip address
+    LCD.write("http://MISlocker")
 
 
 # ------------------------------ Admin level interfaces ------------------------------
@@ -410,7 +413,7 @@ def warningDeletePage():
 
 
 def DBdeleteDonePage():
-    LCD.setCursor(1, 2)  # row, column
+    LCD.setCursor(2, 2)  # row, column
     LCD.write("DATABASE DELETED!")
 
 
@@ -418,7 +421,7 @@ def modifyDatabaseInfoPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("Connect to SSH with:")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("MISlocker@")
+    LCD.write("mis@")
     LCD.setCursor(0, 2)  # row, column
     LCD.write(subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     LCD.setCursor(0, 3)  # row, column
