@@ -172,7 +172,9 @@ def __waitForConfirmation():
     # time.sleep(0.4)  # prevent debounce
     while True: # wait for someone to push OK button
         if button.read() == "BUT_OK": 
-            break
+            return True
+        if button.read() == "BUT_CANCEL":
+            return False
         
 
 
@@ -892,17 +894,20 @@ def adminCase():
                 lcd.clear()
                 lcd.warningDeletePage()
 
-                __waitForConfirmation()
+                # press OK button
+                if __waitForConfirmation(): # wait loop integrated inside
 
-                dtb.delAllMember() # delete all member in the database
-                fingerPrint.deleteAll() # delete all fingerprint pattern in fingerprint sensor database
+                    dtb.delAllMember() # delete all member in the database
+                    fingerPrint.deleteAll() # delete all fingerprint pattern in fingerprint sensor database
+                    
+                    lcd.clear()
+                    lcd.DBdeleteDonePage()
+                    time.sleep(2)
                 
-                lcd.clear()
-                lcd.DBdeleteDonePage()
-                time.sleep(2)
                 lcd.clear()
                 lcd.mainAdminPage()
                 lcd.pointerPos(3, choosing_pointer)
+                
             # //////////////// MODIFY DATABASE /////////////////
             if choosing_pointer == 2:  # Modify database command
                 lcd.clear()

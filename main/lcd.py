@@ -362,12 +362,12 @@ def addNewInfo():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("ADD INFO: Log in to")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("MIS-CTU wifi to scan")
+    LCD.write("MIS-CTU wifi and go")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("QR or access web at ")
+    LCD.write("to http://MISlocker")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("http://MISlocker")
-
+    LCD.write("or" + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
+    
 
 def confirmChangeInfo():
     LCD.setCursor(4, 0)  # row, column
@@ -382,12 +382,12 @@ def changeNameMSSV():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("connect to MIS-CTU")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("wifi to scan QR or")
+    LCD.write("MIS-CTU wifi and go")
     LCD.setCursor(0, 2)  # row, column
-    LCD.write("access web at")
+    LCD.write("to http://MISlocker")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("http://MISlocker")
-
+    LCD.write("or" + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
+    
 
 # ------------------------------ Admin level interfaces ------------------------------
 def mainAdminPage():
@@ -421,7 +421,7 @@ def modifyDatabaseInfoPage():
     LCD.setCursor(0, 0)  # row, column
     LCD.write("Connect to SSH with:")
     LCD.setCursor(0, 1)  # row, column
-    LCD.write("mis@")
+    LCD.write("MISlocker@")
     LCD.setCursor(0, 2)  # row, column
     LCD.write(subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     LCD.setCursor(0, 3)  # row, column
