@@ -366,7 +366,7 @@ def addNewInfo():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("to http://MISlocker")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("or" + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
+    LCD.write("or  " + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     
 
 def confirmChangeInfo():
@@ -386,7 +386,7 @@ def changeNameMSSV():
     LCD.setCursor(0, 2)  # row, column
     LCD.write("to http://MISlocker")
     LCD.setCursor(0, 3)  # row, column
-    LCD.write("or" + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
+    LCD.write("or  " + subpro.check_output(["hostname", "-I"]).decode("utf-8")[:-2])
     
 
 # ------------------------------ Admin level interfaces ------------------------------
