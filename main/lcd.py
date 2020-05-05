@@ -356,6 +356,12 @@ def changeRFIDFailPage():
     LCD.write("Retry")
     LCD.setCursor(2, 3)  # row, column
     LCD.write("Cancel")
+
+def changeRFIDExistedPage():
+    LCD.setCursor(4, 0)  # row, column
+    LCD.write("CHANGE RFID")
+    LCD.setCursor(6, 1)  # row, column
+    LCD.write("RFID existed!")
 # ================================================ INFOMATION ======================================
 
 def addNewInfo():

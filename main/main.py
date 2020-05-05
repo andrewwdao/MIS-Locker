@@ -315,51 +315,57 @@ def __ChangeRFID(user_id):
         # wait for signal here
         if rfid.hasID():
             current_tag = rfid.tagID()
-            status = dtb.changeRFID(user_id, current_tag) # add rfid to database and return the user id from dtb
-            if status:  # RFID change successfully
+            if dtb.searchRFID(current_tag)[0]:
                 lcd.clear()
-                lcd.changeRFIDSuccessPage()
+                lcd.changeRFIDExistedPage()
                 __waitForConfirmation()
-                return True
-            else:  # RFID failed to change
-                lcd.clear()
-                lcd.changeRFIDFailPage()
-                choosing_pointer = 1  # default at first position
-                lcd.pointerPos(2, choosing_pointer)
-                # ------------------Button part ------------------
-                while True:
-                    status = button.read()
-                    if status is "BUT_OK":
-                        if choosing_pointer == 1:  # retry
-                            lcd.clear()
-                            rfid.flush()  # clear everything before starting
-                            fingerPrint.flush() # clear everthing before starting
-                            break
-                        elif choosing_pointer == 2: # cancel
+                return False
+            else:
+                status = dtb.changeRFID(user_id, current_tag) # add rfid to database and return the user id from dtb
+                if status:  # RFID change successfully
+                    lcd.clear()
+                    lcd.changeRFIDSuccessPage()
+                    __waitForConfirmation()
+                    return True
+                else:  # RFID failed to change
+                    lcd.clear()
+                    lcd.changeRFIDFailPage()
+                    choosing_pointer = 1  # default at first position
+                    lcd.pointerPos(2, choosing_pointer)
+                    # ------------------Button part ------------------
+                    while True:
+                        status = button.read()
+                        if status is "BUT_OK":
+                            if choosing_pointer == 1:  # retry
+                                lcd.clear()
+                                rfid.flush()  # clear everything before starting
+                                fingerPrint.flush() # clear everthing before starting
+                                break
+                            elif choosing_pointer == 2: # cancel
+                                # clean rfid and finger buffer, if existed
+                                rfid.flush()  # flush out old buffer before get out
+                                fingerPrint.flush() # clear everthing before starting
+                                return False
+                            return False
+                        elif status is "BUT_CANCEL":
                             # clean rfid and finger buffer, if existed
                             rfid.flush()  # flush out old buffer before get out
                             fingerPrint.flush() # clear everthing before starting
                             return False
-                        return False
-                    elif status is "BUT_CANCEL":
-                        # clean rfid and finger buffer, if existed
-                        rfid.flush()  # flush out old buffer before get out
-                        fingerPrint.flush() # clear everthing before starting
-                        return False
-                    elif status is "BUT_UP":
-                        if choosing_pointer == 1:  # limit to 1
-                            pass
-                        else:
-                            choosing_pointer -= 1
-                        lcd.changeRFIDFailPage()
-                        lcd.pointerPos(2, choosing_pointer)
-                    elif status is "BUT_DOWN":
-                        if choosing_pointer == 2:  # limit to 2
-                            pass
-                        else:
-                            choosing_pointer += 1
-                        lcd.changeRFIDFailPage()
-                        lcd.pointerPos(2, choosing_pointer)
+                        elif status is "BUT_UP":
+                            if choosing_pointer == 1:  # limit to 1
+                                pass
+                            else:
+                                choosing_pointer -= 1
+                            lcd.changeRFIDFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
+                        elif status is "BUT_DOWN":
+                            if choosing_pointer == 2:  # limit to 2
+                                pass
+                            else:
+                                choosing_pointer += 1
+                            lcd.changeRFIDFailPage()
+                            lcd.pointerPos(2, choosing_pointer)
 
         # At anytime, if cancel was pressed, cancel the whole process
         if button.read() is "BUT_CANCEL":
