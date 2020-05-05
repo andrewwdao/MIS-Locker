@@ -10,6 +10,8 @@ import os
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
+        # super(WebServer, self).__init__(*args, **kwargs)
+        # self._stop_event = threading.Event()
         self.pid = app_pid
         # self.ON_FLAG = True
         
@@ -30,6 +32,7 @@ class WebServer(threading.Thread):
         self.server.close()
         self.gevent_signal.cancel()
         # self.ON_FLAG = False
+        raise ValueError("Hello")
 
         
 
