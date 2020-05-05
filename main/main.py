@@ -52,12 +52,10 @@ pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
 server_pid = int()
-server = WebServer()
 
 # ==== ISR for cancel button when in server mode =========
 def __cancelServerISR(channel):
     global button
-    # os.kill(int(server.get_my_tid()),signal.SIGTERM) #  find out the pid of the server and kill it
     # incomplete member delete is handle
     print("Hello there")
     shutdownServer()
@@ -73,9 +71,8 @@ def __wakeup_server():
     # start server
     print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
+    server = WebServer()
     server.start()
-    # while server.ON_FLAG:
-    #     pass
     server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
     # in case user don't press cancel button, reset back button
