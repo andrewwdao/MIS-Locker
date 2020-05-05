@@ -54,6 +54,8 @@ fingerPrint.activate()
 server_pid = int()
 server = WebServer()
 
+print('helloooooooooooooooo')
+
 # ==== ISR for cancel button when in server mode =========
 def __cancelServerISR(channel):
     global button
