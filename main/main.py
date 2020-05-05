@@ -22,7 +22,7 @@ from server import WebServer
 import RPi.GPIO as GPIO  # default as BCM mode!
 import signal
 import os
-
+from app.save_info.routes import shutdownServer
 # ---------------------------- Configurable parameters -------------------------
 # -----Admin ID key:
 ADMIN_KEY = '0x47106C'
@@ -60,8 +60,7 @@ def __cancelServerISR(channel):
     # os.kill(int(server.get_my_tid()),signal.SIGTERM) #  find out the pid of the server and kill it
     # incomplete member delete is handle
     print("Hello there")
-    from app.save_info.routes import shutdownServer
-    shutdownServer
+    shutdownServer()
     button.reset()
     button.init()
 
