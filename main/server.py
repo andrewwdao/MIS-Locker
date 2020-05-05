@@ -12,7 +12,7 @@ class WebServer(threading.Thread):
         super().__init__()
         # super(WebServer, self).__init__(*args, **kwargs)
         # self._stop_event = threading.Event()
-        self.pid = app_pid
+        # self.pid = app_pid
         # self.ON_FLAG = True
         
     def run(self):
@@ -32,7 +32,31 @@ class WebServer(threading.Thread):
         self.server.close()
         self.gevent_signal.cancel()
         # self.ON_FLAG = False
-        raise ValueError("Hello")
+        # raise ValueError("Hello")
+    
+    def get_my_tid(self):
+        """determines this (self's) thread id
+
+        CAREFUL : this function is executed in the context of the caller
+        thread, to get the identity of the thread represented by this
+        instance.
+        """
+        if not self.isAlive():
+            raise threading.ThreadError("the thread is not active")
+
+        # do we have it cached?
+        # if hasattr(self, "_thread_id"):
+        #     return self._thread_id
+
+        # no, look for it in the _active dict
+        for tid, tobj in threading._active.items():
+            if tobj is self:
+                self._thread_id = tid
+                return tid
+
+        # TODO: in python 2.6, there's a simpler way to do : self.ident
+
+        raise AssertionError("could not determine the thread's id")
 
         
 
