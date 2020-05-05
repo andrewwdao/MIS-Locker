@@ -52,28 +52,27 @@ pr.init()
 fingerPrint.begin()
 fingerPrint.activate()
 server_pid = int()
-
+server = WebServer()
 
 # ==== ISR for cancel button when in server mode =========
 def __cancelServerISR(channel):
-    global server_pid
-    global button
-    os.kill(int(server_pid),signal.SIGTERM) #  find out the pid of the server and kill it
-    # incomplete member delete is handle
-    button.reset()
-    button.init()
+    # global server_pid
+    # global button
+    # os.kill(int(server_pid),signal.SIGTERM) #  find out the pid of the server and kill it
+    # # incomplete member delete is handle
+    # button.reset()
+    # button.init()
+    server.shutdown()
 
 
 def __wakeup_server():
     global server_pid
-    server = WebServer()
+    
     # embedded a return way before open the server
     GPIO.setmode(GPIO.BCM)
     GPIO.remove_event_detect(button.CANCEL_BUTTON)
     GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE*2)
     server_pid = server.pid
-    print("hello 1 " +str(server_pid))
-    print('hello 2 ' +str(os.getpid()))
     # start server
     print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
