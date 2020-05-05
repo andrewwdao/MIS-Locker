@@ -1,6 +1,7 @@
 from gevent.pywsgi import WSGIServer
 import gevent
-from app import saveInfo_app, app_pid
+from app import saveInfo_app #, app_pid
+from app.save_info.routes import app_pid
 import threading
 import signal
 import os

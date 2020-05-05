@@ -17,13 +17,14 @@ import signal
 from database import Database
 import subprocess as subpro
 
+app_pid = str(os.getpid())
 
 # shutdown production server
 def shutdownServer():
     print('Prepare to shutting down server...')
     # we want to do this, but in a little delay, so do it in a separate thread
     # os.kill(int(os.getpid()),signal.SIGTERM) # find out the current task it's running on, then kill it
-    subpro.Popen(['sudo','python3','shutdown-server.py',str(os.getpid())], shell=False) # send the pid of the current webserver and send signal to kill it
+    subpro.Popen(['sudo','python3','shutdown-server.py',app_pid], shell=False) # send the pid of the current webserver and send signal to kill it
     
 
 # ======================== for development only =====================

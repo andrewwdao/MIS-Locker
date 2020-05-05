@@ -26,7 +26,7 @@ migrate = Migrate(saveInfo_app, db)
 bootstrap = Bootstrap(saveInfo_app)
 saveInfo_app.config['BOOTSTRAP_SERVE_LOCAL'] = True  # make bootstrap use local resources instead of using online resources
 
-app_pid = os.getpid()
+# app_pid = os.getpid()
 
 from app.errors import bp as errors_bp
 saveInfo_app.register_blueprint(errors_bp)
