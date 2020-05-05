@@ -58,11 +58,11 @@ server = WebServer()
 def __cancelServerISR(channel):
     # global server_pid
     # global button
-    # os.kill(int(server_pid),signal.SIGTERM) #  find out the pid of the server and kill it
+    os.kill(int(server.pid),signal.SIGTERM) #  find out the pid of the server and kill it
     # # incomplete member delete is handle
-    # button.reset()
-    # button.init()
-    server.shutdown()
+    button.reset()
+    button.init()
+    # server.shutdown()
 
 
 def __wakeup_server():
@@ -77,9 +77,9 @@ def __wakeup_server():
     print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
     server.start()
-    while server.ON_FLAG:
-        pass
-    # server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
+    # while server.ON_FLAG:
+    #     pass
+    server.join() # Wait until the server thread terminates -- this is a function from the parent class Thread
     subpro.call(['sudo','mount','-o','remount,ro','/'], shell=False) # turn on ro
     # in case user don't press cancel button, reset back button
     button.reset()

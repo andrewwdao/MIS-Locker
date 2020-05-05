@@ -1,6 +1,6 @@
 from gevent.pywsgi import WSGIServer
 import gevent
-from app import saveInfo_app
+from app import saveInfo_app, app_pid
 import threading
 import signal
 import os
@@ -9,11 +9,11 @@ import os
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
-        self.pid = os.getpid()
-        self.ON_FLAG = True
+        self.pid = app_pid
+        # self.ON_FLAG = True
         
     def run(self):
-        self.ON_FLAG = True
+        # self.ON_FLAG = True
         self.server = WSGIServer(('0.0.0.0', 80), saveInfo_app)
         self.gevent_signal = gevent.hub.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
@@ -28,7 +28,7 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
-        self.ON_FLAG = False
+        # self.ON_FLAG = False
 
         
 
