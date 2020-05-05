@@ -9,13 +9,8 @@ import os
 class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
-        # super(WebServer, self).__init__(*args, **kwargs)
-        # self._stop_event = threading.Event()
-        # self.pid = app_pid
-        # self.ON_FLAG = True
         
     def run(self):
-        # self.ON_FLAG = True
         self.server = WSGIServer(('0.0.0.0', 80), saveInfo_app)
         self.gevent_signal = gevent.hub.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
@@ -30,10 +25,6 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
-        # os.kill(int(os.getpid()),signal.SIGTERM) #  find out the pid of the server and kill it
-    
-        # self.ON_FLAG = False
-        # raise ValueError("Hello")
 
     # def start(self): --> existed already from parent 
 
