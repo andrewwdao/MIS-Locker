@@ -10,8 +10,10 @@ class WebServer(threading.Thread):
     def __init__(self):
         super().__init__()
         self.pid = os.getpid()
+        self.ON_FLAG = True
         
     def run(self):
+        self.ON_FLAG = True
         self.server = WSGIServer(('0.0.0.0', 80), saveInfo_app)
         self.gevent_signal = gevent.hub.signal(signal.SIGTERM, self.shutdown)
         self.server.serve_forever()
@@ -26,7 +28,7 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
-        os.kill(os.getpid(),signal.SIGTERM) # find out the current task it's running on, then kill it
+        self.ON_FLAG = False
 
         
 
