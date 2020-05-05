@@ -26,6 +26,8 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
+        os.kill(os.getpid(),signal.SIGTERM) # find out the current task it's running on, then kill it
+
         
 
     # def start(self): --> existed already from parent 
