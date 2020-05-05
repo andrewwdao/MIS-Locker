@@ -72,6 +72,8 @@ def __wakeup_server():
     GPIO.remove_event_detect(button.CANCEL_BUTTON)
     GPIO.add_event_detect(button.CANCEL_BUTTON, GPIO.FALLING, callback=__cancelServerISR, bouncetime=button.DEBOUNCE*2)
     server_pid = server.pid
+    print(server_pid)
+    print(os.getpid())
     # start server
     print('Server starting...')
     subpro.call(['sudo','mount','-o','remount,rw','/'], shell=False) # turn on rw
