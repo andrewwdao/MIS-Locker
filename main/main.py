@@ -59,7 +59,9 @@ def __cancelServerISR(channel):
     global button
     # os.kill(int(server.get_my_tid()),signal.SIGTERM) #  find out the pid of the server and kill it
     # incomplete member delete is handle
-    server.shutdown()
+    print("Hello there")
+    from app.save_info.routes import shutdownServer
+    shutdownServer
     button.reset()
     button.init()
 

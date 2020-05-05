@@ -1,14 +1,13 @@
 from gevent.pywsgi import WSGIServer
 import gevent
 from app import saveInfo_app #, app_pid
-from app.save_info.routes import app_pid
 import threading
 import signal
 import os
 
 
 class WebServer(threading.Thread):
-    def __init__(self,  *args, **kwargs):
+    def __init__(self):
         super().__init__()
         # super(WebServer, self).__init__(*args, **kwargs)
         # self._stop_event = threading.Event()
@@ -31,7 +30,7 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
-        os.kill(int(os.getpid()),signal.SIGTERM) #  find out the pid of the server and kill it
+        # os.kill(int(os.getpid()),signal.SIGTERM) #  find out the pid of the server and kill it
     
         # self.ON_FLAG = False
         # raise ValueError("Hello")
