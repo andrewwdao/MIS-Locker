@@ -9,9 +9,9 @@ import os
 
 class WebServer(threading.Thread):
     def __init__(self,  *args, **kwargs):
-        # super().__init__()
-        super(WebServer, self).__init__(*args, **kwargs)
-        self._stop_event = threading.Event()
+        super().__init__()
+        # super(WebServer, self).__init__(*args, **kwargs)
+        # self._stop_event = threading.Event()
         # self.pid = app_pid
         # self.ON_FLAG = True
         
@@ -31,12 +31,10 @@ class WebServer(threading.Thread):
         self.server.stop()
         self.server.close()
         self.gevent_signal.cancel()
-        self.stop()
+        os.kill(int(os.getpid()),signal.SIGTERM) #  find out the pid of the server and kill it
+    
         # self.ON_FLAG = False
         # raise ValueError("Hello")
-    
-    def stop(self):
-        self._stop_event.set()
 
     # def start(self): --> existed already from parent 
 
