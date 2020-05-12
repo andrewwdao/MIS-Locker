@@ -89,7 +89,7 @@ cd /home/$(who am i | awk '{print $1}')/ # return to home folder -- cannot use $
 if [ -d "./system" ] ; then  # check if the directory exist or not
 	rm -rf ./system
 fi
-git clone https://github.com/minhan74/UV-Robot.git
+git clone https://github.com/minhan74/MIS-Locker.git
 # change name
 mv MIS-Locker/ system/
 
