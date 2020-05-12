@@ -29,7 +29,8 @@ echo "Installing..."
 # automatically get and set time from the internet (workaround for proxy setting)
 date -s "$(wget -qSO- --max-redirect=0 google.vn 2>&1 | grep Date: | cut -d' ' -f5-8)Z"
 
-apt-get update && apt-get upgrade -y
+apt-get update
+apt-get upgrade -y
 
 # pip installation
 apt-get install python3-pip -y
@@ -88,17 +89,19 @@ cd /home/$(who am i | awk '{print $1}')/ # return to home folder -- cannot use $
 if [ -d "./system" ] ; then  # check if the directory exist or not
 	rm -rf ./system
 fi
-mkdir ./system
-cd ./system
-git init
-git remote add origin https://github.com/minhan74/MIS-Locker.git
-git pull origin master
+git clone https://github.com/minhan74/UV-Robot.git
+# change name
+mv MIS-Locker/ system/
 
 # go to main code section, clean the c binary files and re-create them
 # and provide priveledge for setup itself
 cd ./main # /home/<user>/system/main
 chmod +x binary_renewer.sh
 ./binary_renewer.sh
+
+# setup server database for admin login
+chmod +x server-db_setup.sh
+./server-db_setup.sh
 
 # --- activate system on start-up
 
