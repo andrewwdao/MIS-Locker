@@ -13,12 +13,12 @@ cd app/
 
 # delete old database (admin information)
 if [ -f "./database.db" ] ; then # check if database.db exist or not
-	rm -rf database.db
+	rm -rf ./database.db
 fi
 
 # delete old migrations folder
 if [ -d "./migrations" ] ; then  # check if the directory exist or not
-	rm -rf migrations
+	rm -rf ./migrations
 fi
 
 # delete old log folder in the app folder
@@ -36,8 +36,6 @@ flask db migrate -m "users table"
 flask db upgrade
 
 
-
-python3 ../server_admin-init.py
 
 echo
 echo
