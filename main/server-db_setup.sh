@@ -12,23 +12,18 @@ echo "This will set up the admin database for Raspberry Pi's streaming server"
 cd app/
 
 # delete old database (admin information)
-if [ -f "./database.db" ] ; then # check if database.db exist or not
-	rm -rf ./database.db
+if [ -f "/home/$(who am i | awk '{print $1}')/system/main/database.db" ] ; then # check if database.db exist or not
+	rm -rf /home/$(who am i | awk '{print $1}')/system/main/database.db
 fi
 
 # delete old migrations folder
-if [ -d "./migrations" ] ; then  # check if the directory exist or not
-	rm -rf ./migrations
+if [ -d "/home/$(who am i | awk '{print $1}')/system/main/migrations" ] ; then  # check if the directory exist or not
+	rm -rf /home/$(who am i | awk '{print $1}')/system/main/migrations
 fi
 
 # delete old log folder in the app folder
-if [ -d "./logs" ] ; then  # check if the directory exist or not
-	rm -rf logs
-fi
-
-# delete old log again in the main folder
-if [ -d "../logs" ] ; then  # check if the directory exist or not
-	rm -rf ../logs
+if [ -d "/home/$(who am i | awk '{print $1}')/system/main/logs" ] ; then  # check if the directory exist or not
+	rm -rf /home/$(who am i | awk '{print $1}')/system/main/logs
 fi
 
 flask db init
