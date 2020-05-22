@@ -95,7 +95,7 @@ mv MIS-Locker/ system/
 
 # go to main code section, clean the c binary files and re-create them
 # and provide priveledge for setup itself
-cd ./system/main # /home/<user>/system/main
+cd /home/$(who am i | awk '{print $1}')/system/main # /home/<user>/system/main
 chmod +x binary_renewer.sh
 ./binary_renewer.sh
 
