@@ -43,6 +43,9 @@ class StreamReader:
 
     def readline(self, timeout = None):
         try:
+            if not self._q.empty():
+                print("Queue: ", end ='')
+                print(self._q.queue)
             return self._q.get(block = timeout is not None,
                     timeout = timeout)
         except Empty:
