@@ -799,7 +799,7 @@ def userCase(got_data, user_id, user_name, user_mssv, user_rfid, user_fing):
             current_locker = __getNextAvailableLocker()
             if current_locker is None:  # out of vacancy
                 lcd.clear()
-                lcd.outOfVacancy()
+                lcd.outOfVacancyPage()
 
                 __waitForConfirmation()
 
