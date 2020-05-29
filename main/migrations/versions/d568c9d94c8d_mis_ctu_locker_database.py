@@ -1,8 +1,8 @@
-"""user table
+"""MIS-CTU locker database
 
-Revision ID: 542f477f5858
+Revision ID: d568c9d94c8d
 Revises: 
-Create Date: 2019-10-18 12:15:13.962742
+Create Date: 2020-05-29 09:25:33.413557
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '542f477f5858'
+revision = 'd568c9d94c8d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,7 +28,7 @@ def upgrade():
     )
     op.create_index(op.f('ix_user_fing'), 'user', ['fing'], unique=True)
     op.create_index(op.f('ix_user_mssv'), 'user', ['mssv'], unique=True)
-    op.create_index(op.f('ix_user_name'), 'user', ['name'], unique=True)
+    op.create_index(op.f('ix_user_name'), 'user', ['name'], unique=False)
     op.create_index(op.f('ix_user_rfid'), 'user', ['rfid'], unique=True)
     # ### end Alembic commands ###
 

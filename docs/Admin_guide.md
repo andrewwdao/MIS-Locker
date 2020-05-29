@@ -85,6 +85,30 @@ flask db migrate -m "users table"
 flask db upgrade
 ```
 
+<span style="color: red;"><b>Note:</b> </span>
+This database (SQLite) is compatible with SQL database, so it can be accessed and modified by SQL commands.
+You can use sqlite3 module directly to access the database using python:
+
+```python
+import sqlite3
+db = sqlite3.connect("database.db")
+u = db.execute("SQL commands, ie: select * from User")
+```
+
+You can fetch all rows or 1 row at a time in the database by using
+
+```python
+u.fetchall()
+u.fetchone()
+```
+
+You should remember to commit database changes and close the connection:
+
+```python
+db.commit()
+db.close()
+```
+
 ## Testing peripheral
 
 In order to test the LEDs and/or the electric locks, go in:
