@@ -42,7 +42,7 @@ def index():
     if form.validate_on_submit():
         user = User.query.filter_by(mssv=form.mssv.data).first()
         if user is None:
-            newUser = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+            newUser = User.query.order_by(User.id.desc()).first()  # get the lastest user out
             newUser.name = form.name.data
             newUser.mssv = form.mssv.data
             db.session.commit()
@@ -59,7 +59,7 @@ def index():
 
 @saveInfo_app.route('/gotinfo', methods=['GET', 'POST'])
 def gotInfo():
-    user = User.query.order_by(User.timestamp.desc()).first()  # get the lastest user out
+    user = User.query.order_by(User.id.desc()).first()  # get the lastest user out
     templateData = {
         'server_title': 'MIS Locker',
         'main_title': 'MIS Locker System',

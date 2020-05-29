@@ -66,7 +66,7 @@ class Database:
 
     def getLastMemberInfo(self):
         self.__readwrite()
-        user = User.query.order_by(User.timestamp.desc()).first()
+        user = User.query.order_by(User.id.desc()).first()
         if user is None:  # if user doesn't exist
             self.__readonly()
             return [False, None, None, None, None, None]
